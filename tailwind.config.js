@@ -23,7 +23,7 @@ export default {
         },
         slideUp: {
           '0%': {
-            transform: 'translateY(100%) scale(0.5)',
+            transform: 'translateY(30%) scale(0.7)',
             opacity: '0',
           },
           '100%': {
