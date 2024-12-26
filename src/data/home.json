@@ -1,5 +1,5 @@
 {
-    "name": "ISHARA",
+    "name": ["ISHARA", "Ishara Madushanka" ],
     "title":"Hello, I’m Abo, a product Designer With 7 years of experience.",
     "description":"I care a lot about using design for positive impact. and enjoy creating user-centric, delightful, and human experiences.",
     "image":"./src/assets/images/about/about_me.jpg",
