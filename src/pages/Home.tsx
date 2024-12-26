@@ -1,7 +1,7 @@
 export default function Home() {
     return (
-        <div>
-
+        <div className={`flex h-[600px] w-full bg-black`}>
+            <div className=""></div>
         </div>
     )
 }
