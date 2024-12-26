@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className={`flex justify-center w-full h-auto font-semibold`}>
-      <div className="flex justify-center w-full md:w-[1086px] flex-col px-2 relative">
+      <div className="flex justify-center w-full md:w-[1086px] flex-col px-2 relative overflow-hidden">
         <Header />
         <Home/>
       </div>
