@@ -1,10 +1,10 @@
 [
     {
         "id": 1,
-        "title": "My App",
-        "description": "This is my app",
-        "image":"https://lh3.googleusercontent.com/pw/AP1GczPUFeGOFAiqAkbdsD68xBo3m2A7EYRnTX_Si-8YnUS466LcoWO5HpR_elPp6cG_EdKYkEPDkadaiF3zallDgV9oOnQkc3UkW3PEEvcnsCjqYd3g0BZ9MzjLdTrNr-fMEw8PxK5YPs93O02a-F8t_eVN=w570-h704-s-no-gm?authuser=0",
-        "homepage": "https://github.com/example/my-app",
+        "title": "Pirith App",
+        "description": "Pirith App is a mobile app built with React Native and Expo.",
+        "image":"../assets/images/projectImages/pirith-app.png",
+        "homepage": "https://github.com/ishara-madu/PirithApp",
         "textColor": "#fff"
     },
     {
