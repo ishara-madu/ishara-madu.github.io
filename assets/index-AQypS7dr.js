@@ -76,6 +76,8 @@ Error generating stack: `+e.message+`
       "description": "A portfolio website showcasing the skills and projects of Ishara Madushanka Bandara.",
       "publisher": {
         "@type": "Person",
+        "name": "Ishara Madushanka Bandara",
+        "url": "https://ishara-madu.github.io/"
       }
     }
   `})]}),R.jsx(hm,{})]})}));
