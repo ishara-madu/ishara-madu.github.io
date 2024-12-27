@@ -26,9 +26,9 @@
     {
         "id": 4,
         "title": "HireMe Web",
-        "description": "Explore my work in web app development, highlighting creativity, functionality, and user-centric design.",
+        "description": "Seamlessly connect employees and employers for efficient collaboration. Built with React, Supabase, and Redux.",
         "image":"https://github.com/ishara-madu/ishara-madu.github.io/blob/main/src/assets/images/projectImages/hireme-web.jpg?raw=true",
-        "homepage": "https://github.com/ishara-madu/ishara-madu.github.io",
-        "textColor": "#fff"
+        "homepage": "https://github.com/ishara-madu/HireMeWeb",
+        "textColor": "#000"
     }
 ]
