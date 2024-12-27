@@ -9,6 +9,7 @@ export default {
       animation: {
         'slide-down': 'slideDown 1s ease-out forwards',
         'slide-up': 'slideUp 1s ease-out forwards',
+        halfRotate: 'halfRotate 3s linear infinite', // Customize duration, easing, etc.
       },
       keyframes: {
         slideDown: {
@@ -30,6 +31,11 @@ export default {
             transform: 'translateY(0) scale(1)',
             opacity: '1',
           },
+        },
+        halfRotate: {
+          '0%': { transform: 'rotate(-25deg)' },
+          '50%': { transform: 'rotate(25deg)' },
+          '100%': { transform: 'rotate(-25deg)' },
         },
       },
     },
