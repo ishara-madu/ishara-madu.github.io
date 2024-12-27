@@ -1,4 +1,3 @@
-import React from 'react'
 import homeData from '../data/home.json'
 import placeholder from '../assets/images/placeholder.webp'
 
