@@ -11,7 +11,7 @@ export default function ProjectCard(id: ProjectCardProps) {
             <div className="flex justify-between p-5 sm:px-8">
                 <div className="flex flex-col text-base sm:text-xl w-full h-full" style={{ color: project?.textColor || "black" }}>
                     {project?.title}
-                    <div className="flex text-xs sm:text-base font-thin">
+                    <div className="hidden md:flex text-xs sm:text-base font-thin">
                         {project?.description}
                     </div>
                 </div>
