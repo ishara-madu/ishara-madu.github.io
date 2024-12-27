@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://github.com/ishara-madu/ishara-madu.github.io",
+  "homepage": "https://ishara-madu.github.io",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
