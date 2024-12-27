@@ -9,7 +9,8 @@ export default {
       animation: {
         'slide-down': 'slideDown 1s ease-out forwards',
         'slide-up': 'slideUp 1s ease-out forwards',
-        halfRotate: 'halfRotate 3s linear infinite', // Customize duration, easing, etc.
+        halfRotate: 'halfRotate 3s linear infinite', 
+        'slide-up-card': 'slideUpCard 0.2s ease-out forwards',
       },
       keyframes: {
         slideDown: {
@@ -25,6 +26,16 @@ export default {
         slideUp: {
           '0%': {
             transform: 'translateY(30%) scale(0.7)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateY(0) scale(1)',
+            opacity: '1',
+          },
+        },
+        slideUpCard: {
+          '0%': {
+            transform: 'translateY(10%) scale(0.8)',
             opacity: '0',
           },
           '100%': {
