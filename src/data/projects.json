@@ -3,9 +3,9 @@
         "id": 1,
         "title": "Pirith App",
         "description": "Pirith App is a mobile app built with React Native and Expo.",
-        "image":"../assets/images/projectImages/pirith-app.png",
+        "image":"https://github.com/ishara-madu/ishara-madu.github.io/blob/main/src/assets/images/projectImages/pirith-app.png?raw=true",
         "homepage": "https://github.com/ishara-madu/PirithApp",
-        "textColor": "#fff"
+        "textColor": "#000"
     },
     {
         "id": 2,
