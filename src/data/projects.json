@@ -19,8 +19,8 @@
         "id": 3,
         "title": "My Portfolio",
         "description": "Explore my work in web app development, highlighting creativity, functionality, and user-centric design.",
-        "image":"https://github.com/ishara-madu/ishara-madu.github.io/blob/main/src/assets/images/projectImages/lte-app.jpg?raw=true",
-        "homepage": "https://play.google.com/store/apps/details?id=com.pixeleye.lteonly",
-        "textColor": "#000"
+        "image":"https://github.com/ishara-madu/ishara-madu.github.io/blob/main/src/assets/images/projectImages/portfolio.jpg?raw=true",
+        "homepage": "https://github.com/ishara-madu/ishara-madu.github.io",
+        "textColor": "#fff"
     }
 ]
