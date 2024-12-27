@@ -4,7 +4,7 @@ export default function Projects() {
 
 
   return (
-    <div className={`grid md:grid-cols-2 justify-items-center gap-5 mb-5`}>
+    <div id='projects' className={`grid md:grid-cols-2 justify-items-center gap-5 mb-5 pt-3`}>
       {
         projectData.map((project, index) => (
           <ProjectCard key={index} id={project.id}/>
