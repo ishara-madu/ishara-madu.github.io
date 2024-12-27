@@ -54,7 +54,6 @@ Error generating stack: `+e.message+`
     {
       "@context": "https://schema.org",
       "@type": "Person",
-      "@id": "https://ishara-madu.github.io/#person",
       "name": "Ishara Madushanka Bandara",
       "url": "https://ishara-madu.github.io/",
       "image": "https://lh3.googleusercontent.com/pw/AP1GczPUFeGOFAiqAkbdsD68xBo3m2A7EYRnTX_Si-8YnUS466LcoWO5HpR_elPp6cG_EdKYkEPDkadaiF3zallDgV9oOnQkc3UkW3PEEvcnsCjqYd3g0BZ9MzjLdTrNr-fMEw8PxK5YPs93O02a-F8t_eVN=w570-h704-s-no-gm?authuser=0",
@@ -77,7 +76,6 @@ Error generating stack: `+e.message+`
       "description": "A portfolio website showcasing the skills and projects of Ishara Madushanka Bandara.",
       "publisher": {
         "@type": "Person",
-        "@id": "https://ishara-madu.github.io/#person"
       }
     }
   `})]}),R.jsx(x0,{})]}),R.jsx(x0,{})]}));
