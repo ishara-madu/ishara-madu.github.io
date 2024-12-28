@@ -6,9 +6,9 @@ Welcome to my **Portfolio**! This repository contains the source code for my per
 
 ## **Badges**
 
-![GitHub stars](https://img.shields.io/github/stars/ishara-madu/portfolio)  
-![GitHub issues](https://img.shields.io/github/issues/ishara-madu/portfolio)  
-![GitHub forks](https://img.shields.io/github/forks/ishara-madu/portfolio)  
+![GitHub stars](https://img.shields.io/github/stars/ishara-madu/ishara-madu.github.io)  
+![GitHub issues](https://img.shields.io/github/issues/ishara-madu/ishara-madu.github.io)  
+![GitHub forks](https://img.shields.io/github/forks/ishara-madu/ishara-madu.github.io)  
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Portfolio-blue)](https://ishara-madu.github.io/)
 
 ---
