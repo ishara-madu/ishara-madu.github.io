@@ -14,7 +14,7 @@ export default function ProjectCard(id: ProjectCardProps) {
         <div ref={ref} className={`w-full min-h-72 sm:min-h-96 rounded-3xl md:h-[500px] overflow-hidden relative group`}>
             <div className={`w-full min-h-72 sm:min-h-96 rounded-3xl md:h-[500px] ${inView ? 'animate-slide-up-card opacity-100' : 'opacity-0'} overflow-hidden relative group`}>
                 <img
-                    src={project?.image} alt={`'${project?.title} project by ${homeData?.name?.[2]}`} title={`${homeData?.name?.[2]}'s ${project?.title} Project`} loading='lazy' className={`w-full h-full object-cover z-[-1] absolute group-hover:scale-105 duration-300 opacity-duration-300`} />
+                    src={project?.image} alt={`${project?.title} project by ${homeData?.name[2]}`} title={`${project?.title} Project`} loading='lazy' className={`w-full h-full object-cover z-[-1] absolute group-hover:scale-105 duration-300 opacity-duration-300`} />
                 <div
                     className="flex justify-between p-5 sm:px-8">
                     <div className="flex flex-col text-base sm:text-xl w-full h-full" style={{ color: project?.textColor || "black" }}>
