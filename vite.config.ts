@@ -10,4 +10,7 @@ export default defineConfig({
       hostname: 'https://ishara-madu.github.io/',
     }),
   ],
+  ssr: {
+    noExternal: ['react', 'react-dom'],
+  },
 })
