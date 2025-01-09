@@ -7,9 +7,22 @@ createRoot(document.getElementById('root')!).render(
   <>
     <HelmetProvider>
       <Helmet>
-        <meta name="description" content="Welcome to Ishara Madushanka Bandara's official portfolio. Explore my projects, skills, and achievements." />
-        <meta name="keywords" content="Ishara Madushanka Bandara, Ishara, Madushanka, Bandara, portfolio, web development developer,software developer, app developer" />
+        <meta name="description" content="Ishara Madushanka Bandara's portfolio. I am a web and software developer specializing in React, Node.js, NeutralinoJS, Electron, and app development. Check out my projects and get in touch!" />
+        <meta
+          name="keywords"
+          content="Ishara Madushanka Bandara, Ishara Madushanka, Ishara, Madushanka, Madhusanka, Bandara, portfolio, web developer, software developer, app developer, front-end developer, full-stack developer, freelance developer, Sri Lankan developer, React developer, JavaScript developer, Node.js developer, Vite, NeutralinoJS, Electron, Unity, Python, Sri Lanka developer"
+        />
         <meta name="author" content="Ishara Madushanka Bandara" />
+
+        {/* Open Graph Meta Tags (for social media sharing) */}
+        <meta property="og:title" content="Ishara Madushanka Bandara - Portfolio" />
+        <meta
+          property="og:description"
+          content="Ishara Madushanka Bandara's portfolio showcasing web and software development projects. Specializing in React, Node.js, and app development."
+        />
+        <meta property="og:image" content="https://raw.githubusercontent.com/ishara-madu/ishara-madu.github.io/refs/heads/main/src/assets/images/userImages/ishara-madushanka-bandara-1.jpg" />
+        <meta property="og:url" content="https://ishara-madu.github.io" />
+        <meta property="og:type" content="website" />
 
         {/* Person Schema */}
         <script type="application/ld+json">
