@@ -7,7 +7,7 @@ createRoot(document.getElementById('root')!).render(
   <>
     <HelmetProvider>
       <Helmet>
-        <meta name="description" content="Ishara Madushanka Bandara's portfolio. I am a web and software developer specializing in React, Node.js, NeutralinoJS, Electron, and app development. Check out my projects and get in touch!" />
+        <meta name="description" content="Ishara Madushanka Bandara's portfolio. I am a web and software developer specializing in React, Node.js, Electron, Java and app development. Check out my projects and get in touch!" />
         <meta
           name="keywords"
           content="Ishara Madushanka Bandara, Ishara Madushanka, Ishara, Madushanka, Madhusanka, Bandara, portfolio, web developer, software developer, app developer, front-end developer, full-stack developer, freelance developer, Sri Lankan developer, React developer, JavaScript developer, Node.js developer, Vite, NeutralinoJS, Electron, Unity, Python, Sri Lanka developer"
