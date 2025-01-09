@@ -7,13 +7,13 @@ createRoot(document.getElementById('root')!).render(
   <>
     <HelmetProvider>
       <Helmet>
-      <meta name="description" content="Welcome to Ishara Madushanka Bandara's official portfolio. Explore my projects, skills, and achievements." />
-<meta name="keywords" content="Ishara Madushanka, portfolio, web development, developer" />
-<meta name="author" content="Ishara Madushanka Bandara" />
+        <meta name="description" content="Welcome to Ishara Madushanka Bandara's official portfolio. Explore my projects, skills, and achievements." />
+        <meta name="keywords" content="Ishara Madushanka Bandara, Ishara, Madushanka, Bandara, portfolio, web development developer,software developer, app developer" />
+        <meta name="author" content="Ishara Madushanka Bandara" />
 
-{/* Person Schema */}
-<script type="application/ld+json">
-  {`
+        {/* Person Schema */}
+        <script type="application/ld+json">
+          {`
     {
       "@context": "https://schema.org",
       "@type": "Person",
@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
       "jobTitle": "Web Developer, Software Developer, App Developer, UI/UX Designer",
       "sameAs": [
         "https://www.instagram.com/ishara_madhusanka_bandara",
-        "https://www.linkedin.com/in/ishara-madushanka-55bb09247",
+        "https://www.linkedin.com/in/ishara-madu",
         "https://www.facebook.com/IsharaMadushankaBandara",
         "https://www.pinterest.com/pixel__eye",
         "https://www.tiktok.com/@pixel.eye",
@@ -31,11 +31,11 @@ createRoot(document.getElementById('root')!).render(
       ]
     }
   `}
-</script>
+        </script>
 
-{/* WebSite Schema */}
-<script type="application/ld+json">
-  {`
+        {/* WebSite Schema */}
+        <script type="application/ld+json">
+          {`
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -49,7 +49,7 @@ createRoot(document.getElementById('root')!).render(
       }
     }
   `}
-</script>
+        </script>
 
 
       </Helmet>
