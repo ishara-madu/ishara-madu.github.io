@@ -139,8 +139,8 @@ export default function Home() {
 
     // Shared style object to guarantee 100% pixel-perfect text layering
     const sharedEditorStyle: React.CSSProperties = {
-        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
-        fontSize: '12px',
+        fontFamily: 'Courier New, Courier, monospace',
+        fontSize: '13px',
         lineHeight: '26px',
         padding: '0px',
         margin: '0px',
@@ -148,9 +148,8 @@ export default function Home() {
         outline: 'none',
         resize: 'none',
         background: 'transparent',
-        whiteSpace: 'pre-wrap',
-        wordBreak: 'break-all',
-        width: '100%',
+        whiteSpace: 'pre',
+        wordBreak: 'keep-all',
         boxShadow: 'none',
         tabSize: 4,
         color: '#383a42',
@@ -237,15 +236,19 @@ function renderSpace() {
                         </div>
 
                         {/* Right Workspace: Content area */}
-                        <div className="flex-1 pl-4 md:pl-6 flex flex-col min-h-full">
+                        <div className="flex-1 pl-4 md:pl-6 flex flex-col min-h-full overflow-x-auto custom-scrollbar">
                             {activeTab === "index.tsx" ? (
                                 renderActiveTabContent()
                             ) : (
-                                <div className="relative w-full flex-grow min-h-[300px]">
+                                <div className="grid grid-cols-1 grid-rows-1 w-full min-h-[300px] flex-grow">
                                     {/* Syntax Highlighted Pre block underneath */}
                                     <pre 
-                                        style={sharedEditorStyle}
-                                        className="p-0 m-0 pointer-events-none select-none"
+                                        style={{
+                                            ...sharedEditorStyle,
+                                            gridArea: '1 / 1 / 2 / 2',
+                                            pointerEvents: 'none',
+                                            userSelect: 'none',
+                                        }}
                                         dangerouslySetInnerHTML={activeTab === "journey.json" ? highlightJSON(journeyContent) : highlightTS(projectsContent)}
                                     />
                                     {/* Invisible textarea input layer on top */}
@@ -256,14 +259,15 @@ function renderSpace() {
                                             else setProjectsContent(e.target.value);
                                         }}
                                         rows={lineCount}
+                                        wrap="off"
                                         style={{
                                             ...sharedEditorStyle,
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
+                                            gridArea: '1 / 1 / 2 / 2',
                                             color: 'transparent',
                                             caretColor: '#4078f2',
                                             overflow: 'hidden',
+                                            width: '100%',
+                                            height: '100%',
                                         }}
                                         spellCheck="false"
                                     />
