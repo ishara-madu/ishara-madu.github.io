@@ -43,11 +43,6 @@ export default function Home() {
         let html = code
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt bridge;"); // wait, type fix: &gt;
-        
-        html = code
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
         
         // Highlight keys (crimson/purple)
@@ -95,17 +90,17 @@ export default function Home() {
         return (
             <div className="flex flex-col min-h-full">
                 {/* Import declarations at top (Aligned to Line 01) */}
-                <div className="font-mono text-[10px] sm:text-xs text-slate-500 tracking-tight leading-[26px] md:leading-[28px] select-none">
+                <div className="font-mono text-xs text-slate-500 tracking-tight leading-[26px] select-none">
                     <span className="text-purple-700 font-bold">import</span> {"{"} <span className="text-indigo-700 font-semibold">Developer</span> {"}"} <span className="text-purple-750 font-bold">from</span> <span className="text-emerald-700 font-semibold">"ishara-madu"</span>;
                 </div>
 
                 {/* Section header comment (Aligned to Line 02) */}
-                <span className="font-mono text-[10px] sm:text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] md:leading-[28px] select-none">
+                <span className="font-mono text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] select-none">
                     // index.tsx - main entrance greeting
                 </span>
 
                 {/* Virtual empty Line 03 spacer */}
-                <div className="h-[26px] md:h-[28px] select-none" />
+                <div className="h-[26px] select-none" />
 
                 {/* Content centered in remaining editor window */}
                 <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
@@ -115,15 +110,33 @@ export default function Home() {
                     </h1>
 
                     <div className="relative pl-4 border-l-2 border-indigo-550 my-6 select-none">
-                        <span className="absolute left-0 top-0 font-mono text-[10px] sm:text-xs text-indigo-600 select-none font-bold">/*</span>
+                        <span className="absolute left-0 top-0 font-mono text-xs text-indigo-600 select-none font-bold">/*</span>
                         <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
                             {homeData.description}
                         </p>
-                        <span className="font-mono text-[10px] sm:text-xs text-indigo-600 select-none block font-bold">*/</span>
+                        <span className="font-mono text-xs text-indigo-600 select-none block font-bold">*/</span>
                     </div>
                 </div>
             </div>
         );
+    };
+
+    // Shared style object to guarantee 100% pixel-perfect text layering
+    const sharedEditorStyle: React.CSSProperties = {
+        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace',
+        fontSize: '12px',
+        lineHeight: '26px',
+        padding: '0px',
+        margin: '0px',
+        border: 'none',
+        outline: 'none',
+        resize: 'none',
+        background: 'transparent',
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-all',
+        width: '100%',
+        boxShadow: 'none',
+        tabSize: 4,
     };
 
     return (
@@ -200,7 +213,7 @@ function renderSpace() {
                     <div className="flex-1 flex h-full overflow-y-auto p-5 select-text custom-scrollbar z-10">
                         
                         {/* Left Gutter: Code Editor Line Numbers */}
-                        <div className="w-8 md:w-10 flex flex-col items-end pr-2 md:pr-3 border-r border-zinc-200 border-opacity-30 select-none font-mono text-[9px] md:text-[11px] text-slate-500 leading-[26px] md:leading-[28px]">
+                        <div className="w-8 md:w-10 flex flex-col items-end pr-2 md:pr-3 border-r border-zinc-200 border-opacity-30 select-none font-mono text-[10px] text-slate-500 leading-[26px]">
                             {Array.from({ length: lineCount }, (_, i) => String(i + 1).padStart(2, '0')).map(num => (
                                 <span key={num}>{num}</span>
                             ))}
@@ -214,7 +227,8 @@ function renderSpace() {
                                 <div className="relative w-full flex-grow min-h-[300px]">
                                     {/* Syntax Highlighted Pre block underneath */}
                                     <pre 
-                                        className="w-full bg-transparent font-mono text-[10px] sm:text-xs leading-[26px] md:leading-[28px] p-0 m-0 pointer-events-none select-none whitespace-pre-wrap break-all"
+                                        style={sharedEditorStyle}
+                                        className="text-slate-800 p-0 m-0 pointer-events-none select-none"
                                         dangerouslySetInnerHTML={activeTab === "journey.json" ? highlightJSON(journeyContent) : highlightTS(projectsContent)}
                                     />
                                     {/* Invisible textarea input layer on top */}
@@ -225,7 +239,15 @@ function renderSpace() {
                                             else setProjectsContent(e.target.value);
                                         }}
                                         rows={lineCount}
-                                        className="absolute inset-0 w-full h-full bg-transparent text-transparent caret-slate-800 font-mono text-[10px] sm:text-xs outline-none border-none resize-none leading-[26px] md:leading-[28px] focus:ring-0 p-0 overflow-hidden whitespace-pre-wrap break-all font-medium"
+                                        style={{
+                                            ...sharedEditorStyle,
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            color: 'transparent',
+                                            caretColor: '#1e293b',
+                                            overflow: 'hidden',
+                                        }}
                                         spellCheck="false"
                                     />
                                 </div>
