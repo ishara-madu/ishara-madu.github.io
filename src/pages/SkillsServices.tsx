@@ -55,7 +55,7 @@ function TechIcon({ name }: { name: string }) {
     // Expo
     if (n.includes("expo")) {
         return (
-            <svg className="w-3.5 h-3.5 text-zinc-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
         );
@@ -63,7 +63,7 @@ function TechIcon({ name }: { name: string }) {
     // Kotlin
     if (n.includes("kotlin")) {
         return (
-            <svg className="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
             </svg>
         );
@@ -71,7 +71,7 @@ function TechIcon({ name }: { name: string }) {
     // Android SDK
     if (n.includes("android")) {
         return (
-            <svg className="w-3.5 h-3.5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
                 <line x1="12" y1="18" x2="12.01" y2="18" />
             </svg>
@@ -90,7 +90,7 @@ function TechIcon({ name }: { name: string }) {
     // Express
     if (n.includes("express")) {
         return (
-            <svg className="w-3.5 h-3.5 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-zinc-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
                 <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
                 <line x1="6" y1="6" x2="6.01" y2="6" />
@@ -101,7 +101,7 @@ function TechIcon({ name }: { name: string }) {
     // Supabase
     if (n.includes("supabase")) {
         return (
-            <svg className="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
         );
@@ -109,7 +109,7 @@ function TechIcon({ name }: { name: string }) {
     // REST APIs
     if (n.includes("api") || n.includes("rest")) {
         return (
-            <svg className="w-3.5 h-3.5 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
                 <line x1="2" y1="12" x2="22" y2="12" />
                 <line x1="12" y1="2" x2="12" y2="22" />
@@ -119,7 +119,7 @@ function TechIcon({ name }: { name: string }) {
     // PostgreSQL
     if (n.includes("postgres")) {
         return (
-            <svg className="w-3.5 h-3.5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <ellipse cx="12" cy="5" rx="9" ry="3" />
                 <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
                 <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
@@ -148,7 +148,7 @@ function TechIcon({ name }: { name: string }) {
     // Vite
     if (n.includes("vite")) {
         return (
-            <svg className="w-3.5 h-3.5 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M12 22V12" />
             </svg>
@@ -221,7 +221,7 @@ export default function SkillsServices() {
     return (
         <div 
             id="skills" 
-            className="flex h-auto w-full rounded-3xl animate-slide-up overflow-hidden justify-center items-center mb-5 border border-zinc-200 border-opacity-40"
+            className="flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-200 border-opacity-40"
         >
             <div className="flex h-auto w-full bg-slate-500 bg-opacity-10 p-6 md:p-10 flex-col bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:16px_16px]">
                 

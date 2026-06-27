@@ -1,4 +1,6 @@
+import { useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
+import { LuFlashlight } from "react-icons/lu";
 import journeyData from "../data/journey.json";
 import homeData from "../data/home.json";
 
@@ -23,13 +25,13 @@ function JourneyItem({ item }: JourneyItemProps) {
     >
       {/* Vertical connector line */}
       <div 
-        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-slate-200 group-last:hidden animate-pulse"
+        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-zinc-800 group-last:hidden animate-pulse"
         style={{ transformOrigin: "top" }}
       />
 
       {/* Circle dot marker */}
       <div
-        className="absolute left-0 top-1.5 w-4 h-4 md:w-6 md:h-6 rounded-full border-4 border-white shadow-md z-10 transition-all duration-300 group-hover:scale-125"
+        className="absolute left-0 top-1.5 w-4 h-4 md:w-6 md:h-6 rounded-full border-4 border-zinc-950 shadow-md z-10 transition-all duration-300 group-hover:scale-125"
         style={{ 
           backgroundColor: accentColor,
           boxShadow: `0 0 0 0px ${accentColor}40`,
@@ -38,7 +40,7 @@ function JourneyItem({ item }: JourneyItemProps) {
       />
 
       {/* Content card */}
-      <div className="flex flex-col bg-white bg-opacity-60 backdrop-blur-sm hover:bg-opacity-85 p-5 md:p-6 rounded-2xl border border-slate-100 hover:border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-x-1">
+      <div className="flex flex-col bg-zinc-900 bg-opacity-35 hover:bg-opacity-55 backdrop-blur-sm p-5 md:p-6 rounded-2xl border border-zinc-800/80 hover:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-x-1">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           {/* Year Badge */}
           <span 
@@ -47,20 +49,20 @@ function JourneyItem({ item }: JourneyItemProps) {
           >
             {item.year}
           </span>
-          <span className="text-[10px] font-mono font-semibold text-zinc-400 capitalize bg-slate-100 px-2 py-0.5 rounded border border-slate-200 border-opacity-40">
+          <span className="text-[10px] font-mono font-semibold text-zinc-400 capitalize bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
             {item.type}
           </span>
         </div>
 
-        <h3 className="text-lg md:text-xl font-bold text-slate-850 group-hover:text-black transition-colors duration-200">
+        <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-indigo-300 transition-colors duration-200">
           {item.title}
         </h3>
         
-        <p className="text-xs font-mono font-semibold text-slate-500 mt-1">
+        <p className="text-xs font-mono font-semibold text-zinc-500 mt-1">
           @ {item.institution}
         </p>
 
-        <p className="text-sm font-normal text-slate-600 mt-3 leading-relaxed">
+        <p className="text-sm font-normal text-zinc-400 mt-3 leading-relaxed">
           {item.description}
         </p>
 
@@ -70,7 +72,7 @@ function JourneyItem({ item }: JourneyItemProps) {
             {item.skills.map((skill, index) => (
               <span
                 key={index}
-                className="text-[10px] font-mono font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-white hover:border-slate-350 hover:text-slate-900 transition-all duration-150"
+                className="text-[10px] font-mono font-semibold bg-zinc-900/60 text-zinc-300 px-2.5 py-1 rounded-lg border border-zinc-800/80 hover:bg-zinc-800 hover:border-zinc-700 hover:text-white transition-all duration-150"
               >
                 {skill}
               </span>
@@ -83,28 +85,87 @@ function JourneyItem({ item }: JourneyItemProps) {
 }
 
 export default function Journey() {
+  const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // High performance GPU-accelerated coordinate setting via CSS variables
+    containerRef.current.style.setProperty('--mouse-x', `${x}px`);
+    containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+  };
+
+  // Fades whole container from 100% to 6% smoothly on mouse leave. Keeps mask structure to prevent layout flash.
+  const maskStyle: React.CSSProperties = {
+    maskImage: `radial-gradient(180px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    WebkitMaskImage: `radial-gradient(180px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    opacity: isHovered ? 1 : 0.06,
+    transition: "opacity 0.4s ease-out",
+  };
+
   return (
     <div
+      ref={containerRef}
       id="journey"
-      className="flex h-auto w-full rounded-3xl animate-slide-up overflow-hidden justify-center items-center mb-5 border border-zinc-200 border-opacity-40"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-350 cursor-none"
     >
-      <div className="flex h-auto w-full bg-slate-500 bg-opacity-10 p-6 md:p-10 flex-col">
+      {/* Brighter Spotlight Gradient Background Overlay (Follows Mouse via CSS variables) */}
+      <div 
+        className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
+        style={{
+          background: `radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
+        }}
+      />
+
+      {/* Custom Lucide-style Flashlight Cursor (Follows Mouse coordinates via CSS variables) */}
+      {isHovered && (
+        <div 
+          className="pointer-events-none absolute z-30 select-none"
+          style={{
+            left: 'var(--mouse-x, -999px)',
+            top: 'var(--mouse-y, -999px)',
+            transform: 'translate(-80%, -20%)',
+          }}
+        >
+          <LuFlashlight 
+            className="w-7 h-7 text-yellow-400 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.9)]" 
+          />
+        </div>
+      )}
+
+      {/* Grid/Layout Grid lines (very low opacity, rendered above spotlight, behind content) */}
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+
+      {/* Content Container (Masked to reveal only under the torch/flashlight spotlight) */}
+      <div 
+        style={maskStyle}
+        className="flex h-auto w-full p-6 md:p-10 flex-col z-10 relative"
+      >
         
         {/* macOS Window Controls */}
         <div className="flex gap-1.5 mb-6 select-none">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-400 opacity-80" />
-          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 opacity-80" />
-          <span className="w-2.5 h-2.5 rounded-full bg-green-400 opacity-80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
         </div>
 
         <div className="flex flex-col mb-8">
-          <span className="font-mono text-xs text-slate-500 mb-2 block tracking-wider font-semibold">
+          <span className="font-mono text-xs text-zinc-500 mb-2 block tracking-wider font-semibold">
             // journey.tsx - education & career timeline
           </span>
-          <h2 className="text-2xl md:text-5xl font-extrabold mb-4 text-slate-900">
+          <h2 className="text-2xl md:text-5xl font-extrabold mb-4 text-white">
             &lt;MyJourney /&gt;
           </h2>
-          <p className="text-base font-normal text-slate-600">
+          <p className="text-base font-normal text-zinc-400">
             A timeline of my key milestones, education, professional experience, and technical growth.
           </p>
         </div>
