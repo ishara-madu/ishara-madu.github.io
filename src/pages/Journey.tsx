@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { LuFlashlight } from "react-icons/lu";
 import journeyData from "../data/journey.json";
@@ -86,10 +86,18 @@ function JourneyItem({ item }: JourneyItemProps) {
 
 export default function Journey() {
   const [isHovered, setIsHovered] = useState(false);
+  const [hasHover, setHasHover] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Detect if device supports hover (desktop mouse pointer vs touch screen)
+    if (typeof window !== "undefined") {
+      setHasHover(window.matchMedia("(hover: hover)").matches);
+    }
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (!hasHover || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -100,11 +108,14 @@ export default function Journey() {
   };
 
   // Fades whole container from 100% to 6% smoothly on mouse leave. Keeps mask structure to prevent layout flash.
-  const maskStyle: React.CSSProperties = {
+  // Disabled on touch devices to ensure full visibility and ease of reading.
+  const maskStyle: React.CSSProperties = hasHover ? {
     maskImage: `radial-gradient(180px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     WebkitMaskImage: `radial-gradient(180px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     opacity: isHovered ? 1 : 0.06,
     transition: "opacity 0.4s ease-out",
+  } : {
+    opacity: 1, // Always 100% visible on mobile/tablets
   };
 
   return (
@@ -114,20 +125,24 @@ export default function Journey() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-350 cursor-none"
+      className={`group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-350 ${
+        hasHover ? "cursor-none" : ""
+      }`}
     >
-      {/* Brighter Spotlight Gradient Background Overlay (Follows Mouse via CSS variables) */}
-      <div 
-        className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
-          isHovered ? "opacity-100" : "opacity-0"
-        }`}
-        style={{
-          background: `radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
-        }}
-      />
+      {/* Brighter Spotlight Gradient Background Overlay (Only active when device supports hover) */}
+      {hasHover && (
+        <div 
+          className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
+            isHovered ? "opacity-100" : "opacity-0"
+          }`}
+          style={{
+            background: `radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
+          }}
+        />
+      )}
 
-      {/* Custom Lucide-style Flashlight Cursor (Follows Mouse coordinates via CSS variables) */}
-      {isHovered && (
+      {/* Custom Lucide-style Flashlight Cursor (Only active on hover-supporting desktop devices) */}
+      {isHovered && hasHover && (
         <div 
           className="pointer-events-none absolute z-30 select-none"
           style={{
