@@ -75,19 +75,20 @@ function renderSpace() {
                     </div>
 
                     {/* Right Workspace: Core Greeting & Content */}
-                    <div className="flex-1 pl-4 md:pl-6 pt-6 pb-6 pr-4 sm:pr-6 flex flex-col justify-between h-full relative z-10">
+                    <div className="flex-1 pl-4 md:pl-6 pt-6 pb-6 pr-4 sm:pr-6 flex flex-col h-full relative z-10">
                         
-                        <div className="flex flex-col">
-                            {/* Import declaration code style */}
-                            <div className="font-mono text-[10px] sm:text-xs text-zinc-500 mb-3 tracking-tight leading-normal">
-                                <span className="text-purple-600 font-semibold">import</span> {"{"} <span className="text-indigo-600 font-semibold">Developer</span> {"}"} <span className="text-purple-600 font-semibold">from</span> <span className="text-emerald-600 font-semibold">"ishara-madu"</span>;
-                            </div>
+                        {/* Import statements always at the top of the file */}
+                        <div className="font-mono text-[10px] sm:text-xs text-zinc-500 mb-3 tracking-tight leading-normal select-none">
+                            <span className="text-purple-600 font-semibold">import</span> {"{"} <span className="text-indigo-600 font-semibold">Developer</span> {"}"} <span className="text-purple-600 font-semibold">from</span> <span className="text-emerald-600 font-semibold">"ishara-madu"</span>;
+                        </div>
 
-                            {/* Section header comment */}
-                            <span className="font-mono text-[10px] sm:text-xs text-slate-400 mb-2 block tracking-wider font-semibold">
-                                // index.tsx - main entrance greeting
-                            </span>
+                        {/* Section header comment at the top */}
+                        <span className="font-mono text-[10px] sm:text-xs text-slate-400 mb-4 block tracking-wider font-semibold select-none">
+                            // index.tsx - main entrance greeting
+                        </span>
 
+                        {/* Center container only for Title and Description */}
+                        <div className="flex-1 flex flex-col justify-center my-auto">
                             {/* Heading title with cursor animation */}
                             <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight">
                                 {homeData.title}
