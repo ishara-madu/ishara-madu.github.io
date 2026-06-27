@@ -38,20 +38,22 @@ export default function Home() {
 
     const lineCount = Math.max(14, getLineCount());
 
+
+
     const renderActiveTabContent = () => {
         return (
             <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
                 <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight select-none">
                     {homeData.title}
-                    <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-500 ml-1.5 animate-pulse select-none" />
+                    <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-650 ml-1.5 animate-pulse select-none" />
                 </h1>
 
-                <div className="relative pl-4 border-l border-indigo-400 border-opacity-40 my-6 select-none">
-                    <span className="absolute left-0 top-0 font-mono text-[10px] sm:text-xs text-indigo-400 opacity-60">/*</span>
-                    <p className="text-xs sm:text-sm font-mono font-medium text-slate-600 leading-relaxed py-0.5 select-text">
+                <div className="relative pl-4 border-l-2 border-indigo-550 my-6 select-none">
+                    <span className="absolute left-0 top-0 font-mono text-[10px] sm:text-xs text-indigo-600 select-none font-bold">/*</span>
+                    <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
                         {homeData.description}
                     </p>
-                    <span className="font-mono text-[10px] sm:text-xs text-indigo-400 block opacity-60">*/</span>
+                    <span className="font-mono text-[10px] sm:text-xs text-indigo-600 select-none block font-bold">*/</span>
                 </div>
             </div>
         );
@@ -95,7 +97,7 @@ export default function Home() {
                             >
                                 <span className={
                                     tab === "index.tsx" ? "text-sky-500" :
-                                    tab === "journey.json" ? "text-yellow-500" : "text-sky-600"
+                                    tab === "journey.json" ? "text-yellow-600 font-bold" : "text-sky-600 font-bold"
                                 }>
                                     {tab === "index.tsx" ? "⚛" : tab === "journey.json" ? "{}" : "ts"}
                                 </span>
@@ -131,7 +133,7 @@ function renderSpace() {
                     <div className="flex-1 flex h-full overflow-y-auto p-5 select-text custom-scrollbar z-10">
                         
                         {/* Left Gutter: Code Editor Line Numbers */}
-                        <div className="w-8 md:w-10 flex flex-col items-end pr-2 md:pr-3 border-r border-zinc-200 border-opacity-30 select-none font-mono text-[9px] md:text-[11px] text-zinc-400 leading-[26px] md:leading-[28px]">
+                        <div className="w-8 md:w-10 flex flex-col items-end pr-2 md:pr-3 border-r border-zinc-200 border-opacity-30 select-none font-mono text-[9px] md:text-[11px] text-slate-500 leading-[26px] md:leading-[28px]">
                             {Array.from({ length: lineCount }, (_, i) => String(i + 1).padStart(2, '0')).map(num => (
                                 <span key={num}>{num}</span>
                             ))}
@@ -140,12 +142,12 @@ function renderSpace() {
                         {/* Right Workspace: Content area */}
                         <div className="flex-1 pl-4 md:pl-6 flex flex-col min-h-full">
                             {/* Import declarations at top (Aligned to Line 01) */}
-                            <div className="font-mono text-[10px] sm:text-xs text-zinc-500 tracking-tight leading-[26px] md:leading-[28px] select-none">
-                                <span className="text-purple-600 font-semibold">import</span> {"{"} <span className="text-indigo-600 font-semibold">File</span> {"}"} <span className="text-purple-600 font-semibold">from</span> <span className="text-emerald-600 font-semibold">"./workspace/{activeTab}"</span>;
+                            <div className="font-mono text-[10px] sm:text-xs text-slate-500 tracking-tight leading-[26px] md:leading-[28px] select-none">
+                                <span className="text-purple-750 font-bold">import</span> {"{"} <span className="text-indigo-700 font-semibold">File</span> {"}"} <span className="text-purple-755 font-bold">from</span> <span className="text-emerald-700 font-semibold">"./workspace/{activeTab}"</span>;
                             </div>
 
                             {/* Section header comment (Aligned to Line 02) */}
-                            <span className="font-mono text-[10px] sm:text-xs text-slate-400 block tracking-wider font-semibold leading-[26px] md:leading-[28px] select-none">
+                            <span className="font-mono text-[10px] sm:text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] md:leading-[28px] select-none">
                                 // current_active_file: {activeTab}
                             </span>
 
@@ -162,7 +164,7 @@ function renderSpace() {
                                         else setProjectsContent(e.target.value);
                                     }}
                                     rows={lineCount - 3}
-                                    className="w-full bg-transparent text-zinc-300 font-mono text-[10px] sm:text-xs outline-none border-none resize-none leading-[26px] md:leading-[28px] focus:ring-0 p-0 overflow-hidden"
+                                    className="w-full bg-transparent text-slate-800 font-mono text-[10px] sm:text-xs outline-none border-none resize-none leading-[26px] md:leading-[28px] focus:ring-0 p-0 overflow-hidden font-medium"
                                     spellCheck="false"
                                 />
                             )}
