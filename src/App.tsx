@@ -14,8 +14,8 @@ function App() {
         <HeadOptions />
         <Header />
         <Home />
-        <Projects />
         <Journey />
+        <Projects />
         <Contact />
       </div>
     </div>

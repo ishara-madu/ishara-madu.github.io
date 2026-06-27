@@ -25,8 +25,8 @@ export default function Navbar() {
             <div className={`hidden md:flex pr-2 relative`}>
                 <ul className="flex gap-10 text-zinc-500">
                     <li><a href="/" className={`text-black`}>Home</a></li>
-                    <li><a href="#projects">Projects</a></li>
                     <li><a href="#journey">Journey</a></li>
+                    <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -36,8 +36,8 @@ export default function Navbar() {
             <div className={`flex md:hidden ${showLinks ? 'translate-x-0 opacity-100 overflow-hidden' : 'translate-x-full opacity-0'} fixed duration-500 w-full h-lvh bg-white top-14 z-50`}>
                 <ul onClick={() => { setShowLinks(false) }} className="flex gap-10 text-zinc-500 text-lg flex-col pl-5 pt-10">
                     <li><a href="/" className={`text-black`}>Home</a></li>
-                    <li><a href="#projects">Projects</a></li>
                     <li><a href="#journey">Journey</a></li>
+                    <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
