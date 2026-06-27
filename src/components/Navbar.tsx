@@ -26,6 +26,7 @@ export default function Navbar() {
                 <ul className="flex gap-10 text-zinc-500">
                     <li><a href="/" className={`text-black`}>Home</a></li>
                     <li><a href="#journey">Journey</a></li>
+                    <li><a href="#skills">Skills</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -37,6 +38,7 @@ export default function Navbar() {
                 <ul onClick={() => { setShowLinks(false) }} className="flex gap-10 text-zinc-500 text-lg flex-col pl-5 pt-10">
                     <li><a href="/" className={`text-black`}>Home</a></li>
                     <li><a href="#journey">Journey</a></li>
+                    <li><a href="#skills">Skills</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>

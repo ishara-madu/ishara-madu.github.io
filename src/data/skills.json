@@ -1,0 +1,46 @@
+{
+  "skills": [
+    {
+      "category": "Frontend",
+      "items": ["React", "Next.js", "Redux Toolkit", "Tailwind CSS", "HTML5 & CSS3"]
+    },
+    {
+      "category": "Mobile",
+      "items": ["React Native", "Expo", "Kotlin", "Android SDK"]
+    },
+    {
+      "category": "Backend",
+      "items": ["Node.js", "Express", "Supabase", "REST APIs"]
+    },
+    {
+      "category": "Tools & Databases",
+      "items": ["PostgreSQL", "Firebase", "Git & GitHub", "Vite", "PNPM"]
+    }
+  ],
+  "services": [
+    {
+      "title": "Cross-Platform Mobile Apps",
+      "icon": "📱",
+      "description": "Designing and developing fast, native-feeling mobile applications for iOS & Android with Kotlin and React Native.",
+      "tech": ["React Native", "Expo", "Kotlin"]
+    },
+    {
+      "title": "Full-Stack Web Development",
+      "icon": "💻",
+      "description": "Building interactive, high-performance web applications using modern stacks, responsive layouts, and robust databases.",
+      "tech": ["React", "Next.js", "Supabase", "Tailwind"]
+    },
+    {
+      "title": "API & Backend Integration",
+      "icon": "⚡",
+      "description": "Engineering secure, scalable backend architectures, RESTful API design, database schemas, and real-time synchronizations.",
+      "tech": ["Node.js", "PostgreSQL", "Supabase", "Firebase"]
+    },
+    {
+      "title": "Figma to Clean Code",
+      "icon": "🎨",
+      "description": "Translating UI/UX designs into pixel-perfect, clean, and organized React code structures with smooth, interactive transitions.",
+      "tech": ["React", "Tailwind CSS", "Vanilla CSS"]
+    }
+  ]
+}
