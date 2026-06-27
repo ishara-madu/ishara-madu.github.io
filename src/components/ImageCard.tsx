@@ -30,7 +30,7 @@ export default function ImageCard() {
                                 : 'hover:text-white'
                         }`}
                     >
-                        📷 PROFILE
+                        PROFILE
                     </button>
                     <button 
                         onClick={() => setShowTerminal(true)}
@@ -40,7 +40,7 @@ export default function ImageCard() {
                                 : 'hover:text-white'
                         }`}
                     >
-                        💻 TERMINAL
+                        TERMINAL
                     </button>
                 </div>
             </div>
