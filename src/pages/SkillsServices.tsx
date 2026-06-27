@@ -175,6 +175,48 @@ function TechIcon({ name }: { name: string }) {
     );
 }
 
+function ServiceIcon({ title }: { title: string }) {
+    const t = title.toLowerCase();
+    
+    // Cross-Platform Mobile Apps
+    if (t.includes("mobile")) {
+        return (
+            <svg className="w-5 h-5 text-indigo-600 mr-2.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg>
+        );
+    }
+    // Full-Stack Web Development
+    if (t.includes("web") || t.includes("full-stack")) {
+        return (
+            <svg className="w-5 h-5 text-indigo-600 mr-2.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+        );
+    }
+    // API & Backend Integration
+    if (t.includes("api") || t.includes("backend")) {
+        return (
+            <svg className="w-5 h-5 text-indigo-600 mr-2.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3" />
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
+            </svg>
+        );
+    }
+    // Figma to clean code (Layout/Wireframe)
+    return (
+        <svg className="w-5 h-5 text-indigo-600 mr-2.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M21 12H3" />
+            <path d="M12 3v18" />
+        </svg>
+    );
+}
+
 export default function SkillsServices() {
     return (
         <div 
@@ -250,7 +292,7 @@ export default function SkillsServices() {
                                 >
                                     {/* Service Title Bar */}
                                     <div className="flex items-center">
-                                        <span className="font-mono text-indigo-600 font-bold select-none mr-2 text-sm sm:text-base">::</span>
+                                        <ServiceIcon title={service.title} />
                                         <h4 className="font-extrabold text-slate-900 text-sm sm:text-base">
                                             {service.title}
                                         </h4>
