@@ -6,13 +6,13 @@ import homeData from "../data/home.json";
 interface HistoryItem {
   text: string;
   isInput: boolean;
-  prompt?: string;
+  prompt?: boolean;
 }
 
 export default function InteractiveTerminal() {
   const [history, setHistory] = useState<HistoryItem[]>([
-    { text: "Ishara Portfolio Shell v2.1.0 (tty/1)", isInput: false },
-    { text: "Type 'help' to view available commands or 'ls' to list files.", isInput: false },
+    { text: "Ishara Portfolio OS v2.2.0 (tty/1)", isInput: false },
+    { text: "Type 'help' to view commands or 'ls' to see files.", isInput: false },
     { text: "", isInput: false },
   ]);
   const [input, setInput] = useState("");
@@ -22,7 +22,7 @@ export default function InteractiveTerminal() {
   const terminalEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Virtual files content
+  // Virtual files content with syntax highlights
   const files: Record<string, string> = {
     "about.txt": `${homeData.name[2]}\n-----------------------------------\n${homeData.description}\n\nPassionate about building responsive, high-performance web and mobile software.`,
     "skills.json": JSON.stringify({
@@ -65,17 +65,25 @@ export default function InteractiveTerminal() {
     }
   };
 
+  const renderPrompt = () => (
+    <>
+      <span className="text-emerald-500 font-bold select-none">visitor@ishara-madu</span>
+      <span className="text-zinc-500 font-bold select-none">:</span>
+      <span className="text-sky-400 font-bold select-none">~</span>
+      <span className="text-zinc-400 font-bold select-none">$ </span>
+    </>
+  );
+
   const handleCommandSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedInput = input.trim();
     if (!trimmedInput) return;
 
-    // Add to command history
     const updatedHistoryCmd = [...commandHistory, trimmedInput];
     setCommandHistory(updatedHistoryCmd);
     setHistoryIndex(-1);
 
-    const newHistory = [...history, { text: input, isInput: true, prompt: "visitor@ishara-madu:~$ " }];
+    const newHistory = [...history, { text: input, isInput: true, prompt: true }];
     const args = trimmedInput.split(" ");
     const command = args[0].toLowerCase();
     const arg1 = args[1];
@@ -84,7 +92,7 @@ export default function InteractiveTerminal() {
 
     switch (command) {
       case "help":
-        response = `Supported commands:
+        response = `Available commands:
   ls           - List files in current directory
   cat [file]   - View the contents of a file
   neofetch     - Show system information
@@ -94,7 +102,8 @@ export default function InteractiveTerminal() {
         break;
 
       case "ls":
-        response = Object.keys(files).join("    ");
+        // We will handle file color coding inside the renderer instead of simple text string
+        response = "about.txt    skills.json    projects.list    contact.cfg";
         break;
 
       case "cat":
@@ -120,7 +129,7 @@ export default function InteractiveTerminal() {
         |_|
    visitor@ishara-madu
    -------------------
-   OS: Ishara Portfolio OS v2.1
+   OS: Ishara Portfolio OS v2.2
    Kernel: React / Vite / Tailwind
    Shell: ishara-sh (custom)
    DE: Minimal Terminal
@@ -142,30 +151,77 @@ export default function InteractiveTerminal() {
     setInput("");
   };
 
+  const renderHistoryItem = (item: HistoryItem, index: number) => {
+    if (item.isInput) {
+      return (
+        <div key={index} className="flex items-center">
+          {renderPrompt()}
+          <span className="text-white font-bold whitespace-pre">{item.text}</span>
+        </div>
+      );
+    }
+
+    // Special styling for file listing
+    if (item.text === "about.txt    skills.json    projects.list    contact.cfg") {
+      return (
+        <div key={index} className="flex gap-4 select-none font-semibold">
+          <span className="text-zinc-200">about.txt</span>
+          <span className="text-yellow-400">skills.json</span>
+          <span className="text-sky-400">projects.list</span>
+          <span className="text-pink-400">contact.cfg</span>
+        </div>
+      );
+    }
+
+    // Command not found error styling
+    if (item.text.startsWith("sh: command not found:") || item.text.startsWith("cat: ")) {
+      return (
+        <div key={index} className="text-red-400 whitespace-pre-wrap leading-relaxed opacity-95">
+          {item.text}
+        </div>
+      );
+    }
+
+    return (
+      <div key={index} className="text-zinc-300 whitespace-pre-wrap leading-relaxed opacity-90">
+        {item.text}
+      </div>
+    );
+  };
+
   return (
     <div
       onClick={handleTerminalClick}
-      className="flex flex-col w-full h-[280px] bg-zinc-950 text-emerald-400 font-mono text-xs p-4 overflow-y-auto cursor-text select-text rounded-b-2xl border border-zinc-900 shadow-inner"
+      className="flex flex-col w-full h-full bg-zinc-950 font-mono text-[11px] p-5 overflow-y-auto cursor-text select-text custom-scrollbar"
     >
-      <div className="flex-1 flex flex-col space-y-1">
-        {history.map((item, index) => (
-          <div key={index} className="whitespace-pre-wrap leading-relaxed">
-            {item.prompt && <span className="text-zinc-400 font-bold">{item.prompt}</span>}
-            <span className={item.isInput ? "text-white font-bold" : "text-emerald-400 opacity-90"}>
-              {item.text}
-            </span>
-          </div>
-        ))}
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #09090b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #27272a;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #3f3f46;
+        }
+      `}</style>
+
+      <div className="flex-1 flex flex-col space-y-1.5">
+        {history.map((item, index) => renderHistoryItem(item, index))}
         <div ref={terminalEndRef} />
       </div>
 
-      <form onSubmit={handleCommandSubmit} className="flex items-center mt-2 border-t border-zinc-900 pt-2 relative">
-        <span className="text-zinc-400 font-bold mr-2 select-none">visitor@ishara-madu:~$</span>
+      <form onSubmit={handleCommandSubmit} className="flex items-center mt-3 border-t border-zinc-900 pt-3 relative">
+        {renderPrompt()}
         <span className="text-white font-bold whitespace-pre">{input}</span>
-        {/* Blinking terminal cursor indicator */}
+        {/* Blinking block terminal cursor */}
         <span className="w-1.5 h-3.5 bg-emerald-400 animate-pulse ml-0.5 select-none" style={{ animationDuration: '0.8s' }}></span>
         
-        {/* Invisible input overlaying for focus and typing */}
+        {/* Hidden input overlaying for focus and typing */}
         <input
           ref={inputRef}
           type="text"
