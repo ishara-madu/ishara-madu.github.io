@@ -1,7 +1,6 @@
 import ImageCard from "../components/ImageCard";
 import homeData from '../data/home.json';
 import placeholder from '../assets/images/gradient.png';
-import ContactLinks from "../components/ContactLinks";
 
 export default function Home() {
     return (
@@ -105,10 +104,6 @@ function renderSpace() {
                             </div>
                         </div>
 
-                        {/* Social/Contact Links bar */}
-                        <div className="mt-2">
-                            <ContactLinks />
-                        </div>
                     </div>
 
                 </div>
