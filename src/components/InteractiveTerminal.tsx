@@ -19,7 +19,7 @@ export default function InteractiveTerminal() {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Virtual files content with syntax highlights
@@ -37,7 +37,9 @@ export default function InteractiveTerminal() {
   };
 
   useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleTerminalClick = () => {
@@ -190,6 +192,7 @@ export default function InteractiveTerminal() {
 
   return (
     <div
+      ref={containerRef}
       onClick={handleTerminalClick}
       className="flex flex-col w-full h-full bg-zinc-950 font-mono text-[11px] p-5 overflow-y-auto cursor-text select-text custom-scrollbar space-y-1.5"
     >
@@ -230,7 +233,6 @@ export default function InteractiveTerminal() {
           spellCheck="false"
         />
       </form>
-      <div ref={terminalEndRef} />
     </div>
   );
 }
