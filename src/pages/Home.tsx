@@ -43,15 +43,20 @@ export default function Home() {
         let html = code
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt bridge;"); // wait, type fix: &gt;
+        
+        html = code
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
         
-        // Highlight keys
+        // Highlight keys (crimson/purple)
         html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")(\s*:)/g, '<span class="text-purple-700 font-semibold">$1</span>$3');
-        // Highlight string values (excluding keys)
+        // Highlight string values (emerald green)
         html = html.replace(/:(\s*)("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, ':$1<span class="text-emerald-700">$2</span>');
-        // Highlight numbers
+        // Highlight numbers (orange/amber)
         html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
-        // Highlight booleans
+        // Highlight booleans (blue)
         html = html.replace(/\b(true|false)\b/g, '<span class="text-blue-700 font-semibold">$1</span>');
         
         return { __html: html };
@@ -88,18 +93,34 @@ export default function Home() {
 
     const renderActiveTabContent = () => {
         return (
-            <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
-                <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight select-none">
-                    {homeData.title}
-                    <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-650 ml-1.5 animate-pulse select-none" />
-                </h1>
+            <div className="flex flex-col min-h-full">
+                {/* Import declarations at top (Aligned to Line 01) */}
+                <div className="font-mono text-[10px] sm:text-xs text-slate-500 tracking-tight leading-[26px] md:leading-[28px] select-none">
+                    <span className="text-purple-700 font-bold">import</span> {"{"} <span className="text-indigo-700 font-semibold">Developer</span> {"}"} <span className="text-purple-750 font-bold">from</span> <span className="text-emerald-700 font-semibold">"ishara-madu"</span>;
+                </div>
 
-                <div className="relative pl-4 border-l-2 border-indigo-550 my-6 select-none">
-                    <span className="absolute left-0 top-0 font-mono text-[10px] sm:text-xs text-indigo-600 select-none font-bold">/*</span>
-                    <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
-                        {homeData.description}
-                    </p>
-                    <span className="font-mono text-[10px] sm:text-xs text-indigo-600 select-none block font-bold">*/</span>
+                {/* Section header comment (Aligned to Line 02) */}
+                <span className="font-mono text-[10px] sm:text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] md:leading-[28px] select-none">
+                    // index.tsx - main entrance greeting
+                </span>
+
+                {/* Virtual empty Line 03 spacer */}
+                <div className="h-[26px] md:h-[28px] select-none" />
+
+                {/* Content centered in remaining editor window */}
+                <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
+                    <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight select-none">
+                        {homeData.title}
+                        <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-650 ml-1.5 animate-pulse select-none" />
+                    </h1>
+
+                    <div className="relative pl-4 border-l-2 border-indigo-550 my-6 select-none">
+                        <span className="absolute left-0 top-0 font-mono text-[10px] sm:text-xs text-indigo-600 select-none font-bold">/*</span>
+                        <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
+                            {homeData.description}
+                        </p>
+                        <span className="font-mono text-[10px] sm:text-xs text-indigo-600 select-none block font-bold">*/</span>
+                    </div>
                 </div>
             </div>
         );
@@ -187,26 +208,13 @@ function renderSpace() {
 
                         {/* Right Workspace: Content area */}
                         <div className="flex-1 pl-4 md:pl-6 flex flex-col min-h-full">
-                            {/* Import declarations at top (Aligned to Line 01) */}
-                            <div className="font-mono text-[10px] sm:text-xs text-slate-500 tracking-tight leading-[26px] md:leading-[28px] select-none">
-                                <span className="text-purple-750 font-bold">import</span> {"{"} <span className="text-indigo-700 font-semibold">File</span> {"}"} <span className="text-purple-755 font-bold">from</span> <span className="text-emerald-700 font-semibold">"./workspace/{activeTab}"</span>;
-                            </div>
-
-                            {/* Section header comment (Aligned to Line 02) */}
-                            <span className="font-mono text-[10px] sm:text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] md:leading-[28px] select-none">
-                                // current_active_file: {activeTab}
-                            </span>
-
-                            {/* Virtual empty Line 03 spacer */}
-                            <div className="h-[26px] md:h-[28px] select-none" />
-
                             {activeTab === "index.tsx" ? (
                                 renderActiveTabContent()
                             ) : (
                                 <div className="relative w-full flex-grow min-h-[300px]">
                                     {/* Syntax Highlighted Pre block underneath */}
                                     <pre 
-                                        className="w-full bg-transparent text-slate-800 font-mono text-[10px] sm:text-xs leading-[26px] md:leading-[28px] p-0 m-0 pointer-events-none select-none whitespace-pre-wrap break-all"
+                                        className="w-full bg-transparent font-mono text-[10px] sm:text-xs leading-[26px] md:leading-[28px] p-0 m-0 pointer-events-none select-none whitespace-pre-wrap break-all"
                                         dangerouslySetInnerHTML={activeTab === "journey.json" ? highlightJSON(journeyContent) : highlightTS(projectsContent)}
                                     />
                                     {/* Invisible textarea input layer on top */}
@@ -216,7 +224,7 @@ function renderSpace() {
                                             if (activeTab === "journey.json") setJourneyContent(e.target.value);
                                             else setProjectsContent(e.target.value);
                                         }}
-                                        rows={lineCount - 3}
+                                        rows={lineCount}
                                         className="absolute inset-0 w-full h-full bg-transparent text-transparent caret-slate-800 font-mono text-[10px] sm:text-xs outline-none border-none resize-none leading-[26px] md:leading-[28px] focus:ring-0 p-0 overflow-hidden whitespace-pre-wrap break-all font-medium"
                                         spellCheck="false"
                                     />
