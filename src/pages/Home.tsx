@@ -26,7 +26,7 @@ export default function Home() {
     );
 
     const [projectsContent, setProjectsContent] = useState<string>(
-        `import { Project } from "./types";\n\nexport const projects: Project[] = [\n  {\n    id: 1,\n    title: "Pirith App",\n    tech: ["React Native", "Expo"]\n  },\n  {\n    id: 2,\n    title: "4G LTE Only App",\n    tech: ["Kotlin"]\n  },\n  {\n    id: 3,\n    title: "HireMe Web",\n    tech: ["React", "Supabase"]\n  }\n];`
+        `import { Project } from "./types";\n\n// Featured Projects Collection\nexport const projects: Project[] = [\n  {\n    id: 1,\n    title: "Pirith App",\n    tech: ["React Native", "Expo"]\n  },\n  {\n    id: 2,\n    title: "4G LTE Only App",\n    tech: ["Kotlin"]\n  },\n  {\n    id: 3,\n    title: "HireMe Web",\n    tech: ["React", "Supabase"]\n  }\n];`
     );
 
     const getLineCount = () => {
@@ -38,6 +38,7 @@ export default function Home() {
 
     const lineCount = Math.max(14, getLineCount());
 
+    // Atom One Light themed syntax highlighter for JSON
     const highlightJSON = (code: string) => {
         // Escape HTML
         let html = code
@@ -45,43 +46,58 @@ export default function Home() {
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
         
-        // Highlight keys (crimson/purple)
-        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")(\s*:)/g, '<span class="text-purple-700 font-semibold">$1</span>$3');
-        // Highlight string values (emerald green)
-        html = html.replace(/:(\s*)("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, ':$1<span class="text-emerald-700">$2</span>');
-        // Highlight numbers (orange/amber)
-        html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
-        // Highlight booleans (blue)
-        html = html.replace(/\b(true|false)\b/g, '<span class="text-blue-700 font-semibold">$1</span>');
+        // Highlight strings (green: #50a14f)
+        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span style="color: #50a14f">$1</span>');
+        // Highlight numbers (orange/brown: #986801)
+        html = html.replace(/\b(\d+)\b/g, '<span style="color: #986801; font-weight: 500">$1</span>');
+        // Highlight booleans (orange/brown: #986801)
+        html = html.replace(/\b(true|false)\b/g, '<span style="color: #986801; font-weight: 500">$1</span>');
         
         return { __html: html };
     };
 
+    // Atom One Light themed syntax highlighter for TypeScript (Matching the reference image)
     const highlightTS = (code: string) => {
         let html = code
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
 
-        // Keywords
-        const keywords = ["import", "from", "export", "const", "let", "var", "function", "return"];
-        keywords.forEach(kw => {
-            const regex = new RegExp(`\\b${kw}\\b`, "g");
-            html = html.replace(regex, `<span class="text-purple-700 font-bold">${kw}</span>`);
+        // Temporary comment placeholder extraction to avoid highlighting content inside comments
+        const comments: string[] = [];
+        html = html.replace(/(\/\/.*)/g, (match) => {
+            comments.push(match);
+            return `__COMMENT_PLACEHOLDER_${comments.length - 1}__`;
         });
 
-        // Types
+        // Highlight strings (green: #50a14f)
+        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span style="color: #50a14f">$1</span>');
+        html = html.replace(/('(.*?)')/g, '<span style="color: #50a14f">$1</span>');
+
+        // Highlight keywords (magenta/pink: #a626a4)
+        const keywords = ["import", "from", "export", "const", "let", "var", "function", "return", "for", "in", "of", "if", "else"];
+        keywords.forEach(kw => {
+            const regex = new RegExp(`\\b${kw}\\b`, "g");
+            html = html.replace(regex, `<span style="color: #a626a4; font-weight: 600">${kw}</span>`);
+        });
+
+        // Highlight type declarations (blue/purple: #4078f2)
         const types = ["Project", "string", "number", "boolean", "any"];
         types.forEach(t => {
             const regex = new RegExp(`\\b${t}\\b`, "g");
-            html = html.replace(regex, `<span class="text-indigo-700 font-semibold">${t}</span>`);
+            html = html.replace(regex, `<span style="color: #4078f2">${t}</span>`);
         });
 
-        // Strings
-        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span class="text-emerald-700">$1</span>');
-        
-        // Numbers
-        html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
+        // Highlight operator symbols (teal: #0184a7)
+        html = html.replace(/(=|\+=|&lt;|\+\+)/g, '<span style="color: #0184a7">$1</span>');
+
+        // Highlight numbers (orange/brown: #986801)
+        html = html.replace(/\b(\d+)\b/g, '<span style="color: #986801; font-weight: 500">$1</span>');
+
+        // Restore comments (gray: #a0a1a7, italic)
+        comments.forEach((comment, index) => {
+            html = html.replace(`__COMMENT_PLACEHOLDER_${index}__`, `<span style="color: #a0a1a7; font-style: italic">${comment}</span>`);
+        });
 
         return { __html: html };
     };
@@ -91,11 +107,11 @@ export default function Home() {
             <div className="flex flex-col min-h-full">
                 {/* Import declarations at top (Aligned to Line 01) */}
                 <div className="font-mono text-xs text-slate-500 tracking-tight leading-[26px] select-none">
-                    <span className="text-purple-700 font-bold">import</span> {"{"} <span className="text-indigo-700 font-semibold">Developer</span> {"}"} <span className="text-purple-750 font-bold">from</span> <span className="text-emerald-700 font-semibold">"ishara-madu"</span>;
+                    <span style={{ color: "#a626a4", fontWeight: 600 }}>import</span> {"{"} <span style={{ color: "#4078f2" }}>Developer</span> {"}"} <span style={{ color: "#a626a4", fontWeight: 600 }}>from</span> <span style={{ color: "#50a14f" }}>"ishara-madu"</span>;
                 </div>
 
                 {/* Section header comment (Aligned to Line 02) */}
-                <span className="font-mono text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] select-none">
+                <span className="font-mono text-xs block tracking-wider leading-[26px] select-none italic" style={{ color: "#a0a1a7" }}>
                     // index.tsx - main entrance greeting
                 </span>
 
@@ -106,15 +122,15 @@ export default function Home() {
                 <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
                     <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight select-none">
                         {homeData.title}
-                        <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-650 ml-1.5 animate-pulse select-none" />
+                        <span className="inline-block w-1.5 h-5 md:h-7 ml-1.5 animate-pulse select-none" style={{ backgroundColor: "#4078f2" }} />
                     </h1>
 
-                    <div className="relative pl-4 border-l-2 border-indigo-550 my-6 select-none">
-                        <span className="absolute left-0 top-0 font-mono text-xs text-indigo-600 select-none font-bold">/*</span>
-                        <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
+                    <div className="relative pl-4 border-l-2 my-6 select-none" style={{ borderColor: "#a626a4" }}>
+                        <span className="absolute left-0 top-0 font-mono text-xs select-none font-bold" style={{ color: "#a0a1a7" }}>/*</span>
+                        <p className="text-xs sm:text-sm font-mono font-semibold leading-relaxed py-0.5 select-text" style={{ color: "#383a42" }}>
                             {homeData.description}
                         </p>
-                        <span className="font-mono text-xs text-indigo-600 select-none block font-bold">*/</span>
+                        <span className="font-mono text-xs select-none block font-bold" style={{ color: "#a0a1a7" }}>*/</span>
                     </div>
                 </div>
             </div>
@@ -137,6 +153,7 @@ export default function Home() {
         width: '100%',
         boxShadow: 'none',
         tabSize: 4,
+        color: '#383a42',
     };
 
     return (
@@ -228,7 +245,7 @@ function renderSpace() {
                                     {/* Syntax Highlighted Pre block underneath */}
                                     <pre 
                                         style={sharedEditorStyle}
-                                        className="text-slate-800 p-0 m-0 pointer-events-none select-none"
+                                        className="p-0 m-0 pointer-events-none select-none"
                                         dangerouslySetInnerHTML={activeTab === "journey.json" ? highlightJSON(journeyContent) : highlightTS(projectsContent)}
                                     />
                                     {/* Invisible textarea input layer on top */}
@@ -245,7 +262,7 @@ function renderSpace() {
                                             top: 0,
                                             left: 0,
                                             color: 'transparent',
-                                            caretColor: '#1e293b',
+                                            caretColor: '#4078f2',
                                             overflow: 'hidden',
                                         }}
                                         spellCheck="false"
