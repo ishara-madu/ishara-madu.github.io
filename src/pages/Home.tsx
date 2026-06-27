@@ -38,7 +38,53 @@ export default function Home() {
 
     const lineCount = Math.max(14, getLineCount());
 
+    const highlightJSON = (code: string) => {
+        // Escape HTML
+        let html = code
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+        
+        // Highlight keys
+        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")(\s*:)/g, '<span class="text-purple-700 font-semibold">$1</span>$3');
+        // Highlight string values (excluding keys)
+        html = html.replace(/:(\s*)("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, ':$1<span class="text-emerald-700">$2</span>');
+        // Highlight numbers
+        html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
+        // Highlight booleans
+        html = html.replace(/\b(true|false)\b/g, '<span class="text-blue-700 font-semibold">$1</span>');
+        
+        return { __html: html };
+    };
 
+    const highlightTS = (code: string) => {
+        let html = code
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+
+        // Keywords
+        const keywords = ["import", "from", "export", "const", "let", "var", "function", "return"];
+        keywords.forEach(kw => {
+            const regex = new RegExp(`\\b${kw}\\b`, "g");
+            html = html.replace(regex, `<span class="text-purple-700 font-bold">${kw}</span>`);
+        });
+
+        // Types
+        const types = ["Project", "string", "number", "boolean", "any"];
+        types.forEach(t => {
+            const regex = new RegExp(`\\b${t}\\b`, "g");
+            html = html.replace(regex, `<span class="text-indigo-700 font-semibold">${t}</span>`);
+        });
+
+        // Strings
+        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span class="text-emerald-700">$1</span>');
+        
+        // Numbers
+        html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
+
+        return { __html: html };
+    };
 
     const renderActiveTabContent = () => {
         return (
@@ -157,16 +203,24 @@ function renderSpace() {
                             {activeTab === "index.tsx" ? (
                                 renderActiveTabContent()
                             ) : (
-                                <textarea
-                                    value={activeTab === "journey.json" ? journeyContent : projectsContent}
-                                    onChange={(e) => {
-                                        if (activeTab === "journey.json") setJourneyContent(e.target.value);
-                                        else setProjectsContent(e.target.value);
-                                    }}
-                                    rows={lineCount - 3}
-                                    className="w-full bg-transparent text-slate-800 font-mono text-[10px] sm:text-xs outline-none border-none resize-none leading-[26px] md:leading-[28px] focus:ring-0 p-0 overflow-hidden font-medium"
-                                    spellCheck="false"
-                                />
+                                <div className="relative w-full flex-grow min-h-[300px]">
+                                    {/* Syntax Highlighted Pre block underneath */}
+                                    <pre 
+                                        className="w-full bg-transparent text-slate-800 font-mono text-[10px] sm:text-xs leading-[26px] md:leading-[28px] p-0 m-0 pointer-events-none select-none whitespace-pre-wrap break-all"
+                                        dangerouslySetInnerHTML={activeTab === "journey.json" ? highlightJSON(journeyContent) : highlightTS(projectsContent)}
+                                    />
+                                    {/* Invisible textarea input layer on top */}
+                                    <textarea
+                                        value={activeTab === "journey.json" ? journeyContent : projectsContent}
+                                        onChange={(e) => {
+                                            if (activeTab === "journey.json") setJourneyContent(e.target.value);
+                                            else setProjectsContent(e.target.value);
+                                        }}
+                                        rows={lineCount - 3}
+                                        className="absolute inset-0 w-full h-full bg-transparent text-transparent caret-slate-800 font-mono text-[10px] sm:text-xs outline-none border-none resize-none leading-[26px] md:leading-[28px] focus:ring-0 p-0 overflow-hidden whitespace-pre-wrap break-all font-medium"
+                                        spellCheck="false"
+                                    />
+                                </div>
                             )}
                         </div>
                     </div>
