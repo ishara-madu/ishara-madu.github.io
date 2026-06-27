@@ -145,7 +145,7 @@ export default function Home() {
                         <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-600 ml-1.5 animate-pulse select-none" />
                     </h1>
 
-                    <div className="relative pl-4 border-l-2 border-indigo-400 my-6 select-none">
+                    <div className="relative pl-4 border-l-2 border-indigo-400 mt-12 mb-6 select-none">
                         <span className="absolute left-0 top-0 font-mono text-xs select-none font-bold" style={{ color: "#005cc5" }}>/*</span>
                         <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
                             {homeData.description}
