@@ -108,10 +108,10 @@ export default function Journey() {
   };
 
   // Fades whole container from 100% to 6% smoothly on mouse leave. Keeps mask structure to prevent layout flash.
-  // Disabled on touch devices to ensure full visibility and ease of reading.
+  // Mask centers 65px to the top-right of the cursor tip, projecting the beam significantly forward in the direction the torch points.
   const maskStyle: React.CSSProperties = hasHover ? {
-    maskImage: `radial-gradient(180px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
-    WebkitMaskImage: `radial-gradient(180px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    maskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 65px) calc(var(--mouse-y, -999px) - 65px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    WebkitMaskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 65px) calc(var(--mouse-y, -999px) - 65px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     opacity: isHovered ? 1 : 0.06,
     transition: "opacity 0.4s ease-out",
   } : {
@@ -125,18 +125,19 @@ export default function Journey() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-350 ${
+      className={`group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-355 ${
         hasHover ? "cursor-none" : ""
       }`}
     >
       {/* Brighter Spotlight Gradient Background Overlay (Only active when device supports hover) */}
+      {/* Light center shifted 65px to the top-right of the cursor, projecting the beam significantly in front of the torch head */}
       {hasHover && (
         <div 
           className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           style={{
-            background: `radial-gradient(350px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
+            background: `radial-gradient(350px circle at calc(var(--mouse-x, -999px) + 65px) calc(var(--mouse-y, -999px) - 65px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
           }}
         />
       )}
