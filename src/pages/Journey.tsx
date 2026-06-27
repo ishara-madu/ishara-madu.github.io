@@ -23,7 +23,7 @@ function JourneyItem({ item }: JourneyItemProps) {
     >
       {/* Vertical connector line */}
       <div 
-        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-slate-200 group-last:hidden"
+        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-slate-200 group-last:hidden animate-pulse"
         style={{ transformOrigin: "top" }}
       />
 
@@ -38,26 +38,26 @@ function JourneyItem({ item }: JourneyItemProps) {
       />
 
       {/* Content card */}
-      <div className="flex flex-col bg-white bg-opacity-60 backdrop-blur-sm hover:bg-opacity-80 p-5 md:p-6 rounded-2xl border border-slate-100 hover:border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-x-1">
+      <div className="flex flex-col bg-white bg-opacity-60 backdrop-blur-sm hover:bg-opacity-85 p-5 md:p-6 rounded-2xl border border-slate-100 hover:border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-x-1">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           {/* Year Badge */}
           <span 
-            className="text-xs md:text-sm font-bold px-3 py-1 rounded-full text-white tracking-wider"
+            className="text-xs font-mono font-bold px-3 py-1 rounded-full text-white tracking-wider"
             style={{ backgroundColor: accentColor }}
           >
             {item.year}
           </span>
-          <span className="text-xs text-zinc-400 capitalize bg-slate-100 px-2 py-0.5 rounded">
+          <span className="text-[10px] font-mono font-semibold text-zinc-400 capitalize bg-slate-100 px-2 py-0.5 rounded border border-slate-200 border-opacity-40">
             {item.type}
           </span>
         </div>
 
-        <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-black transition-colors duration-200">
+        <h3 className="text-lg md:text-xl font-bold text-slate-850 group-hover:text-black transition-colors duration-200">
           {item.title}
         </h3>
         
-        <p className="text-sm font-medium text-slate-500 mt-0.5">
-          {item.institution}
+        <p className="text-xs font-mono font-semibold text-slate-500 mt-1">
+          @ {item.institution}
         </p>
 
         <p className="text-sm font-normal text-slate-600 mt-3 leading-relaxed">
@@ -70,7 +70,7 @@ function JourneyItem({ item }: JourneyItemProps) {
             {item.skills.map((skill, index) => (
               <span
                 key={index}
-                className="text-xs font-medium bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 border-opacity-60 hover:bg-white hover:border-slate-300 hover:shadow-sm transition-all duration-150"
+                className="text-[10px] font-mono font-semibold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-white hover:border-slate-350 hover:text-slate-900 transition-all duration-150"
               >
                 {skill}
               </span>
@@ -86,11 +86,24 @@ export default function Journey() {
   return (
     <div
       id="journey"
-      className="flex h-auto w-full rounded-3xl animate-slide-up overflow-hidden justify-center items-center mb-5"
+      className="flex h-auto w-full rounded-3xl animate-slide-up overflow-hidden justify-center items-center mb-5 border border-zinc-200 border-opacity-40"
     >
       <div className="flex h-auto w-full bg-slate-500 bg-opacity-10 p-6 md:p-10 flex-col">
+        
+        {/* macOS Window Controls */}
+        <div className="flex gap-1.5 mb-6 select-none">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-400 opacity-80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 opacity-80" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-400 opacity-80" />
+        </div>
+
         <div className="flex flex-col mb-8">
-          <h2 className="text-2xl md:text-5xl font-bold mb-4">My Journey</h2>
+          <span className="font-mono text-xs text-slate-500 mb-2 block tracking-wider font-semibold">
+            // journey.tsx - education & career timeline
+          </span>
+          <h2 className="text-2xl md:text-5xl font-extrabold mb-4 text-slate-900">
+            &lt;MyJourney /&gt;
+          </h2>
           <p className="text-base font-normal text-slate-600">
             A timeline of my key milestones, education, professional experience, and technical growth.
           </p>
