@@ -26,13 +26,13 @@ export default function Home() {
     );
 
     const [projectsContent, setProjectsContent] = useState<string>(
-        `import React from "react";\nimport { Project } from "./types";\n\nexport const MyProjects = () => {\n  return (\n    <div className="grid gap-4">\n      {projects.map(p => (\n        <div key={p.id} className="card">\n          <h3>{p.title}</h3>\n        </div>\n      ))}\n    </div>\n  );\n};`
+        `import { Project } from "./types";\n\n// Featured Projects Collection\nexport const projects: Project[] = [\n  {\n    id: 1,\n    title: "Pirith App",\n    tech: ["React Native", "Expo"]\n  },\n  {\n    id: 2,\n    title: "4G LTE Only App",\n    tech: ["Kotlin"]\n  },\n  {\n    id: 3,\n    title: "HireMe Web",\n    tech: ["React", "Supabase"]\n  }\n];`
     );
 
     const getLineCount = () => {
         if (activeTab === "index.tsx") return 14;
         if (activeTab === "journey.json") return journeyContent.split("\n").length;
-        if (activeTab === "projects.tsx") return projectsContent.split("\n").length;
+        if (activeTab === "projects.ts") return projectsContent.split("\n").length;
         return 14;
     };
 
@@ -42,11 +42,6 @@ export default function Home() {
     const highlightJSON = (code: string) => {
         // Escape HTML
         let html = code
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt bridge;"); // wait, typo fix: &gt;
-        
-        html = code
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
@@ -61,7 +56,7 @@ export default function Home() {
         return { __html: html };
     };
 
-    // Atom One Light themed syntax highlighter for TypeScript/TSX (Matching the reference image)
+    // Atom One Light themed syntax highlighter for TypeScript (Matching the reference image)
     const highlightTS = (code: string) => {
         let html = code
             .replace(/&/g, "&amp;")
@@ -79,10 +74,6 @@ export default function Home() {
         html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span style="color: #50a14f">$1</span>');
         html = html.replace(/('(.*?)')/g, '<span style="color: #50a14f">$1</span>');
 
-        // Highlight HTML/JSX tags: &lt;/tagName&gt; (closing) and &lt;tagName ... &gt; (opening/self-closing)
-        html = html.replace(/(&lt;\/)([a-zA-Z0-9]+)(&gt;)/g, '$1<span style="color: #e06c75; font-weight: 500">$2</span>$3');
-        html = html.replace(/(&lt;)([a-zA-Z0-9]+)(\s|&gt;|\/&gt;)/g, '$1<span style="color: #e06c75; font-weight: 500">$2</span>$3');
-
         // Highlight keywords (magenta/pink: #a626a4)
         const keywords = ["import", "from", "export", "const", "let", "var", "function", "return", "for", "in", "of", "if", "else"];
         keywords.forEach(kw => {
@@ -90,15 +81,12 @@ export default function Home() {
             html = html.replace(regex, `<span style="color: #a626a4; font-weight: 600">${kw}</span>`);
         });
 
-        // Highlight type and React component references (blue/purple: #4078f2)
-        const types = ["Project", "string", "number", "boolean", "any", "React", "MyProjects"];
+        // Highlight type declarations (blue/purple: #4078f2)
+        const types = ["Project", "string", "number", "boolean", "any"];
         types.forEach(t => {
             const regex = new RegExp(`\\b${t}\\b`, "g");
             html = html.replace(regex, `<span style="color: #4078f2">${t}</span>`);
         });
-
-        // Highlight JSX attributes (orange/brown: #986801)
-        html = html.replace(/\b(className|key|id)\b/g, '<span style="color: #986801">$1</span>');
 
         // Highlight operator symbols (teal: #0184a7)
         html = html.replace(/(=|\+=|&lt;|\+\+)/g, '<span style="color: #0184a7">$1</span>');
@@ -193,7 +181,7 @@ export default function Home() {
                     
                     {/* Code Tabs */}
                     <div className="flex gap-1 select-none pt-1">
-                        {["index.tsx", "journey.json", "projects.tsx"].map((tab) => (
+                        {["index.tsx", "journey.json", "projects.ts"].map((tab) => (
                             <div 
                                 key={tab}
                                 onClick={() => setActiveTab(tab)}
@@ -207,7 +195,7 @@ export default function Home() {
                                     tab === "index.tsx" ? "text-sky-500" :
                                     tab === "journey.json" ? "text-yellow-600 font-bold" : "text-sky-600 font-bold"
                                 }>
-                                    {tab === "index.tsx" ? "⚛" : tab === "journey.json" ? "{}" : "tsx"}
+                                    {tab === "index.tsx" ? "⚛" : tab === "journey.json" ? "{}" : "ts"}
                                 </span>
                                 {tab}
                             </div>
