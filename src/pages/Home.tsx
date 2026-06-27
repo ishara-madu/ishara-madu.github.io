@@ -77,15 +77,18 @@ function renderSpace() {
                     {/* Right Workspace: Core Greeting & Content */}
                     <div className="flex-1 pl-4 md:pl-6 pt-6 pb-6 pr-4 sm:pr-6 flex flex-col h-full relative z-10">
                         
-                        {/* Import statements always at the top of the file */}
-                        <div className="font-mono text-[10px] sm:text-xs text-zinc-500 mb-3 tracking-tight leading-normal select-none">
+                        {/* Import statements always at the top of the file (Aligned to Line 01) */}
+                        <div className="font-mono text-[10px] sm:text-xs text-zinc-500 tracking-tight leading-[26px] md:leading-[28px] select-none">
                             <span className="text-purple-600 font-semibold">import</span> {"{"} <span className="text-indigo-600 font-semibold">Developer</span> {"}"} <span className="text-purple-600 font-semibold">from</span> <span className="text-emerald-600 font-semibold">"ishara-madu"</span>;
                         </div>
 
-                        {/* Section header comment at the top */}
-                        <span className="font-mono text-[10px] sm:text-xs text-slate-400 mb-4 block tracking-wider font-semibold select-none">
+                        {/* Section header comment at the top (Aligned to Line 02) */}
+                        <span className="font-mono text-[10px] sm:text-xs text-slate-400 block tracking-wider font-semibold leading-[26px] md:leading-[28px] select-none">
                             // index.tsx - main entrance greeting
                         </span>
+
+                        {/* Virtual empty Line 03 spacer */}
+                        <div className="h-[26px] md:h-[28px] select-none" />
 
                         {/* Center container only for Title and Description */}
                         <div className="flex-1 flex flex-col justify-center my-auto">
