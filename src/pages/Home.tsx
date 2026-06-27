@@ -140,7 +140,7 @@ export default function Home() {
 
                 {/* Content centered in remaining editor window */}
                 <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
-                    <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight select-none">
+                    <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-normal select-none">
                         {homeData.title}
                         <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-600 ml-1.5 animate-pulse select-none" />
                     </h1>
