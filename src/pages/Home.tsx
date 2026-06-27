@@ -240,7 +240,7 @@ function renderSpace() {
                             {activeTab === "index.tsx" ? (
                                 renderActiveTabContent()
                             ) : (
-                                <div className="grid grid-cols-1 grid-rows-1 w-full min-h-[300px] flex-grow">
+                                <div className="grid grid-cols-1 grid-rows-1 w-max min-w-full min-h-[300px] flex-grow">
                                     {/* Syntax Highlighted Pre block underneath */}
                                     <pre 
                                         style={{
