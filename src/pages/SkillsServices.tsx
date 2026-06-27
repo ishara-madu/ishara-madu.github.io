@@ -73,8 +73,8 @@ export default function SkillsServices() {
                                     className="bg-white bg-opacity-35 hover:bg-opacity-55 border border-zinc-200 border-opacity-50 p-5 rounded-2xl shadow-sm hover:scale-[1.01] hover:shadow-md transition-all duration-300 flex flex-col relative overflow-hidden"
                                 >
                                     {/* Service Title Bar */}
-                                    <div className="flex items-center gap-2.5">
-                                        <span className="text-lg sm:text-xl select-none">{service.icon}</span>
+                                    <div className="flex items-center">
+                                        <span className="font-mono text-indigo-600 font-bold select-none mr-2 text-sm sm:text-base">::</span>
                                         <h4 className="font-extrabold text-slate-900 text-sm sm:text-base">
                                             {service.title}
                                         </h4>
