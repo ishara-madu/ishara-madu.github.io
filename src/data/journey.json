@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "year": "2021",
+    "title": "Beginning the Programming Journey",
+    "institution": "Self-Learning & Fundamentals",
+    "description": "Started learning basic programming concepts, algorithms, and web development fundamentals (HTML, CSS, JavaScript). Discovering a passion for software.",
+    "type": "learning",
+    "skills": ["HTML", "CSS", "JavaScript", "Algorithms"]
+  },
+  {
+    "id": 2,
+    "year": "2022",
+    "title": "Mobile App Development (Kotlin)",
+    "institution": "Google Play Store Publishing",
+    "description": "Developed and published '4G LTE Only App' using Kotlin. Learned Android SDK, networking, and publishing guidelines, reaching active users on Play Store.",
+    "type": "work",
+    "skills": ["Kotlin", "Android SDK", "Git", "Play Console"]
+  },
+  {
+    "id": 3,
+    "year": "2023",
+    "title": "Expanding to React Native & Expo",
+    "institution": "Cross-Platform Mobile Apps",
+    "description": "Built 'Pirith App', a mobile application using React Native and Expo. Focused on clean user interface design, state management, and audio playback integration.",
+    "type": "work",
+    "skills": ["React Native", "Expo", "JavaScript", "Mobile UI"]
+  },
+  {
+    "id": 4,
+    "year": "2024",
+    "title": "Full-Stack Development & State Management",
+    "institution": "Web Applications",
+    "description": "Developed 'HireMe Web' using React, Redux for state management, and Supabase for authentication and database services. Mastered modern styling with Tailwind CSS.",
+    "type": "work",
+    "skills": ["React.js", "Redux", "Supabase", "Tailwind CSS"]
+  },
+  {
+    "id": 5,
+    "year": "2025 - Present",
+    "title": "Aspiring Software Engineer",
+    "institution": "Personal & Professional Projects",
+    "description": "Continuing to build highly optimized, user-centric web and mobile software. Exploring TypeScript, Next.js, and system optimization techniques.",
+    "type": "learning",
+    "skills": ["TypeScript", "Next.js", "Vite", "Node.js"]
+  }
+]

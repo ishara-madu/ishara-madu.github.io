@@ -4,6 +4,7 @@ import HeadOptions from './components/HeadOptions'
 import Contact from './pages/Contact'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
+import Journey from './pages/Journey'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Header />
         <Home />
         <Projects />
+        <Journey />
         <Contact />
       </div>
     </div>
