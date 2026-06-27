@@ -18,7 +18,7 @@ export default function ProjectCard({ id }: ProjectCardProps) {
     return (
         <div 
             ref={ref} 
-            className={`w-full min-h-[320px] sm:min-h-[400px] md:h-[480px] rounded-3xl overflow-hidden relative group shadow-lg hover:shadow-xl transition-all duration-500 ${
+            className={`w-full min-h-[260px] sm:min-h-[300px] md:h-[360px] rounded-3xl overflow-hidden relative group shadow-lg hover:shadow-xl transition-all duration-500 ${
                 inView ? 'animate-slide-up-card opacity-100' : 'opacity-0'
             }`}
         >
@@ -35,15 +35,15 @@ export default function ProjectCard({ id }: ProjectCardProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-900/50 to-zinc-900/10 z-10 opacity-85 group-hover:opacity-90 transition-opacity duration-300" />
 
             {/* Content Container (Bottom-Aligned) */}
-            <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8 z-20 text-white select-none">
+            <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 z-20 text-white select-none">
                 
                 {/* Tech Stack Tags */}
                 {project.tags && project.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-3 transform translate-y-2 group-hover:translate-y-0 opacity-80 group-hover:opacity-100 duration-300 transition-all">
+                    <div className="flex flex-wrap gap-1.5 mb-2.5 transform translate-y-2 group-hover:translate-y-0 opacity-80 group-hover:opacity-100 duration-300 transition-all">
                         {project.tags.map((tag, index) => (
                             <span 
                                 key={index} 
-                                className="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-md bg-white bg-opacity-15 backdrop-blur-md border border-white border-opacity-10 text-white font-medium uppercase tracking-wider"
+                                className="text-[9px] sm:text-[10px] px-2.5 py-0.5 rounded-md bg-white bg-opacity-15 backdrop-blur-md border border-white border-opacity-10 text-white font-medium uppercase tracking-wider"
                             >
                                 {tag}
                             </span>
@@ -54,12 +54,12 @@ export default function ProjectCard({ id }: ProjectCardProps) {
                 <div className="flex items-end justify-between gap-4">
                     <div className="flex flex-col max-w-[80%]">
                         {/* Title */}
-                        <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight mb-2 group-hover:translate-x-1 duration-300 transition-transform">
+                        <h2 className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight mb-1.5 group-hover:translate-x-1 duration-300 transition-transform">
                             {project.title}
                         </h2>
                         
                         {/* Description (visible, line-clamp, smooth text styling) */}
-                        <p className="text-xs sm:text-sm font-normal text-zinc-300 leading-relaxed line-clamp-2 md:line-clamp-3 group-hover:text-white transition-colors duration-300">
+                        <p className="text-xs sm:text-sm font-normal text-zinc-300 leading-relaxed line-clamp-3 sm:line-clamp-4 group-hover:text-white transition-colors duration-300">
                             {project.description}
                         </p>
                     </div>
