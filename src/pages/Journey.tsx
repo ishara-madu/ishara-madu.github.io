@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { LuFlashlight } from "react-icons/lu";
 import journeyData from "../data/journey.json";
 import homeData from "../data/home.json";
+import torchIcon from "../assets/icons/tourch.svg";
 
 interface JourneyItemProps {
   item: typeof journeyData[0];
@@ -141,18 +141,20 @@ export default function Journey() {
         />
       )}
 
-      {/* Custom Lucide-style Flashlight Cursor (Only active on hover-supporting desktop devices) */}
+      {/* Custom user flashlight icon cursor (tourch.svg) */}
       {isHovered && hasHover && (
         <div 
           className="pointer-events-none absolute z-30 select-none"
           style={{
             left: 'var(--mouse-x, -999px)',
             top: 'var(--mouse-y, -999px)',
-            transform: 'translate(-80%, -20%)',
+            transform: 'translate(-90%, -10%)', // Aligns the top-right shining bulb head of the SVG with the coordinates
           }}
         >
-          <LuFlashlight 
-            className="w-7 h-7 text-yellow-400 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.9)]" 
+          <img 
+            src={torchIcon} 
+            className="w-8 h-8" 
+            alt="Flashlight"
           />
         </div>
       )}
