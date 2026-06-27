@@ -102,7 +102,6 @@ export default function InteractiveTerminal() {
         break;
 
       case "ls":
-        // We will handle file color coding inside the renderer instead of simple text string
         response = "about.txt    skills.json    projects.list    contact.cfg";
         break;
 
@@ -192,7 +191,7 @@ export default function InteractiveTerminal() {
   return (
     <div
       onClick={handleTerminalClick}
-      className="flex flex-col w-full h-full bg-zinc-950 font-mono text-[11px] p-5 overflow-y-auto cursor-text select-text custom-scrollbar"
+      className="flex flex-col w-full h-full bg-zinc-950 font-mono text-[11px] p-5 overflow-y-auto cursor-text select-text custom-scrollbar space-y-1.5"
     >
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
@@ -210,12 +209,9 @@ export default function InteractiveTerminal() {
         }
       `}</style>
 
-      <div className="flex-1 flex flex-col space-y-1.5">
-        {history.map((item, index) => renderHistoryItem(item, index))}
-        <div ref={terminalEndRef} />
-      </div>
+      {history.map((item, index) => renderHistoryItem(item, index))}
 
-      <form onSubmit={handleCommandSubmit} className="flex items-center mt-3 border-t border-zinc-900 pt-3 relative">
+      <form onSubmit={handleCommandSubmit} className="flex items-center relative pt-1">
         {renderPrompt()}
         <span className="text-white font-bold whitespace-pre">{input}</span>
         {/* Blinking block terminal cursor */}
@@ -234,6 +230,7 @@ export default function InteractiveTerminal() {
           spellCheck="false"
         />
       </form>
+      <div ref={terminalEndRef} />
     </div>
   );
 }
