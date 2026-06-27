@@ -39,20 +39,28 @@ export default function Home() {
     const lineCount = Math.max(14, getLineCount());
 
     const highlightJSON = (code: string) => {
-        // Escape HTML
         let html = code
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
         
-        // Highlight keys (crimson/purple)
-        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")(\s*:)/g, '<span class="text-purple-700 font-semibold">$1</span>$3');
-        // Highlight string values (emerald green)
-        html = html.replace(/:(\s*)("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, ':$1<span class="text-emerald-700">$2</span>');
-        // Highlight numbers (orange/amber)
-        html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
-        // Highlight booleans (blue)
-        html = html.replace(/\b(true|false)\b/g, '<span class="text-blue-700 font-semibold">$1</span>');
+        // Strings (both keys and values - forest green: #22863a)
+        const strings: string[] = [];
+        html = html.replace(/("[^"\\]*(?:\\.[^"\\]*)*")/g, (match) => {
+            strings.push(`<span style="color: #22863a;">${match}</span>`);
+            return `___STRING_${strings.length - 1}___`;
+        });
+        
+        // Numbers (orange/gold: #e36209)
+        html = html.replace(/\b(\d+)\b/g, '<span style="color: #e36209; font-weight: 600;">$1</span>');
+        
+        // Booleans (blue/violet: #005cc5)
+        html = html.replace(/\b(true|false)\b/g, '<span style="color: #005cc5; font-weight: 600;">$1</span>');
+        
+        // Restore strings
+        strings.forEach((str, index) => {
+            html = html.replace(`___STRING_${index}___`, str);
+        });
         
         return { __html: html };
     };
@@ -63,25 +71,53 @@ export default function Home() {
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;");
 
-        // Keywords
-        const keywords = ["import", "from", "export", "const", "let", "var", "function", "return"];
+        // Comments (italicized grey: #969896)
+        const comments: string[] = [];
+        html = html.replace(/(\/\/.*)/g, (match) => {
+            comments.push(`<span class="italic font-normal" style="color: #969896;">${match}</span>`);
+            return `___COMMENT_${comments.length - 1}___`;
+        });
+
+        // Strings (forest green: #22863a)
+        const strings: string[] = [];
+        // Single quotes
+        html = html.replace(/('[^'\\]*(?:\\.[^'\\]*)*')/g, (match) => {
+            strings.push(`<span style="color: #22863a;">${match}</span>`);
+            return `___STRING_${strings.length - 1}___`;
+        });
+        // Double quotes
+        html = html.replace(/("[^"\\]*(?:\\.[^"\\]*)*")/g, (match) => {
+            strings.push(`<span style="color: #22863a;">${match}</span>`);
+            return `___STRING_${strings.length - 1}___`;
+        });
+
+        // Keywords (pinkish-purple: #a71d5d)
+        const keywords = ["import", "from", "export", "const", "let", "var", "function", "return", "for", "in", "of", "if", "else"];
         keywords.forEach(kw => {
             const regex = new RegExp(`\\b${kw}\\b`, "g");
-            html = html.replace(regex, `<span class="text-purple-700 font-bold">${kw}</span>`);
+            html = html.replace(regex, `<span class="font-semibold" style="color: #a71d5d;">${kw}</span>`);
         });
 
-        // Types
-        const types = ["Project", "string", "number", "boolean", "any"];
-        types.forEach(t => {
-            const regex = new RegExp(`\\b${t}\\b`, "g");
-            html = html.replace(regex, `<span class="text-indigo-700 font-semibold">${t}</span>`);
+        // Types & Identifiers (blue: #005cc5)
+        const blues = ["Project", "projects", "id", "title", "tech", "Developer", "Ishara", "Madushanka"];
+        blues.forEach(b => {
+            const regex = new RegExp(`\\b${b}\\b`, "g");
+            html = html.replace(regex, `<span class="font-semibold" style="color: #005cc5;">${b}</span>`);
         });
 
-        // Strings
-        html = html.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g, '<span class="text-emerald-700">$1</span>');
-        
-        // Numbers
-        html = html.replace(/\b(\d+)\b/g, '<span class="text-amber-700 font-semibold">$1</span>');
+        // Numbers & Booleans (orange/gold: #e36209)
+        html = html.replace(/\b(\d+)\b/g, '<span style="color: #e36209; font-weight: 600;">$1</span>');
+        html = html.replace(/\b(true|false)\b/g, '<span style="color: #e36209; font-weight: 600;">$1</span>');
+
+        // Restore strings
+        strings.forEach((str, index) => {
+            html = html.replace(`___STRING_${index}___`, str);
+        });
+
+        // Restore comments
+        comments.forEach((comment, index) => {
+            html = html.replace(`___COMMENT_${index}___`, comment);
+        });
 
         return { __html: html };
     };
@@ -90,12 +126,12 @@ export default function Home() {
         return (
             <div className="flex flex-col min-h-full">
                 {/* Import declarations at top (Aligned to Line 01) */}
-                <div className="font-mono text-xs text-slate-500 tracking-tight leading-[26px] select-none">
-                    <span className="text-purple-700 font-bold">import</span> {"{"} <span className="text-indigo-700 font-semibold">Developer</span> {"}"} <span className="text-purple-750 font-bold">from</span> <span className="text-emerald-700 font-semibold">"ishara-madu"</span>;
+                <div className="font-mono text-xs tracking-tight leading-[26px] select-none text-slate-700">
+                    <span className="font-bold" style={{ color: "#a71d5d" }}>import</span> {"{"} <span className="font-semibold" style={{ color: "#005cc5" }}>Developer</span> {"}"} <span className="font-bold" style={{ color: "#a71d5d" }}>from</span> <span style={{ color: "#22863a" }}>"ishara-madu"</span>;
                 </div>
 
                 {/* Section header comment (Aligned to Line 02) */}
-                <span className="font-mono text-xs text-slate-450 block tracking-wider font-semibold leading-[26px] select-none">
+                <span className="font-mono text-xs block tracking-wider font-normal italic leading-[26px] select-none" style={{ color: "#969896" }}>
                     // index.tsx - main entrance greeting
                 </span>
 
@@ -106,15 +142,15 @@ export default function Home() {
                 <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
                     <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-tight select-none">
                         {homeData.title}
-                        <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-650 ml-1.5 animate-pulse select-none" />
+                        <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-600 ml-1.5 animate-pulse select-none" />
                     </h1>
 
-                    <div className="relative pl-4 border-l-2 border-indigo-550 my-6 select-none">
-                        <span className="absolute left-0 top-0 font-mono text-xs text-indigo-600 select-none font-bold">/*</span>
+                    <div className="relative pl-4 border-l-2 border-indigo-400 my-6 select-none">
+                        <span className="absolute left-0 top-0 font-mono text-xs select-none font-bold" style={{ color: "#005cc5" }}>/*</span>
                         <p className="text-xs sm:text-sm font-mono font-semibold text-slate-700 leading-relaxed py-0.5 select-text">
                             {homeData.description}
                         </p>
-                        <span className="font-mono text-xs text-indigo-600 select-none block font-bold">*/</span>
+                        <span className="font-mono text-xs select-none block font-bold" style={{ color: "#005cc5" }}>*/</span>
                     </div>
                 </div>
             </div>
@@ -213,7 +249,7 @@ function renderSpace() {
                     <div className="flex-1 flex h-full overflow-y-auto p-5 select-text custom-scrollbar z-10">
                         
                         {/* Left Gutter: Code Editor Line Numbers */}
-                        <div className="w-8 md:w-10 flex flex-col items-end pr-2 md:pr-3 border-r border-zinc-200 border-opacity-30 select-none font-mono text-[10px] text-slate-500 leading-[26px]">
+                        <div className="w-8 md:w-10 flex flex-col items-end pr-2 md:pr-3 border-r border-zinc-200 border-opacity-30 select-none font-mono text-[10px] text-slate-400 leading-[26px]">
                             {Array.from({ length: lineCount }, (_, i) => String(i + 1).padStart(2, '0')).map(num => (
                                 <span key={num}>{num}</span>
                             ))}
@@ -228,7 +264,7 @@ function renderSpace() {
                                     {/* Syntax Highlighted Pre block underneath */}
                                     <pre 
                                         style={sharedEditorStyle}
-                                        className="text-slate-800 p-0 m-0 pointer-events-none select-none"
+                                        className="text-slate-700 p-0 m-0 pointer-events-none select-none"
                                         dangerouslySetInnerHTML={activeTab === "journey.json" ? highlightJSON(journeyContent) : highlightTS(projectsContent)}
                                     />
                                     {/* Invisible textarea input layer on top */}
@@ -245,7 +281,7 @@ function renderSpace() {
                                             top: 0,
                                             left: 0,
                                             color: 'transparent',
-                                            caretColor: '#1e293b',
+                                            caretColor: '#24292e',
                                             overflow: 'hidden',
                                         }}
                                         spellCheck="false"
