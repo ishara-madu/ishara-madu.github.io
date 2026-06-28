@@ -3,14 +3,14 @@ import { LuFileCode, LuFolder, LuGitBranch } from "react-icons/lu";
 
 function getSkillIconKey(name: string): string {
     const n = name.toLowerCase().trim();
-    if (n.includes("next")) return "nextjs";
+    if (n.includes("next")) return "nextdotjs";
     if (n.includes("react native")) return "react";
     if (n.includes("react")) return "react";
     if (n.includes("kotlin")) return "kotlin";
     if (n.includes("kmp")) return "kotlin";
-    if (n.includes("typescript") || n === "ts") return "ts";
-    if (n.includes("javascript") || n === "js") return "js";
-    if (n.includes("tailwind")) return "tailwind";
+    if (n.includes("typescript") || n === "ts") return "typescript";
+    if (n.includes("javascript") || n === "js") return "javascript";
+    if (n.includes("tailwind")) return "tailwindcss";
     if (n.includes("supabase")) return "supabase";
     if (n.includes("firebase")) return "firebase";
     if (n.includes("mongodb") || n.includes("mongo")) return "mongodb";
@@ -24,14 +24,14 @@ function getSkillIconKey(name: string): string {
     if (n.includes("pnpm")) return "pnpm";
     if (n.includes("yarn")) return "yarn";
     if (n.includes("figma")) return "figma";
-    if (n.includes("excel")) return "excel";
-    if (n.includes("python")) return "py";
+    if (n.includes("excel")) return "microsoftexcel";
+    if (n.includes("python")) return "python";
     if (n.includes("java")) return "java";
-    if (n.includes("gemini") || n.includes("ai")) return "gemini";
+    if (n.includes("gemini") || n.includes("ai")) return "googlegemini";
     if (n.includes("postman") || n.includes("api") || n.includes("rest")) return "postman";
     if (n.includes("payments") || n.includes("stripe")) return "stripe";
-    if (n.includes("admob")) return "admob";
-    if (n.includes("revenuecat")) return "apple"; // fallback to apple
+    if (n.includes("admob")) return "googleadmob";
+    if (n.includes("revenuecat")) return "revenuecat";
     return "git";
 }
 
@@ -39,7 +39,7 @@ function TechIcon({ name }: { name: string }) {
     const key = getSkillIconKey(name);
     return (
         <img 
-            src={`https://go-skill-icons.vercel.app/api/icons?i=${key}`} 
+            src={`https://simpleskill.icons.workers.dev/svg?i=${key}`} 
             alt={name} 
             className="w-4 h-4 rounded object-contain flex-shrink-0 select-none pointer-events-none"
             loading="lazy"
