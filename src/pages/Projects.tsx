@@ -39,7 +39,6 @@ export default function Projects() {
   useEffect(() => {
     const fetchGitHubProjects = async () => {
       try {
-        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const urlParams = new URLSearchParams(window.location.search);
         const forceRefresh = urlParams.get('refresh') === 'true' || urlParams.get('nocache') === 'true';
 
@@ -52,7 +51,7 @@ export default function Projects() {
         const cachedData = localStorage.getItem(CACHE_KEY);
         const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
         
-        if (cachedData && cachedTimestamp && !isLocalhost && !forceRefresh) {
+        if (cachedData && cachedTimestamp && !forceRefresh) {
           const age = Date.now() - parseInt(cachedTimestamp, 10);
           if (age < CACHE_DURATION) {
             setProjects(JSON.parse(cachedData));
@@ -182,7 +181,17 @@ export default function Projects() {
         localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
 
       } catch (err) {
-        console.warn("GitHub fetch failed, loading local projects fallback.", err);
+        console.warn("GitHub fetch failed, attempting cache fallback first.", err);
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+          try {
+            setProjects(JSON.parse(cachedData));
+            console.log("Successfully loaded expired cached GitHub projects as fallback.");
+            return;
+          } catch (e) {
+            // Cached parse failed, fall through to local fallback
+          }
+        }
         setProjects(getLocalFallback());
       } finally {
         setLoading(false);
