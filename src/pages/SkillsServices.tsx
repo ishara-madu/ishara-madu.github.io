@@ -39,9 +39,9 @@ function TechIcon({ name }: { name: string }) {
     const key = getSkillIconKey(name);
     return (
         <img 
-            src={`https://simpleskill.icons.workers.dev/svg?i=${key}`} 
+            src={`https://cdn.simpleicons.org/${key}`} 
             alt={name} 
-            className="w-4 h-4 rounded object-contain flex-shrink-0 select-none pointer-events-none"
+            className="w-4 h-4 object-contain flex-shrink-0 select-none pointer-events-none"
             loading="lazy"
         />
     );
