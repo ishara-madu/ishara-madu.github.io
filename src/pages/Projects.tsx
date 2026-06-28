@@ -1,8 +1,170 @@
-import ProjectCard from '../components/ProjectCard';
+import { useEffect, useState } from 'react';
+import ProjectCard, { ProjectType } from '../components/ProjectCard';
 import projectData from '../data/projects.json';
 import { LuFolder, LuGitBranch, LuBox, LuActivity } from 'react-icons/lu';
 
+const CACHE_KEY = 'portfolio_github_projects';
+const CACHE_TIMESTAMP_KEY = 'portfolio_github_projects_timestamp';
+const CACHE_DURATION = 3600000; // 1 hour in milliseconds
+
 export default function Projects() {
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Map local JSON data to match ProjectType structure as a reliable fallback
+  const getLocalFallback = (): ProjectType[] => {
+    return (projectData as any[]).map((p, idx) => ({
+      id: p.id || idx + 1,
+      title: p.title,
+      description: p.description,
+      image: p.image,
+      homepage: p.homepage,
+      textColor: p.textColor || "#ffffff",
+      tags: p.tags || [],
+      github: p.github,
+      playstore: p.playstore,
+      website: p.website
+    }));
+  };
+
+  useEffect(() => {
+    const fetchGitHubProjects = async () => {
+      try {
+        // 1. Check local storage cache first to avoid rate-limiting
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+        
+        if (cachedData && cachedTimestamp) {
+          const age = Date.now() - parseInt(cachedTimestamp, 10);
+          if (age < CACHE_DURATION) {
+            setProjects(JSON.parse(cachedData));
+            setLoading(false);
+            return;
+          }
+        }
+
+        // 2. Fetch public repositories from GitHub
+        const res = await fetch('https://api.github.com/users/ishara-madu/repos?per_page=100&sort=updated');
+        if (!res.ok) throw new Error("Failed to fetch repositories from GitHub");
+        
+        const repos = await res.json();
+        if (!Array.isArray(repos)) throw new Error("Invalid response format");
+
+        // 3. Filter repos: stargazers_count >= 1 OR contains 'portfolio' topic
+        const filteredRepos = repos.filter((repo: any) => {
+          const hasStars = repo.stargazers_count && repo.stargazers_count >= 1;
+          const hasTopics = repo.topics && (
+            repo.topics.includes('portfolio') || 
+            repo.topics.includes('portfolio-project')
+          );
+          return hasStars || hasTopics;
+        });
+
+        if (filteredRepos.length === 0) {
+          // If no repos match, use local fallback
+          setProjects(getLocalFallback());
+          setLoading(false);
+          return;
+        }
+
+        // 4. Resolve details (images and readmes) concurrently for filtered repos
+        const parsedProjects = await Promise.all(
+          filteredRepos.map(async (repo: any) => {
+            const owner = repo.owner.login;
+            const name = repo.name;
+            
+            // Format title neatly (e.g. hireme-web -> Hireme Web)
+            const title = name.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+            const description = repo.description || "A public repository developed by ishara-madu.";
+            const tags = repo.topics && repo.topics.length > 0 
+                ? repo.topics.map((t: string) => t.toUpperCase()) 
+                : ["GITHUB", "REPOSITORY"];
+                
+            let github = repo.html_url;
+            let website = repo.homepage || undefined;
+            let playstore = undefined;
+            
+            // Parse Google Play Store links from repo homepage if any
+            if (website && website.includes("play.google.com")) {
+                playstore = website;
+                website = undefined;
+            }
+            
+            // Query image folder 'portfolio_images' in the root
+            let image = "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=60"; // generic banner
+            try {
+                const contentsUrl = `https://api.github.com/repos/${owner}/${name}/contents/portfolio_images`;
+                const contentsRes = await fetch(contentsUrl);
+                if (contentsRes.ok) {
+                    const files = await contentsRes.json();
+                    if (Array.isArray(files)) {
+                        const imgFile = files.find(f => {
+                            const fname = f.name.toLowerCase();
+                            return fname.endsWith(".png") || fname.endsWith(".jpg") || fname.endsWith(".jpeg") || fname.endsWith(".webp") || fname.endsWith(".gif");
+                        });
+                        if (imgFile) {
+                            image = imgFile.download_url;
+                        }
+                    }
+                }
+            } catch (e) {
+                // No folder or error, skip
+            }
+            
+            // Query README.md for extra links
+            try {
+                const readmeUrl = `https://raw.githubusercontent.com/${owner}/${name}/${repo.default_branch || 'main'}/README.md`;
+                const readmeRes = await fetch(readmeUrl);
+                if (readmeRes.ok) {
+                    const text = await readmeRes.text();
+                    
+                    const playStoreRegex = /(https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-zA-Z0-9._]+)/i;
+                    const playMatch = text.match(playStoreRegex);
+                    if (playMatch && !playstore) {
+                        playstore = playMatch[1];
+                    }
+                    
+                    const websiteRegex = /\[(?:Live Demo|Website)\]\((https?:\/\/[^\s)]+)\)/i;
+                    const webMatch = text.match(websiteRegex);
+                    if (webMatch && !website) {
+                        website = webMatch[1];
+                    }
+                }
+            } catch (e) {
+                // Readme parsing failed, skip
+            }
+
+            return {
+                id: repo.id,
+                title,
+                description,
+                image,
+                homepage: repo.homepage || repo.html_url,
+                textColor: "#ffffff",
+                tags,
+                github,
+                playstore,
+                website
+            };
+          })
+        );
+
+        // 5. Save to state and update cache
+        setProjects(parsedProjects);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(parsedProjects));
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+
+      } catch (err) {
+        console.warn("GitHub fetch failed, loading local projects fallback.", err);
+        setProjects(getLocalFallback());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGitHubProjects();
+  }, []);
+
   return (
     <div
       id="projects"
@@ -65,25 +227,36 @@ export default function Projects() {
               <span className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Repos</span>
               <span className="text-lg font-bold text-slate-800 flex items-center gap-1.5">
                 <LuBox className="w-4.5 h-4.5 text-indigo-500" />
-                {projectData.length}
+                {projects.length}
               </span>
             </div>
             <div className="flex flex-col border-l border-slate-200/50 pl-4">
               <span className="text-[10px] text-slate-400 uppercase tracking-wider mb-1">Status</span>
               <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5 h-7">
                 <LuActivity className="w-4 h-4 text-emerald-500 animate-pulse" />
-                STABLE
+                {loading ? "SYNCING" : "STABLE"}
               </span>
             </div>
           </div>
         </div>
 
         {/* Cards Grid */}
-        <div className="grid md:grid-cols-2 justify-items-center gap-6 w-full">
-          {projectData.map((_, index) => (
-            <ProjectCard key={index} id={projectData.length - index} />
-          ))}
-        </div>
+        {loading && projects.length === 0 ? (
+          /* Sleek loader animation */
+          <div className="w-full bg-white/60 border border-slate-200/50 rounded-2xl p-6 font-mono text-xs text-slate-500 space-y-1.5 select-none shadow-inner">
+            <div>$ git log --grep="portfolio" --max-count=4</div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
+              <span>Fetching dynamic repository specifications from GitHub...</span>
+            </div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 justify-items-center gap-6 w-full">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

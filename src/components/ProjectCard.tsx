@@ -1,13 +1,8 @@
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import projectsData from '../data/projects.json';
 import { GoArrowUpRight } from 'react-icons/go';
 
-interface ProjectCardProps {
-    id: number;
-}
-
-interface ProjectType {
+export interface ProjectType {
     id: number;
     title: string;
     description: string;
@@ -20,9 +15,12 @@ interface ProjectType {
     website?: string;
 }
 
-export default function ProjectCard({ id }: ProjectCardProps) {
+interface ProjectCardProps {
+    project: ProjectType;
+}
+
+export default function ProjectCard({ project }: ProjectCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const project = projectsData.find((p) => p.id === id) as ProjectType | undefined;
     const { ref, inView } = useInView({
         threshold: 0.1,
         triggerOnce: true,
