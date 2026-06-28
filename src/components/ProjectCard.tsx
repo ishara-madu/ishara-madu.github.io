@@ -224,7 +224,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                         e.stopPropagation();
                                         setCurrentImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
                                     }}
-                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 text-white flex justify-center items-center backdrop-blur-sm opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md hover:scale-105 active:scale-95 z-30"
+                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 text-white flex justify-center items-center backdrop-blur-sm opacity-100 md:opacity-0 md:group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md hover:scale-105 active:scale-95 z-30"
                                     title="Previous Image"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -240,7 +240,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                         e.stopPropagation();
                                         setCurrentImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
                                     }}
-                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 text-white flex justify-center items-center backdrop-blur-sm opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md hover:scale-105 active:scale-95 z-30"
+                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 text-white flex justify-center items-center backdrop-blur-sm opacity-100 md:opacity-0 md:group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md hover:scale-105 active:scale-95 z-30"
                                     title="Next Image"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
