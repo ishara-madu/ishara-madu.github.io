@@ -153,20 +153,42 @@ export default function Journey() {
     }
   }, []);
 
-  // Listen to scroll events to dynamically update container rect offsets and shift the mask coords accordingly
+  // Listen to scroll events to dynamically update container rect offsets, shift the mask, and track hover transitions
   useEffect(() => {
     const handleScroll = () => {
-      if (!isHovered || !containerRef.current || !rectRef.current) return;
+      if (!containerRef.current) return;
       
-      // Update cached bounding rect on scroll
-      rectRef.current = containerRef.current.getBoundingClientRect();
+      const rect = containerRef.current.getBoundingClientRect();
       
-      // Recalculate container coordinates using the new scrolled offset rect
-      const x = lastMousePos.current.clientX - rectRef.current.left;
-      const y = lastMousePos.current.clientY - rectRef.current.top;
+      // Check if mouse cursor is physically inside the container during scroll
+      const isInside = (
+        lastMousePos.current.clientX >= rect.left &&
+        lastMousePos.current.clientX <= rect.right &&
+        lastMousePos.current.clientY >= rect.top &&
+        lastMousePos.current.clientY <= rect.bottom
+      );
       
-      containerRef.current.style.setProperty('--mouse-x', `${x}px`);
-      containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+      if (isInside) {
+        if (!isHovered) {
+          setIsHovered(true);
+        }
+        rectRef.current = rect;
+        
+        const x = lastMousePos.current.clientX - rect.left;
+        const y = lastMousePos.current.clientY - rect.top;
+        
+        containerRef.current.style.setProperty('--mouse-x', `${x}px`);
+        containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+        
+        if (cursorRef.current) {
+          cursorRef.current.style.transform = `translate3d(${lastMousePos.current.clientX}px, ${lastMousePos.current.clientY}px, 0) translate(-97.7%, -33.2%)`;
+        }
+      } else {
+        if (isHovered) {
+          setIsHovered(false);
+          rectRef.current = null;
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -248,7 +270,7 @@ export default function Journey() {
           ref={cursorRef}
           className="pointer-events-none fixed left-0 top-0 z-[9999] select-none will-change-transform"
           style={{
-            transform: 'translate3d(-999px, -999px, 0) translate(-97.7%, -33.2%)',
+            transform: `translate3d(${lastMousePos.current.clientX}px, ${lastMousePos.current.clientY}px, 0) translate(-97.7%, -33.2%)`,
           }}
         >
           <img 
