@@ -1,25 +1,66 @@
-import { TbBrandGithubFilled, TbBrandLinkedinFilled, TbFileCv } from 'react-icons/tb'
-import contactData from '../data/contacts.json'
-import { PiInstagramLogoFill } from 'react-icons/pi'
-export default function ContactLinks() {
+import { TbBrandGithubFilled, TbBrandLinkedinFilled, TbFileCv } from 'react-icons/tb';
+import contactData from '../data/contacts.json';
+import { PiInstagramLogoFill } from 'react-icons/pi';
+import { LuPlay } from 'react-icons/lu';
 
+export default function ContactLinks() {
     return (
-        <div className="flex gap-y-5 md:gap-y-0 md:gap-x-5 flex-col md:flex-row justify-center items-center md:items-start md:justify-start w-full">
-            <a href={`mailto:${contactData.email}`} className="flex w-full md:w-44 h-12 rounded-full gap-2 text-sm text-white bg-slate-900 hover:bg-slate-800 duration-150 justify-center items-center">Contact me</a>
-            <div className="flex w-full md:w-auto justify-between md:justify-start md:gap-x-5">
-                <a href={contactData.github} target='_blank' className={`flex w-12 h-12 bg-white hover:bg-black rounded-full items-center justify-center group duration-300`}>
-                    <TbBrandGithubFilled size={26} className={`group-hover:fill-white`} />
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-end w-full">
+            {/* Primary Action Button (Terminal Run Command) */}
+            <a 
+                href={`mailto:${contactData.email}`} 
+                className="flex w-full sm:w-44 h-12 rounded-2xl gap-2 text-sm font-mono font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md hover:shadow-lg transition-all duration-200 justify-center items-center select-none active:scale-98"
+            >
+                <LuPlay className="w-3.5 h-3.5 fill-white" />
+                <span>run_contact.sh</span>
+            </a>
+
+            {/* Social Network Port Link Icons */}
+            <div className="flex items-center gap-3">
+                {/* GitHub */}
+                <a 
+                    href={contactData.github} 
+                    target='_blank' 
+                    rel="noopener noreferrer"
+                    className="flex w-12 h-12 bg-white border border-slate-200/80 hover:border-slate-300 hover:bg-slate-50 text-slate-700 hover:text-slate-900 rounded-2xl items-center justify-center shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5 select-none"
+                    title="GitHub Profile"
+                >
+                    <TbBrandGithubFilled size={22} />
                 </a>
-                <a href={contactData.instagram} target='_blank' className={`flex w-12 h-12 bg-white hover:bg-gradient-to-tr from-yellow-400 from-10% via-red-500  to-pink-400  rounded-full items-center justify-center group duration-300`}>
-                    <PiInstagramLogoFill size={26} className={`group-hover:fill-white`} />
+
+                {/* LinkedIn */}
+                <a 
+                    href={contactData.linkedin} 
+                    target='_blank' 
+                    rel="noopener noreferrer"
+                    className="flex w-12 h-12 bg-white border border-slate-200/80 hover:border-slate-300 hover:bg-blue-50/50 text-slate-700 hover:text-blue-600 rounded-2xl items-center justify-center shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5 select-none"
+                    title="LinkedIn Profile"
+                >
+                    <TbBrandLinkedinFilled size={22} />
                 </a>
-                <a href={contactData.linkedin} target='_blank' className={`flex w-12 h-12 bg-white hover:bg-blue-500 rounded-full items-center justify-center group duration-300`}>
-                    <TbBrandLinkedinFilled size={26} className={`group-hover:fill-white`} />
+
+                {/* Instagram */}
+                <a 
+                    href={contactData.instagram} 
+                    target='_blank' 
+                    rel="noopener noreferrer"
+                    className="flex w-12 h-12 bg-white border border-slate-200/80 hover:border-slate-300 hover:bg-rose-50/50 text-slate-700 hover:text-rose-500 rounded-2xl items-center justify-center shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5 select-none"
+                    title="Instagram Profile"
+                >
+                    <PiInstagramLogoFill size={22} />
                 </a>
-                <a href={contactData.cv} target='_blank' className={`flex w-12 h-12 bg-white hover:bg-violet-400 rounded-full items-center justify-center group duration-300`}>
-                    <TbFileCv size={26} className={`group-hover:fill-white`} />
+
+                {/* Resume / CV */}
+                <a 
+                    href={contactData.cv} 
+                    target='_blank' 
+                    rel="noopener noreferrer"
+                    className="flex w-12 h-12 bg-white border border-slate-200/80 hover:border-slate-300 hover:bg-violet-50/50 text-slate-700 hover:text-violet-600 rounded-2xl items-center justify-center shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5 select-none"
+                    title="Download Curriculum Vitae"
+                >
+                    <TbFileCv size={22} />
                 </a>
             </div>
         </div>
-    )
+    );
 }
