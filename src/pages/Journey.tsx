@@ -19,66 +19,115 @@ function JourneyItem({ item }: JourneyItemProps) {
   return (
     <div
       ref={ref}
-      className={`relative pl-8 md:pl-12 pb-10 last:pb-2 group transition-all duration-700 ${
+      className={`relative pl-8 md:pl-16 pb-12 last:pb-2 group transition-all duration-700 ${
         inView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
       }`}
     >
-      {/* Vertical connector line - Optimized: removed animate-pulse to prevent continuous repaint loops */}
+      {/* Circuit track style timeline connector line */}
       <div 
-        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-zinc-800 group-last:hidden"
-        style={{ transformOrigin: "top" }}
+        className="absolute left-[7px] md:left-[11px] top-8 bottom-0 w-[2px] bg-gradient-to-b from-zinc-800 via-zinc-700 to-zinc-900 group-last:hidden"
       />
 
-      {/* Circle dot marker */}
+      {/* Futuristic Radar pulse dot indicator */}
+      <div 
+        className="absolute left-[-6px] md:left-[-2px] top-1.5 w-6 h-6 md:w-8 md:h-8 rounded-full animate-ping opacity-20 pointer-events-none"
+        style={{ backgroundColor: accentColor }}
+      />
       <div
-        className="absolute left-0 top-1.5 w-4 h-4 md:w-6 md:h-6 rounded-full border-4 border-zinc-950 shadow-md z-10 transition-all duration-300 group-hover:scale-125"
+        className="absolute left-0 md:left-[4px] top-2.5 w-4 h-4 md:w-5 md:h-5 rounded-full border-2 border-zinc-950 shadow-md z-10 transition-all duration-300 group-hover:scale-125 flex items-center justify-center"
         style={{ 
           backgroundColor: accentColor,
-          boxShadow: `0 0 0 0px ${accentColor}40`,
+          boxShadow: `0 0 10px ${accentColor}80`,
         }}
         title={item.type}
-      />
+      >
+        <div className="w-1.5 h-1.5 rounded-full bg-zinc-950" />
+      </div>
 
-      {/* Content card - Optimized: removed backdrop-blur-sm to avoid rendering bottleneck under mask-image, swapped transition-all with targeted CSS transitions */}
-      <div className="flex flex-col bg-zinc-900 bg-opacity-35 hover:bg-opacity-55 p-5 md:p-6 rounded-2xl border border-zinc-800/80 hover:border-zinc-700 shadow-sm hover:shadow-md transition-[border-color,background-color,transform,box-shadow] duration-300 hover:translate-x-1">
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-          {/* Year Badge */}
-          <span 
-            className="text-xs font-mono font-bold px-3 py-1 rounded-full text-white tracking-wider"
-            style={{ backgroundColor: accentColor }}
-          >
-            {item.year}
-          </span>
-          <span className="text-[10px] font-mono font-semibold text-zinc-400 capitalize bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
-            {item.type}
-          </span>
+      {/* High-fidelity Workstation IDE-File Module Card */}
+      <div className="flex flex-col overflow-hidden bg-zinc-900/40 hover:bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700/80 shadow-md hover:shadow-xl rounded-2xl transition-[border-color,background-color,transform,box-shadow] duration-300 hover:translate-x-1.5">
+        
+        {/* IDE Editor Tab Header Bar */}
+        <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-950/60 border-b border-zinc-800/80">
+          <div className="flex items-center gap-2">
+            {/* Mini icon indicators */}
+            <span className="text-xs select-none">
+              {item.type === "work" ? "💼" : "🎓"}
+            </span>
+            {/* Tab File Title */}
+            <span className="font-mono text-xs font-semibold text-zinc-300 select-none">
+              {item.type === "work" ? `experience_${item.id}.sh` : `degree_${item.id}.json`}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {/* Git Branch Info */}
+            <span className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] text-zinc-500 select-none">
+              <svg className="w-3 h-3 text-zinc-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+              main*
+            </span>
+            
+            {/* Year Badge */}
+            <span 
+              className="text-[10px] font-mono font-bold px-2 py-0.5 rounded text-white tracking-wider select-none shadow-sm"
+              style={{ backgroundColor: `${accentColor}cc` }}
+            >
+              {item.year}
+            </span>
+          </div>
         </div>
 
-        <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-indigo-300 transition-colors duration-200">
-          {item.title}
-        </h3>
-        
-        <p className="text-xs font-mono font-semibold text-zinc-500 mt-1">
-          @ {item.institution}
-        </p>
-
-        <p className="text-sm font-normal text-zinc-400 mt-3 leading-relaxed">
-          {item.description}
-        </p>
-
-        {/* Skills Tag Cloud */}
-        {item.skills && item.skills.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-4">
-            {item.skills.map((skill, index) => (
-              <span
-                key={index}
-                className="text-[10px] font-mono font-semibold bg-zinc-900/60 text-zinc-300 px-2.5 py-1 rounded-lg border border-zinc-800/80 hover:bg-zinc-800 hover:border-zinc-700 hover:text-white transition-[border-color,background-color,text-color] duration-150"
-              >
-                {skill}
-              </span>
-            ))}
+        {/* Code Layout Grid with Gutter & Content */}
+        <div className="flex">
+          {/* Left Gutter: Code Line Numbers (Resembles an IDE editor workspace) */}
+          <div className="hidden sm:flex flex-col items-end px-3 py-5 bg-zinc-950/20 border-r border-zinc-800/40 text-[10px] font-mono text-zinc-600 select-none min-w-[36px] tracking-wider leading-[1.65]">
+            <span>01</span>
+            <span>02</span>
+            <span>03</span>
+            <span>04</span>
+            {item.skills && item.skills.length > 0 && <span>05</span>}
           </div>
-        )}
+
+          {/* Right Area: Core Text Content */}
+          <div className="flex-1 p-5 sm:p-6">
+            <div className="flex flex-col">
+              
+              {/* Institution and Code Directory path */}
+              <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 mb-1.5 select-none uppercase tracking-wider">
+                <span>{item.type === "work" ? "work" : "edu"}</span>
+                <span>/</span>
+                <span className="text-zinc-400 font-semibold">{item.institution}</span>
+              </div>
+
+              {/* Card Title */}
+              <h3 className="text-base md:text-lg font-bold text-white group-hover:text-indigo-300 transition-colors duration-200 leading-snug">
+                {item.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-xs md:text-sm font-normal text-zinc-400 mt-2.5 leading-relaxed">
+                {item.description}
+              </p>
+
+              {/* Technology Tags styled as code hashtags */}
+              {item.skills && item.skills.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-zinc-800/40">
+                  {item.skills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="text-[10px] font-mono font-semibold bg-zinc-950/60 text-zinc-300 px-2 py-0.5 rounded border border-zinc-800/60 hover:bg-zinc-800/40 hover:border-zinc-600 hover:text-white transition-all duration-150"
+                    >
+                      #{skill.toLowerCase().replace(/\s+/g, "_")}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
