@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { GoArrowUpRight } from 'react-icons/go';
 
+import githubIcon from '../assets/icons/github.svg';
+import playstoreIcon from '../assets/icons/playstore.svg';
+
 export interface ProjectType {
     id: number;
     title: string;
@@ -94,12 +97,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                     className="group/btn flex bg-white w-10 h-10 rounded-full justify-center items-center hover:bg-emerald-50 transition-all duration-300 shadow-md cursor-pointer"
                                     title="Download on Play Store"
                                 >
-                                    <svg className="w-4 h-4 text-zinc-950 group-hover/btn:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M5 3.29c-.1.09-.18.23-.18.41v16.6c0 .18.08.32.18.41l.06.06 9.31-9.31v-.12L5.06 2.23 5 2.29z"/>
-                                        <path d="M17.85 12.41l-3.48-3.48v-.12l3.48-3.48.08.05 4.1 2.33c1.17.66 1.17 1.75 0 2.42l-4.1 2.33c-.08.05-.13.03-.16 0z"/>
-                                        <path d="M14.37 8.81L5.06 2.23c-.3-.17-.71-.13-.97.13l10.28 10.28-1.02-3.83z"/>
-                                        <path d="M14.37 15.19l-10 10c.26.26.67.3.97.13l9.31-6.58-1.28-3.55z"/>
-                                    </svg>
+                                    <img 
+                                        src={playstoreIcon} 
+                                        alt="Play Store" 
+                                        className="w-5 h-5 group-hover/btn:scale-110 transition-transform select-none pointer-events-none" 
+                                    />
                                 </a>
                             )}
 
@@ -112,9 +114,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                     className="group/btn flex bg-white w-10 h-10 rounded-full justify-center items-center hover:bg-slate-100 transition-all duration-300 shadow-md cursor-pointer"
                                     title="View Source Code on GitHub"
                                 >
-                                    <svg className="w-5 h-5 text-zinc-950 group-hover/btn:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"/>
-                                    </svg>
+                                    <img 
+                                        src={githubIcon} 
+                                        alt="GitHub" 
+                                        className="w-5 h-5 group-hover/btn:scale-110 transition-transform select-none pointer-events-none" 
+                                    />
                                 </a>
                             )}
 
@@ -228,9 +232,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                                 href={project.playstore} 
                                                 target='_blank' 
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200 shadow-sm"
                                             >
-                                                Play Store
+                                                <img src={playstoreIcon} alt="" className="w-3.5 h-3.5 invert select-none pointer-events-none" />
+                                                <span>Play Store</span>
                                             </a>
                                         )}
                                         {project.github && (
@@ -238,9 +243,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                                 href={project.github} 
                                                 target='_blank' 
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-[11px] font-bold rounded-lg border border-zinc-700 transition-colors duration-200"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-[11px] font-bold rounded-lg border border-zinc-700 transition-colors duration-200 shadow-sm"
                                             >
-                                                GitHub
+                                                <img src={githubIcon} alt="" className="w-3.5 h-3.5 invert select-none pointer-events-none" />
+                                                <span>GitHub</span>
                                             </a>
                                         )}
                                         {project.website && (
@@ -248,7 +254,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                                 href={project.website} 
                                                 target='_blank' 
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200"
+                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200 shadow-sm"
                                             >
                                                 Website
                                             </a>
