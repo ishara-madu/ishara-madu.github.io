@@ -157,7 +157,7 @@ export default function InteractiveTerminal() {
       return (
         <div key={index} className="flex items-center">
           {renderPrompt()}
-          <span className="text-white font-bold whitespace-pre">{item.text}</span>
+          <span className="text-white font-bold whitespace-pre-wrap break-all">{item.text}</span>
         </div>
       );
     }
@@ -216,7 +216,7 @@ export default function InteractiveTerminal() {
 
       <form onSubmit={handleCommandSubmit} className="flex items-center relative pt-1">
         {renderPrompt()}
-        <span className="text-white font-bold whitespace-pre">{input}</span>
+        <span className="text-white font-bold whitespace-pre-wrap break-all">{input}</span>
         {/* Blinking block terminal cursor */}
         <span className="w-1.5 h-3.5 bg-emerald-400 animate-pulse ml-0.5 select-none" style={{ animationDuration: '0.8s' }}></span>
         
@@ -227,7 +227,7 @@ export default function InteractiveTerminal() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="opacity-0 absolute inset-0 w-full h-full cursor-text outline-none"
+          className="opacity-0 absolute inset-0 w-full h-full cursor-text outline-none text-base"
           autoFocus
           autoComplete="off"
           spellCheck="false"

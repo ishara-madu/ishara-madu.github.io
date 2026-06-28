@@ -278,7 +278,7 @@ export default function Projects() {
             </div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 justify-items-center gap-6 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-6 w-full">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
