@@ -74,14 +74,14 @@ export default function Contact() {
         </div>
 
         {/* Content Columns split */}
-        <div className="flex flex-col lg:flex-row justify-between gap-6 w-full items-start lg:items-center">
+        <div className="flex flex-col lg:flex-row justify-between gap-6 w-full items-start">
           
           {/* Left Column: Terminal Config Editor */}
           <div className="flex flex-col max-w-lg select-none w-full lg:w-auto">
             <span className="font-mono text-xs text-indigo-700 font-bold mb-1.5 block tracking-wider">
               // contact_profile.yaml
             </span>
-            <div className="bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-4 font-mono text-[11px] sm:text-xs text-slate-800 space-y-1.5 shadow-sm">
+            <div className="bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-5 font-mono text-[11px] sm:text-xs text-slate-800 space-y-1.5 shadow-sm">
               <div><span className="text-slate-400">01</span>  <span className="text-indigo-700 font-bold">developer:</span> <span className="text-emerald-700">"Ishara Madusanka"</span></div>
               <div><span className="text-slate-400">02</span>  <span className="text-indigo-700 font-bold">status:</span> <span className="text-emerald-700">"open_to_collaborations"</span></div>
               <div><span className="text-slate-400">03</span>  <span className="text-indigo-700 font-bold">location:</span> <span className="text-emerald-700">"Sri Lanka"</span></div>
@@ -90,14 +90,14 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Dynamic Send Message Form & platform badges */}
-          <div className="flex flex-col gap-5 w-full lg:w-auto items-stretch lg:items-end justify-center">
+          <div className="flex flex-col gap-4 w-full lg:w-[380px] items-stretch justify-start">
             
             {/* Terminal Style Send Message Input Box */}
-            <form onSubmit={handleSendMessage} className="flex flex-col bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-4 font-mono text-[11px] sm:text-xs text-slate-800 space-y-2.5 shadow-sm w-full lg:w-[340px]">
+            <form onSubmit={handleSendMessage} className="flex flex-col bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-5 sm:p-6 font-mono text-[11px] sm:text-xs text-slate-800 space-y-3.5 shadow-sm w-full">
               <div className="text-indigo-750 font-bold select-none">$ ./send_message.sh</div>
               
               {/* Name Input */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-indigo-700 font-bold select-none">name:</span>
                 <input 
                   type="text" 
@@ -105,12 +105,12 @@ export default function Contact() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 text-slate-850 placeholder-slate-400/75 flex-grow"
+                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 py-0.5 text-slate-850 placeholder-slate-400/70 flex-grow"
                 />
               </div>
 
               {/* Email Input */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-indigo-700 font-bold select-none">email:</span>
                 <input 
                   type="email" 
@@ -118,27 +118,27 @@ export default function Contact() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 text-slate-850 placeholder-slate-400/75 flex-grow"
+                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 py-0.5 text-slate-850 placeholder-slate-400/70 flex-grow"
                 />
               </div>
 
               {/* Message Input */}
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1.5">
                 <span className="text-indigo-700 font-bold select-none">message:</span>
                 <textarea 
                   placeholder="write your inquiry or message..."
                   required
-                  rows={2}
+                  rows={3}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="bg-transparent border border-slate-300 focus:border-indigo-500 outline-none p-1.5 rounded-lg text-slate-850 placeholder-slate-400/75 w-full h-14 resize-none leading-normal"
+                  className="bg-transparent border border-slate-300 focus:border-indigo-500 outline-none p-2.5 rounded-xl text-slate-850 placeholder-slate-400/70 w-full h-24 resize-none leading-relaxed"
                 />
               </div>
 
               {/* Submit Action Button */}
               <button 
                 type="submit"
-                className="w-full py-1.5 bg-zinc-900 hover:bg-zinc-950 text-white rounded-xl font-bold shadow-sm hover:shadow active:scale-98 transition-all duration-200 text-center"
+                className="w-full py-2 bg-zinc-900 hover:bg-zinc-950 text-white rounded-xl font-bold shadow-sm hover:shadow active:scale-98 transition-all duration-200 text-center font-mono"
               >
                 sh send_message.sh
               </button>
