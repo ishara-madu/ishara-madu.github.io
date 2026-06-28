@@ -28,7 +28,7 @@ export default function Testimonials() {
     
     // Fetch all open issues to support title-based filtering fallback
     const issuesApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=open`;
-    const newIssueUrl = `https://github.com/ishara-madu/ishara-madu.github.io/issues/new?labels=testimonial&title=Testimonial+from+Your+Name&body=Write+your+recommendation+here.+You+can+also+specify+your+job+title/role.`;
+    const newIssueUrl = `https://github.com/ishara-madu/ishara-madu.github.io/issues/new?labels=testimonial&title=Testimonial+from+[Your+Name]&body=Write+your+recommendation+here.+You+can+also+specify+your+job+title/role.`;
 
     useEffect(() => {
         const fetchTestimonials = async () => {
