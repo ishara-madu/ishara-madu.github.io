@@ -27,7 +27,7 @@ function TechIcon({ name }: { name: string }) {
     // Redux Toolkit
     if (n.includes("redux")) {
         return (
-            <svg className="w-3.5 h-3.5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-purple-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
         );
@@ -61,16 +61,36 @@ function TechIcon({ name }: { name: string }) {
             </svg>
         );
     }
-    // Kotlin
-    if (n.includes("kotlin")) {
+    // Kotlin / KMP
+    if (n.includes("kotlin") || n.includes("kmp")) {
         return (
-            <svg className="w-3.5 h-3.5 text-indigo-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="w-3.5 h-3.5 text-violet-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
             </svg>
         );
     }
-    // Android SDK
-    if (n.includes("android")) {
+    // Java
+    if (n.includes("java") && !n.includes("javascript")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+                <line x1="6" y1="2" x2="6" y2="4" />
+                <line x1="10" y1="2" x2="10" y2="4" />
+                <line x1="14" y1="2" x2="14" y2="4" />
+            </svg>
+        );
+    }
+    // Python
+    if (n.includes("python")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                <path d="M12 6v6l4 2" />
+            </svg>
+        );
+    }
+    // Android SDK / Room Database / SQLite
+    if (n.includes("android") || n.includes("room")) {
         return (
             <svg className="w-3.5 h-3.5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
@@ -107,31 +127,29 @@ function TechIcon({ name }: { name: string }) {
             </svg>
         );
     }
-    // REST APIs
-    if (n.includes("api") || n.includes("rest")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <line x1="12" y1="2" x2="12" y2="22" />
-            </svg>
-        );
-    }
-    // PostgreSQL
-    if (n.includes("postgres")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
-            </svg>
-        );
-    }
     // Firebase
     if (n.includes("firebase")) {
         return (
             <svg className="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+            </svg>
+        );
+    }
+    // MongoDB
+    if (n.includes("mongo")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2c-3.87 0-7 3.13-7 7 0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
+            </svg>
+        );
+    }
+    // MySQL / PostgreSQL / Databases
+    if (n.includes("mysql") || n.includes("postgres") || n.includes("database")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3" />
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
             </svg>
         );
     }
@@ -146,6 +164,55 @@ function TechIcon({ name }: { name: string }) {
             </svg>
         );
     }
+    // n8n / Automation
+    if (n.includes("n8n") || n.includes("automation")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+        );
+    }
+    // Figma
+    if (n.includes("figma")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-rose-450" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" />
+                <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" />
+                <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5a3.5 3.5 0 0 1-3.5-3.5z" />
+                <path d="M12 9h3.5a3.5 3.5 0 1 1-3.5 3.5V9z" />
+                <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 0 1-3.5 3.5c-1.93 0-3.5-1.57-3.5-3.5z" />
+            </svg>
+        );
+    }
+    // MS Excel
+    if (n.includes("excel")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-green-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M9 3v18" />
+                <path d="M3 9h18" />
+                <path d="M3 15h18" />
+            </svg>
+        );
+    }
+    // Google Gemini API / AI
+    if (n.includes("gemini") || n.includes("ai")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+        );
+    }
+    // REST APIs / Integrations / NowPayments / AdMob / RevenueCat
+    if (n.includes("api") || n.includes("rest") || n.includes("payment") || n.includes("admob") || n.includes("revenuecat")) {
+        return (
+            <svg className="w-3.5 h-3.5 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <line x1="12" y1="2" x2="12" y2="22" />
+            </svg>
+        );
+    }
     // Vite
     if (n.includes("vite")) {
         return (
@@ -155,8 +222,8 @@ function TechIcon({ name }: { name: string }) {
             </svg>
         );
     }
-    // PNPM
-    if (n.includes("pnpm")) {
+    // Package Managers
+    if (n.includes("pnpm") || n.includes("npm") || n.includes("yarn")) {
         return (
             <svg className="w-3.5 h-3.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="7" height="7" />
@@ -179,7 +246,7 @@ function TechIcon({ name }: { name: string }) {
 function ServiceIcon({ title }: { title: string }) {
     const t = title.toLowerCase();
     
-    // Cross-Platform Mobile Apps
+    // Mobile App Development
     if (t.includes("mobile")) {
         return (
             <svg className="w-4 h-4 text-emerald-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -198,8 +265,8 @@ function ServiceIcon({ title }: { title: string }) {
             </svg>
         );
     }
-    // API & Backend Integration
-    if (t.includes("api") || t.includes("backend")) {
+    // Backend & Cloud Architecture
+    if (t.includes("backend") || t.includes("cloud")) {
         return (
             <svg className="w-4 h-4 text-violet-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -208,12 +275,11 @@ function ServiceIcon({ title }: { title: string }) {
             </svg>
         );
     }
-    // Figma to clean code (Layout/Wireframe)
+    // AI Integration & Automation
     return (
-        <svg className="w-4 h-4 text-orange-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <path d="M21 12H3" />
-            <path d="M12 3v18" />
+        <svg className="w-4 h-4 text-amber-500 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 6v6l4 2" />
         </svg>
     );
 }
@@ -225,14 +291,16 @@ function getFileExtension(skill: string): string {
     if (s.includes("typescript")) return ".ts";
     if (s.includes("javascript") || s.includes("node") || s.includes("express")) return ".js";
     if (s.includes("kotlin")) return ".kt";
+    if (s.includes("java") && !s.includes("javascript")) return ".java";
+    if (s.includes("python")) return ".py";
     if (s.includes("android")) return ".xml";
-    if (s.includes("postgres")) return ".sql";
-    if (s.includes("supabase")) return ".db";
+    if (s.includes("mysql") || s.includes("postgres")) return ".sql";
+    if (s.includes("supabase") || s.includes("db") || s.includes("mongo")) return ".db";
     if (s.includes("tailwind") || s.includes("css")) return ".css";
     if (s.includes("html")) return ".html";
-    if (s.includes("git")) return ".git";
-    if (s.includes("firebase") || s.includes("expo")) return ".json";
-    if (s.includes("api") || s.includes("pnpm")) return ".yaml";
+    if (s.includes("git") || s.includes("github")) return ".git";
+    if (s.includes("firebase") || s.includes("expo") || s.includes("figma") || s.includes("n8n")) return ".json";
+    if (s.includes("api") || s.includes("pnpm") || s.includes("npm") || s.includes("yarn")) return ".yaml";
     if (s.includes("vite")) return ".config.ts";
     return ".txt";
 }
@@ -242,8 +310,9 @@ function getServiceFileName(title: string): string {
     const t = title.toLowerCase();
     if (t.includes("mobile")) return "mobile_development.kt";
     if (t.includes("web") || t.includes("full-stack")) return "web_development.tsx";
-    if (t.includes("api") || t.includes("backend")) return "backend_api.go";
-    return "layout_conversion.css";
+    if (t.includes("backend") || t.includes("cloud")) return "backend_architecture.db";
+    if (t.includes("automation") || t.includes("ai")) return "workflow_automation.py";
+    return "service_module.ts";
 }
 
 export default function SkillsServices() {
