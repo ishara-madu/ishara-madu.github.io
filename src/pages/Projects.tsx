@@ -55,7 +55,6 @@ export default function Projects() {
           const age = Date.now() - parseInt(cachedTimestamp, 10);
           if (age < CACHE_DURATION) {
             setProjects(JSON.parse(cachedData));
-            window.dispatchEvent(new Event('projects-updated'));
             setLoading(false);
             return;
           }
@@ -173,14 +172,12 @@ export default function Projects() {
 
         // 5. Save to state and update cache
         setProjects(parsedProjects);
-        window.dispatchEvent(new Event('projects-updated'));
         localStorage.setItem(CACHE_KEY, JSON.stringify(parsedProjects));
         localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
 
       } catch (err) {
         console.warn("GitHub fetch failed, loading local projects fallback.", err);
         setProjects(getLocalFallback());
-        window.dispatchEvent(new Event('projects-updated'));
       } finally {
         setLoading(false);
       }

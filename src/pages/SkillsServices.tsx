@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import skillsData from "../data/skills.json";
-import projectsData from "../data/projects.json";
 import { LuFileCode, LuFolder, LuGitBranch } from "react-icons/lu";
 
 function TechIcon({ name }: { name: string }) {
@@ -248,108 +246,7 @@ function getServiceFileName(title: string): string {
     return "layout_conversion.css";
 }
 
-// Helper to extract unique technologies dynamically from cached projects or local projects data
-function getDynamicSkills() {
-    let projects: any[] = [];
-    try {
-        const cached = localStorage.getItem('portfolio_github_projects');
-        if (cached) {
-            projects = JSON.parse(cached);
-        }
-    } catch (e) {
-        console.error("Failed to parse cached projects", e);
-    }
-    
-    if (!projects || projects.length === 0) {
-        projects = projectsData.map(p => ({
-            ...p,
-            tags: p.tags || []
-        }));
-    }
-    
-    const allTagsSet = new Set<string>();
-    projects.forEach(p => {
-        if (p.tags && Array.isArray(p.tags)) {
-            p.tags.forEach((tag: string) => {
-                if (tag && tag.trim()) {
-                    allTagsSet.add(tag.trim());
-                }
-            });
-        }
-    });
-
-    const uniqueTags = Array.from(allTagsSet);
-
-    // Group tags into Frontend, Mobile, Backend, Tools
-    const categories: { category: string; items: string[] }[] = [
-        { category: "Frontend", items: [] },
-        { category: "Mobile", items: [] },
-        { category: "Backend", items: [] },
-        { category: "Tools", items: [] }
-    ];
-
-    uniqueTags.forEach(tag => {
-        const t = tag.toLowerCase();
-        
-        if (
-            t.includes("kotlin") || 
-            t.includes("android") || 
-            t.includes("ios") || 
-            t.includes("swift") || 
-            t.includes("flutter") || 
-            t.includes("expo") || 
-            t.includes("react native") || 
-            t.includes("mobile")
-        ) {
-            categories[1].items.push(tag);
-        } else if (
-            t.includes("node") || 
-            t.includes("express") || 
-            t.includes("supabase") || 
-            t.includes("firebase") || 
-            t.includes("postgres") || 
-            t.includes("sql") || 
-            t.includes("db") || 
-            t.includes("mongo") || 
-            t.includes("api") || 
-            t.includes("rest") || 
-            t.includes("graphql") || 
-            t.includes("go") || 
-            t.includes("python") || 
-            t.includes("backend") || 
-            t.includes("full-stack")
-        ) {
-            categories[2].items.push(tag);
-        } else if (
-            t.includes("git") || 
-            t.includes("github") || 
-            t.includes("pnpm") || 
-            t.includes("npm") || 
-            t.includes("yarn") || 
-            t.includes("docker") || 
-            t.includes("vercel") || 
-            t.includes("pages") || 
-            t.includes("tools")
-        ) {
-            categories[3].items.push(tag);
-        } else {
-            categories[0].items.push(tag);
-        }
-    });
-
-    return categories.filter(cat => cat.items.length > 0);
-}
-
 export default function SkillsServices() {
-    const [skills, setSkills] = useState(getDynamicSkills());
-
-    useEffect(() => {
-        const handleUpdate = () => {
-            setSkills(getDynamicSkills());
-        };
-        window.addEventListener("projects-updated", handleUpdate);
-        return () => window.removeEventListener("projects-updated", handleUpdate);
-    }, []);
     return (
         <div 
             id="skills" 
@@ -398,7 +295,7 @@ export default function SkillsServices() {
 
                         {/* Folder tree representation */}
                         <div className="flex flex-col space-y-6">
-                            {skills.map((category) => (
+                            {skillsData.skills.map((category) => (
                                 <div key={category.category} className="flex flex-col">
                                     {/* Sub-folder Directory Path */}
                                     <div className="flex items-center gap-1.5 mb-3 font-mono text-xs text-indigo-700 font-bold select-none">
