@@ -15,33 +15,6 @@ interface GitHubIssue {
     };
 }
 
-const fallbackTestimonials: GitHubIssue[] = [
-    {
-        id: 101,
-        title: "Testimonial from Dilshan Perera",
-        body: "Working with Ishara was a great experience. He is highly skilled in React Native and Android SDK. He optimized our application to achieve zero-latency performance and delivered clean, readable code on time. Highly recommended!",
-        html_url: "#",
-        created_at: "2026-06-15T08:00:00Z",
-        user: {
-            login: "dilshan-p",
-            avatar_url: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&h=150&q=80",
-            html_url: "#"
-        }
-    },
-    {
-        id: 102,
-        title: "Testimonial from Sarah Fernando",
-        body: "Ishara is an exceptionally creative developer. He transformed our complex Figma wireframes into high-fidelity, responsive web applications. His attention to micro-interactions and performance is stellar.",
-        html_url: "#",
-        created_at: "2026-06-20T10:30:00Z",
-        user: {
-            login: "sarah-fernando",
-            avatar_url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-            html_url: "#"
-        }
-    }
-];
-
 export default function Testimonials() {
     const [testimonials, setTestimonials] = useState<GitHubIssue[]>([]);
     const [loading, setLoading] = useState(true);
@@ -52,7 +25,9 @@ export default function Testimonials() {
 
     const repoOwner = "ishara-madu";
     const repoName = "ishara-madu.github.io";
-    const issuesApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?labels=testimonial&state=open`;
+    
+    // Fetch all open issues to support title-based filtering fallback
+    const issuesApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=open`;
     const newIssueUrl = `https://github.com/ishara-madu/ishara-madu.github.io/issues/new?labels=testimonial&title=Testimonial+from+Your+Name&body=Write+your+recommendation+here.+You+can+also+specify+your+job+title/role.`;
 
     useEffect(() => {
@@ -62,17 +37,18 @@ export default function Testimonials() {
                 if (!res.ok) throw new Error("Failed to fetch");
                 const data = await res.json();
                 
-                // GitHub returns pull requests in the issues API, filter them out if any
-                const filteredIssues = data.filter((issue: any) => !issue.pull_request) as GitHubIssue[];
+                // Filter issues: must not be a PR, and must have 'testimonial' in title or labels
+                const filteredIssues = data.filter((issue: any) => {
+                    if (issue.pull_request) return false;
+                    const hasLabel = issue.labels && issue.labels.some((l: any) => l.name.toLowerCase() === 'testimonial');
+                    const hasTitle = issue.title && issue.title.toLowerCase().includes('testimonial');
+                    return hasLabel || hasTitle;
+                }) as GitHubIssue[];
                 
-                if (filteredIssues.length > 0) {
-                    setTestimonials(filteredIssues);
-                } else {
-                    setTestimonials(fallbackTestimonials);
-                }
+                setTestimonials(filteredIssues);
             } catch (err) {
-                console.error("Failed to load testimonials from GitHub issues. Falling back to local data.", err);
-                setTestimonials(fallbackTestimonials);
+                console.error("Failed to load testimonials from GitHub issues.", err);
+                setTestimonials([]);
             } finally {
                 setLoading(false);
             }
@@ -166,6 +142,12 @@ export default function Testimonials() {
                             <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
                             <span>Fetching verified reviews from GitHub repository api...</span>
                         </div>
+                    </div>
+                ) : testimonials.length === 0 ? (
+                    /* Empty State - No testimonials found */
+                    <div className="w-full bg-white/60 border border-slate-200/50 rounded-3xl p-8 font-mono text-xs text-slate-500 space-y-2 select-none shadow-inner text-center py-12">
+                        <div className="text-slate-400">// no public recommendations registered on git yet</div>
+                        <div className="text-slate-500 text-sm">Run 'write_testimonial.sh' to submit a client review!</div>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
