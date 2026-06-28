@@ -67,9 +67,9 @@ export default function Projects() {
         const repos = await res.json();
         if (!Array.isArray(repos)) throw new Error("Invalid response format");
 
-        // 3. Filter repos: stargazers_count >= 1 OR contains 'portfolio' topic
+        // 3. Filter repos: stargazers_count >= 2 OR contains 'portfolio' topic
         const filteredRepos = repos.filter((repo: any) => {
-          const hasStars = repo.stargazers_count && repo.stargazers_count >= 1;
+          const hasStars = repo.stargazers_count && repo.stargazers_count >= 2;
           const hasTopics = repo.topics && (
             repo.topics.includes('portfolio') || 
             repo.topics.includes('portfolio-project')
