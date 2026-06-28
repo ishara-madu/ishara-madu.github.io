@@ -30,11 +30,20 @@ export default function Projects() {
   useEffect(() => {
     const fetchGitHubProjects = async () => {
       try {
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const urlParams = new URLSearchParams(window.location.search);
+        const forceRefresh = urlParams.get('refresh') === 'true' || urlParams.get('nocache') === 'true';
+
+        if (forceRefresh) {
+          const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+        }
+
         // 1. Check local storage cache first to avoid rate-limiting
         const cachedData = localStorage.getItem(CACHE_KEY);
         const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
         
-        if (cachedData && cachedTimestamp) {
+        if (cachedData && cachedTimestamp && !isLocalhost && !forceRefresh) {
           const age = Date.now() - parseInt(cachedTimestamp, 10);
           if (age < CACHE_DURATION) {
             setProjects(JSON.parse(cachedData));
