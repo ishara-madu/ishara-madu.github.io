@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { LuFolder, LuGitBranch, LuMessageSquare, LuCheck, LuGitPullRequest, LuPlus } from 'react-icons/lu';
 
 interface GitHubIssue {
@@ -44,6 +45,10 @@ const fallbackTestimonials: GitHubIssue[] = [
 export default function Testimonials() {
     const [testimonials, setTestimonials] = useState<GitHubIssue[]>([]);
     const [loading, setLoading] = useState(true);
+    const { ref, inView } = useInView({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
 
     const repoOwner = "ishara-madu";
     const repoName = "ishara-madu.github.io";
@@ -85,7 +90,10 @@ export default function Testimonials() {
     return (
         <div
             id="testimonials"
-            className="flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-slate-200 border-opacity-80 shadow-md bg-slate-50/70 animate-slide-up"
+            ref={ref}
+            className={`flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-slate-200 border-opacity-80 shadow-md bg-slate-50/70 transition-all duration-700 ${
+                inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            }`}
         >
             <div className="flex h-auto w-full p-6 md:p-10 flex-col bg-[linear-gradient(to_right,#80808006_1px,transparent_1px),linear-gradient(to_bottom,#80808006_1px,transparent_1px)] bg-[size:16px_16px]">
                 
@@ -142,7 +150,7 @@ export default function Testimonials() {
                         href={newIssueUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-2.5 bg-indigo-650 hover:bg-indigo-550 text-white font-mono text-xs font-bold rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-98 transition-all duration-200 select-none flex-shrink-0"
+                        className="flex items-center gap-2 px-5 py-2.5 bg-zinc-900 hover:bg-zinc-950 text-white font-mono text-xs font-bold rounded-2xl shadow-md hover:shadow-lg border border-zinc-800/80 hover:-translate-y-0.5 active:scale-98 transition-all duration-200 select-none flex-shrink-0"
                     >
                         <LuPlus className="w-4 h-4" />
                         <span>write_testimonial.sh</span>
