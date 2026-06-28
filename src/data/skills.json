@@ -6,7 +6,7 @@
     },
     {
       "category": "Web & Mobile Frameworks",
-      "items": ["Next.js", "React (v18)", "React Native", "Kotlin Multiplatform (KMP)", "Tailwind CSS", "shadcn-ui"]
+      "items": ["Next.js", "React (v18)", "React Native", "Kotlin Multiplatform (KMP)", "Tailwind CSS"]
     },
     {
       "category": "Databases & Cloud",
