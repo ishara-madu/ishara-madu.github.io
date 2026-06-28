@@ -249,7 +249,7 @@ export default function Journey() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-355 ${
-        hasHover ? "cursor-none" : ""
+        hasHover && isHovered ? "cursor-none [&_*]:!cursor-none" : ""
       }`}
     >
       {/* Spotlight Gradient Background Overlay (Only active when device supports hover) */}
