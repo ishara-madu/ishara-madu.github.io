@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { LuFolder, LuGitBranch, LuMessageSquare, LuCheck, LuGitPullRequest, LuPlus } from 'react-icons/lu';
 
 interface GitHubIssue {
@@ -45,10 +44,6 @@ const fallbackTestimonials: GitHubIssue[] = [
 export default function Testimonials() {
     const [testimonials, setTestimonials] = useState<GitHubIssue[]>([]);
     const [loading, setLoading] = useState(true);
-    const { ref, inView } = useInView({
-        threshold: 0.1,
-        triggerOnce: true,
-    });
 
     const repoOwner = "ishara-madu";
     const repoName = "ishara-madu.github.io";
@@ -90,10 +85,7 @@ export default function Testimonials() {
     return (
         <div
             id="testimonials"
-            ref={ref}
-            className={`flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-slate-200 border-opacity-80 shadow-md bg-slate-50/70 transition-all duration-700 ${
-                inView ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-            }`}
+            className="flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-slate-200 border-opacity-80 shadow-md bg-slate-50/70 animate-slide-up"
         >
             <div className="flex h-auto w-full p-6 md:p-10 flex-col bg-[linear-gradient(to_right,#80808006_1px,transparent_1px),linear-gradient(to_bottom,#80808006_1px,transparent_1px)] bg-[size:16px_16px]">
                 
