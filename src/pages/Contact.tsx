@@ -74,10 +74,10 @@ export default function Contact() {
         </div>
 
         {/* Content Columns split */}
-        <div className="flex flex-col lg:flex-row justify-between gap-6 w-full items-start">
+        <div className="flex flex-col lg:flex-row justify-between gap-6 w-full items-stretch">
           
           {/* Left Column: Terminal Config Editor */}
-          <div className="flex flex-col max-w-lg select-none w-full lg:w-auto gap-4">
+          <div className="flex flex-col max-w-lg select-none w-full lg:w-auto justify-between gap-4 lg:gap-0">
             <div className="flex flex-col">
               <span className="font-mono text-xs text-indigo-700 font-bold mb-1.5 block tracking-wider">
                 // contact_profile.yaml
@@ -87,11 +87,17 @@ export default function Contact() {
                 <div><span className="text-slate-400">02</span>  <span className="text-indigo-700 font-bold">status:</span> <span className="text-emerald-700">"open_to_collaborations"</span></div>
                 <div><span className="text-slate-400">03</span>  <span className="text-indigo-700 font-bold">location:</span> <span className="text-emerald-700">"Sri Lanka"</span></div>
                 <div><span className="text-slate-400">04</span>  <span className="text-indigo-700 font-bold">email:</span> <a href={`mailto:${contactData.email}`} className="text-violet-650 font-semibold underline hover:text-violet-750 transition-colors">"{contactData.email}"</a></div>
+                <div><span className="text-slate-400">05</span>  <span className="text-indigo-700 font-bold">role:</span> <span className="text-emerald-700">"Full Stack Developer"</span></div>
+                <div><span className="text-slate-400">06</span>  <span className="text-indigo-700 font-bold">availability:</span> <span className="text-emerald-700">"freelance_or_contract"</span></div>
+                <div><span className="text-slate-400">07</span>  <span className="text-indigo-700 font-bold">timezone:</span> <span className="text-emerald-700">"GMT+5:30"</span></div>
+                <div><span className="text-slate-400">08</span>  <span className="text-indigo-700 font-bold">website:</span> <a href="https://ishara-madu.github.io" target="_blank" rel="noopener noreferrer" className="text-violet-650 font-semibold underline hover:text-violet-750 transition-colors">"https://ishara-madu.github.io"</a></div>
               </div>
             </div>
             
-            {/* Social connection platform links placed on the left */}
-            <ContactLinks />
+            {/* Social connection platform links placed on the left, pushed to bottom on desktop */}
+            <div className="lg:pt-2">
+              <ContactLinks />
+            </div>
           </div>
 
           {/* Right Column: Dynamic Send Message Form */}
