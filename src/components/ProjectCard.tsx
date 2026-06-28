@@ -160,115 +160,110 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     className="fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-[10000] flex justify-center items-center p-4 sm:p-6"
                     onClick={() => setIsModalOpen(false)}
                 >
-                    {/* macOS Style Window Inspector */}
+                    {/* macOS Style Window Inspector (Vertical Layout) */}
                     <div 
-                        className="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto max-h-[90vh] md:max-h-[550px] animate-in fade-in zoom-in-95 duration-200"
+                        className="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-2xl overflow-y-auto max-h-[90vh] shadow-2xl flex flex-col animate-in fade-in zoom-in-95 duration-200 custom-scrollbar"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Left Column: Image Block */}
-                        <div className="w-full md:w-2/5 h-48 md:h-auto relative overflow-hidden flex-shrink-0 border-b md:border-b-0 md:border-r border-zinc-800">
+                        {/* macOS Top Bar Control Panel */}
+                        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800/80 select-none">
+                            <div className="flex gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 cursor-pointer hover:scale-105 active:scale-95 transition-transform" onClick={() => setIsModalOpen(false)} />
+                                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                            </div>
+                            <span className="font-mono text-[10px] text-zinc-500">
+                                inspect_project_details.json
+                            </span>
+                        </div>
+
+                        {/* Top: Full Width Image Block */}
+                        <div className="w-full relative flex justify-center items-center overflow-hidden flex-shrink-0 border-b border-zinc-800 bg-zinc-950 select-none">
                             <img
                                 src={project.image} 
                                 alt={project.title} 
-                                className="w-full h-full object-cover" 
+                                className="w-full h-auto max-h-[260px] sm:max-h-[360px] md:max-h-[400px] object-contain" 
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-zinc-950/60 to-transparent" />
                         </div>
 
-                        {/* Right Column: Code Inspector Details */}
-                        <div className="w-full md:w-3/5 p-6 flex flex-col justify-between overflow-y-auto">
+                        {/* Bottom: Details & Controls */}
+                        <div className="p-6 flex flex-col gap-4">
                             <div>
-                                {/* macOS Top Bar Control Panel */}
-                                <div className="flex items-center justify-between pb-3 mb-4 border-b border-zinc-800/80 select-none">
-                                    <div className="flex gap-1.5">
-                                        <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 cursor-pointer" onClick={() => setIsModalOpen(false)} />
-                                        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                                        <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                                    </div>
-                                    <span className="font-mono text-[10px] text-zinc-500">
-                                        inspect_project_details.json
-                                    </span>
-                                </div>
-
                                 {/* Directory Path */}
                                 <div className="text-[10px] font-mono text-zinc-500 mb-1 select-none">
                                     projects / <span className="text-zinc-400 font-semibold">{project.title.toLowerCase().replace(/\s+/g, "_")}</span>
                                 </div>
 
                                 {/* Title */}
-                                <h2 className="text-xl md:text-2xl font-extrabold text-white tracking-tight mb-3">
+                                <h2 className="text-xl md:text-2xl font-extrabold text-white tracking-tight mb-2">
                                     {project.title}
                                 </h2>
 
-                                {/* Full Description (Scrollable if extremely long) */}
-                                <div className="max-h-[180px] overflow-y-auto pr-2 custom-scrollbar">
-                                    <p className="text-sm font-normal text-zinc-300 leading-relaxed">
-                                        {project.description}
-                                    </p>
-                                </div>
+                                {/* Full Description */}
+                                <p className="text-sm font-normal text-zinc-300 leading-relaxed select-text">
+                                    {project.description}
+                                </p>
                             </div>
 
-                            <div>
-                                {/* Technology tags list */}
-                                {project.tags && project.tags.length > 0 && (
-                                    <div className="flex flex-wrap gap-1.5 mt-5 mb-5 pt-3 border-t border-zinc-800/60">
-                                        {project.tags.map((tag, index) => (
-                                            <span 
-                                                key={index} 
-                                                className="text-[9px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-950 text-zinc-400 border border-zinc-800"
-                                            >
-                                                #{tag.toLowerCase().replace(/\s+/g, "_")}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
-
-                                {/* Footer Action buttons row */}
-                                <div className="flex items-center justify-between pt-3 border-t border-zinc-800/60">
-                                    {/* Links buttons */}
-                                    <div className="flex gap-2.5 items-center">
-                                        {project.playstore && (
-                                            <a 
-                                                href={project.playstore} 
-                                                target='_blank' 
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200 shadow-sm"
-                                            >
-                                                <img src={playstoreIcon} alt="" className="w-3.5 h-3.5 invert select-none pointer-events-none" />
-                                                <span>Play Store</span>
-                                            </a>
-                                        )}
-                                        {project.github && (
-                                            <a 
-                                                href={project.github} 
-                                                target='_blank' 
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-[11px] font-bold rounded-lg border border-zinc-700 transition-colors duration-200 shadow-sm"
-                                            >
-                                                <img src={githubIcon} alt="" className="w-3.5 h-3.5 invert select-none pointer-events-none" />
-                                                <span>GitHub</span>
-                                            </a>
-                                        )}
-                                        {project.website && (
-                                            <a 
-                                                href={project.website} 
-                                                target='_blank' 
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200 shadow-sm"
-                                            >
-                                                Website
-                                            </a>
-                                        )}
-                                    </div>
-
-                                    {/* Terminate close command */}
-                                    <button 
-                                        onClick={() => setIsModalOpen(false)}
-                                        className="px-3.5 py-1.5 bg-zinc-950/60 hover:bg-zinc-950 text-zinc-400 hover:text-white font-mono text-[11px] font-bold rounded-lg border border-zinc-800 transition-colors duration-200"
-                                    >
-                                        exit()
-                                    </button>
+                            {/* Technology tags list */}
+                            {project.tags && project.tags.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-zinc-800/60">
+                                    {project.tags.map((tag, index) => (
+                                        <span 
+                                            key={index} 
+                                            className="text-[9px] sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-950 text-zinc-400 border border-zinc-800"
+                                        >
+                                            #{tag.toLowerCase().replace(/\s+/g, "_")}
+                                        </span>
+                                    ))}
                                 </div>
+                            )}
+
+                            {/* Footer Action buttons row */}
+                            <div className="flex items-center justify-between pt-3 border-t border-zinc-800/60 mt-1.5">
+                                {/* Links buttons */}
+                                <div className="flex flex-wrap gap-2.5 items-center">
+                                    {project.playstore && (
+                                        <a 
+                                            href={project.playstore} 
+                                            target='_blank' 
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200 shadow-sm"
+                                        >
+                                            <img src={playstoreIcon} alt="" className="w-3.5 h-3.5 invert select-none pointer-events-none" />
+                                            <span>Play Store</span>
+                                        </a>
+                                    )}
+                                    {project.github && (
+                                        <a 
+                                            href={project.github} 
+                                            target='_blank' 
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-white font-mono text-[11px] font-bold rounded-lg border border-zinc-700 transition-colors duration-200 shadow-sm"
+                                        >
+                                            <img src={githubIcon} alt="" className="w-3.5 h-3.5 invert select-none pointer-events-none" />
+                                            <span>GitHub</span>
+                                        </a>
+                                    )}
+                                    {project.website && (
+                                        <a 
+                                            href={project.website} 
+                                            target='_blank' 
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-mono text-[11px] font-bold rounded-lg transition-colors duration-200 shadow-sm"
+                                        >
+                                            Website
+                                        </a>
+                                    )}
+                                </div>
+
+                                {/* Terminate close command */}
+                                <button 
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="px-3.5 py-1.5 bg-zinc-950/60 hover:bg-zinc-950 text-zinc-400 hover:text-white font-mono text-[11px] font-bold rounded-lg border border-zinc-800 transition-colors duration-200"
+                                >
+                                    exit()
+                                </button>
                             </div>
                         </div>
                     </div>
