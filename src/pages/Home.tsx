@@ -142,7 +142,6 @@ export default function Home() {
                 <div className="flex-grow flex flex-col justify-center my-auto min-h-[220px]">
                     <h1 className="text-xl sm:text-3xl md:text-[38px] font-extrabold text-slate-900 leading-normal select-none">
                         {homeData.title}
-                        <span className="inline-block w-1.5 h-5 md:h-7 bg-indigo-600 ml-1.5 animate-pulse select-none" />
                     </h1>
 
                     <div className="relative pl-4 border-l-2 border-indigo-400 mt-12 mb-6 select-none">
