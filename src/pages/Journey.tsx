@@ -88,20 +88,14 @@ export default function Journey() {
   const [isHovered, setIsHovered] = useState(false);
   const [hasHover, setHasHover] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
-  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
     // Detect if device supports hover (desktop mouse pointer vs touch screen)
     if (typeof window !== "undefined") {
       setHasHover(window.matchMedia("(hover: hover)").matches);
     }
-    
-    return () => {
-      if (rafId.current) {
-        cancelAnimationFrame(rafId.current);
-      }
-    };
   }, []);
 
   const handleMouseEnter = () => {
@@ -117,26 +111,20 @@ export default function Journey() {
     const x = e.clientX - rectRef.current.left;
     const y = e.clientY - rectRef.current.top;
     
-    // Optimized: RequestAnimationFrame throttling to coordinate writes exactly with monitor refresh rate
-    if (rafId.current) {
-      cancelAnimationFrame(rafId.current);
+    // 1. Direct GPU position update to the custom cursor container (removes 1-frame latency entirely)
+    // Precise offset calculated from tourch.svg viewBox coordinates (tip is at 97.7% X, 33.2% Y)
+    if (cursorRef.current) {
+      cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-97.7%, -33.2%)`;
     }
 
-    rafId.current = requestAnimationFrame(() => {
-      if (containerRef.current) {
-        containerRef.current.style.setProperty('--mouse-x', `${x}px`);
-        containerRef.current.style.setProperty('--mouse-y', `${y}px`);
-      }
-    });
+    // 2. Set coordinates directly to CSS variables on container for the mask-image radial gradient
+    containerRef.current.style.setProperty('--mouse-x', `${x}px`);
+    containerRef.current.style.setProperty('--mouse-y', `${y}px`);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     rectRef.current = null;
-    if (rafId.current) {
-      cancelAnimationFrame(rafId.current);
-      rafId.current = null;
-    }
   };
 
   // Optimized: will-change added to promote masked content container to GPU compositor layer
@@ -173,14 +161,13 @@ export default function Journey() {
         />
       )}
 
-      {/* Custom user flashlight icon cursor (tourch.svg) */}
+      {/* Custom user flashlight icon cursor (tourch.svg) - GPU translate3d positioning for zero-latency mouse sync */}
       {isHovered && hasHover && (
         <div 
-          className="pointer-events-none absolute z-30 select-none"
+          ref={cursorRef}
+          className="pointer-events-none absolute left-0 top-0 z-30 select-none will-change-transform"
           style={{
-            left: 'var(--mouse-x, -999px)',
-            top: 'var(--mouse-y, -999px)',
-            transform: 'translate(-90%, -10%)', // Aligns the top-right shining bulb head of the SVG with the coordinates
+            transform: 'translate3d(-999px, -999px, 0) translate(-97.7%, -33.2%)',
           }}
         >
           <img 
