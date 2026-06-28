@@ -10,6 +10,7 @@ export interface ProjectType {
     title: string;
     description: string;
     image: string;
+    images?: string[];
     homepage: string;
     textColor: string;
     tags: string[];
@@ -24,6 +25,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { ref, inView } = useInView({
         threshold: 0.1,
         triggerOnce: true,
@@ -31,12 +33,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
     if (!project) return null;
 
+    const images = project.images && project.images.length > 0 ? project.images : [project.image];
+    const showSlider = images.length > 1;
+
+    const handleOpenModal = () => {
+        setCurrentImageIndex(0);
+        setIsModalOpen(true);
+    };
+
     return (
         <>
             {/* Main Interactive Card */}
             <div 
                 ref={ref} 
-                onClick={() => setIsModalOpen(true)}
+                onClick={handleOpenModal}
                 className={`w-full min-h-[260px] sm:min-h-[300px] md:h-[360px] rounded-3xl overflow-hidden relative group shadow-lg hover:shadow-xl cursor-pointer transition-all duration-500 ${
                     inView ? 'animate-slide-up-card opacity-100' : 'opacity-0'
                 }`}
@@ -177,13 +187,65 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                             </span>
                         </div>
 
-                        {/* Top: Full Width Image Block */}
-                        <div className="w-full relative flex justify-center items-center overflow-hidden flex-shrink-0 border-b border-zinc-800 bg-zinc-950 select-none">
+                        {/* Top: Full Width Image Block / Slider */}
+                        <div className="w-full relative flex justify-center items-center overflow-hidden flex-shrink-0 border-b border-zinc-800 bg-zinc-950 select-none group/slider h-[260px] sm:h-[360px] md:h-[400px]">
+                            {/* Slide Image */}
                             <img
-                                src={project.image} 
-                                alt={project.title} 
-                                className="w-full h-auto max-h-[260px] sm:max-h-[360px] md:max-h-[400px] object-contain" 
+                                key={currentImageIndex}
+                                src={images[currentImageIndex]} 
+                                alt={`${project.title} screenshot ${currentImageIndex + 1}`} 
+                                className="w-full h-full object-contain animate-in fade-in duration-300" 
                             />
+
+                            {/* Left Navigation Arrow */}
+                            {showSlider && (
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setCurrentImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+                                    }}
+                                    className="absolute left-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 text-white flex justify-center items-center backdrop-blur-sm opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md hover:scale-105 active:scale-95 z-30"
+                                    title="Previous Image"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                    </svg>
+                                </button>
+                            )}
+
+                            {/* Right Navigation Arrow */}
+                            {showSlider && (
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setCurrentImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+                                    }}
+                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 w-8 h-8 rounded-full bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 text-white flex justify-center items-center backdrop-blur-sm opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md hover:scale-105 active:scale-95 z-30"
+                                    title="Next Image"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                    </svg>
+                                </button>
+                            )}
+
+                            {/* Page Indicator Dots */}
+                            {showSlider && (
+                                <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5 z-30">
+                                    {images.map((_, idx) => (
+                                        <button 
+                                            key={idx}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setCurrentImageIndex(idx);
+                                            }}
+                                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                                                currentImageIndex === idx ? 'bg-white w-3' : 'bg-white/40 hover:bg-white/70'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* Bottom: Details & Controls */}

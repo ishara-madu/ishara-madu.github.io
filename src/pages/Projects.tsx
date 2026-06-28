@@ -25,6 +25,7 @@ export default function Projects() {
         title,
         description: p.description,
         image: p.image,
+        images: p.images || [p.image],
         homepage: p.homepage,
         textColor: p.textColor || "#ffffff",
         tags: p.tags || [],
@@ -113,18 +114,22 @@ export default function Projects() {
             
             // Query image folder 'portfolio_images' in the root
             let image = "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=60"; // generic banner
+            let images: string[] = [];
             try {
                 const contentsUrl = `https://api.github.com/repos/${owner}/${name}/contents/portfolio_images`;
                 const contentsRes = await fetch(contentsUrl);
                 if (contentsRes.ok) {
                     const files = await contentsRes.json();
                     if (Array.isArray(files)) {
-                        const imgFile = files.find(f => {
+                        const imgFiles = files.filter(f => {
                             const fname = f.name.toLowerCase();
                             return fname.endsWith(".png") || fname.endsWith(".jpg") || fname.endsWith(".jpeg") || fname.endsWith(".webp") || fname.endsWith(".gif");
                         });
-                        if (imgFile) {
-                            image = imgFile.download_url;
+                        if (imgFiles.length > 0) {
+                            // Sort alphabetically to maintain order
+                            imgFiles.sort((a, b) => a.name.localeCompare(b.name));
+                            image = imgFiles[0].download_url;
+                            images = imgFiles.map(f => f.download_url);
                         }
                     }
                 }
@@ -160,6 +165,7 @@ export default function Projects() {
                 title,
                 description,
                 image,
+                images: images.length > 0 ? images : [image],
                 homepage: repo.homepage || repo.html_url,
                 textColor: "#ffffff",
                 tags,
