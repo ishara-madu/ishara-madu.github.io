@@ -13,18 +13,26 @@ export default function Projects() {
 
   // Map local JSON data to match ProjectType structure as a reliable fallback
   const getLocalFallback = (): ProjectType[] => {
-    return (projectData as any[]).map((p, idx) => ({
-      id: p.id || idx + 1,
-      title: p.title,
-      description: p.description,
-      image: p.image,
-      homepage: p.homepage,
-      textColor: p.textColor || "#ffffff",
-      tags: p.tags || [],
-      github: p.github,
-      playstore: p.playstore,
-      website: p.website
-    }));
+    return (projectData as any[]).map((p, idx) => {
+      let formattedTitle = p.title.replace(/[-_]/g, ' ');
+      formattedTitle = formattedTitle.replace(/([a-z])([A-Z])/g, '$1 $2');
+      formattedTitle = formattedTitle.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+      formattedTitle = formattedTitle.replace(/(\d+G)([A-Z])/g, '$1 $2');
+      const title = formattedTitle.replace(/\b\w/g, (c: string) => c.toUpperCase());
+      
+      return {
+        id: p.id || idx + 1,
+        title,
+        description: p.description,
+        image: p.image,
+        homepage: p.homepage,
+        textColor: p.textColor || "#ffffff",
+        tags: p.tags || [],
+        github: p.github,
+        playstore: p.playstore,
+        website: p.website
+      };
+    });
   };
 
   useEffect(() => {
@@ -82,8 +90,12 @@ export default function Projects() {
             const owner = repo.owner.login;
             const name = repo.name;
             
-            // Format title neatly (e.g. hireme-web -> Hireme Web)
-            const title = name.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+            // Format title neatly (e.g. 4GLTEOnlyApp -> 4G LTE Only App, hireme-web -> Hireme Web)
+            let formattedTitle = name.replace(/[-_]/g, ' ');
+            formattedTitle = formattedTitle.replace(/([a-z])([A-Z])/g, '$1 $2');
+            formattedTitle = formattedTitle.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+            formattedTitle = formattedTitle.replace(/(\d+G)([A-Z])/g, '$1 $2');
+            const title = formattedTitle.replace(/\b\w/g, (c: string) => c.toUpperCase());
             const description = repo.description || "A public repository developed by ishara-madu.";
             const tags = repo.topics && repo.topics.length > 0 
                 ? repo.topics.map((t: string) => t.toUpperCase()) 
