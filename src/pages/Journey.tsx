@@ -108,10 +108,10 @@ export default function Journey() {
   };
 
   // Fades whole container from 100% to 6% smoothly on mouse leave. Keeps mask structure to prevent layout flash.
-  // Mask centers 65px to the top-right of the cursor tip, projecting the beam significantly forward in the direction the torch points.
+  // Mask centers 150px to the top-right of the cursor tip, projecting the beam far ahead so the torch itself stays outside the lit circle.
   const maskStyle: React.CSSProperties = hasHover ? {
-    maskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 65px) calc(var(--mouse-y, -999px) - 65px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
-    WebkitMaskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 65px) calc(var(--mouse-y, -999px) - 65px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    maskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 150px) calc(var(--mouse-y, -999px) - 150px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    WebkitMaskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 150px) calc(var(--mouse-y, -999px) - 150px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     opacity: isHovered ? 1 : 0.06,
     transition: "opacity 0.4s ease-out",
   } : {
@@ -130,14 +130,14 @@ export default function Journey() {
       }`}
     >
       {/* Brighter Spotlight Gradient Background Overlay (Only active when device supports hover) */}
-      {/* Light center shifted 65px to the top-right of the cursor, projecting the beam significantly in front of the torch head */}
+      {/* Light center shifted 150px to the top-right of the cursor, projecting the beam far in front of the torch head */}
       {hasHover && (
         <div 
           className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           style={{
-            background: `radial-gradient(350px circle at calc(var(--mouse-x, -999px) + 65px) calc(var(--mouse-y, -999px) - 65px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
+            background: `radial-gradient(350px circle at calc(var(--mouse-x, -999px) + 150px) calc(var(--mouse-y, -999px) - 150px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
           }}
         />
       )}
