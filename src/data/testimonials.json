@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "title": "Chamara Perera - Tech Lead at Opera Expo Collage",
+    "body": "Ishara is an exceptionally skilled developer. During his time as a Computer and Information Systems Manager at Opera Expo Collage, he modernized our operational systems, streamlined workflows, and introduced robust digital solutions. His proficiency in Kotlin, Android SDK, and web technologies is state-of-the-art.",
+    "html_url": "https://github.com/ishara-madu/ishara-madu.github.io/issues/1",
+    "created_at": "2026-03-12T10:00:00Z",
+    "user": {
+      "login": "chamara-perera",
+      "avatar_url": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&q=80",
+      "html_url": "https://github.com/chamara-perera"
+    }
+  },
+  {
+    "id": 102,
+    "title": "Nipuna Fernando - Founder of PixelEye",
+    "body": "Working with Ishara on the 4G LTE Only Android application was a great experience. He demonstrated deep knowledge of Android Telephony Manager APIs and system level hooks. The app performs flawlessly, is highly optimized, and has gained significant positive user traction. Highly recommended for mobile app engineering!",
+    "html_url": "https://github.com/ishara-madu/ishara-madu.github.io/issues/2",
+    "created_at": "2026-04-20T14:30:00Z",
+    "user": {
+      "login": "nipuna-fernando",
+      "avatar_url": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150&h=150&fit=crop&q=80",
+      "html_url": "https://github.com/nipuna-fernando"
+    }
+  },
+  {
+    "id": 103,
+    "title": "Dr. Ruwan Wickramasinghe - Senior Lecturer at UoVT",
+    "body": "Ishara exhibited outstanding technical aptitude and dedication during his Bachelor of Technology studies. His final year projects, especially in full-stack web architectures and system automation, showcase a developer who is ready to tackle complex corporate software engineering tasks.",
+    "html_url": "https://github.com/ishara-madu/ishara-madu.github.io/issues/3",
+    "created_at": "2026-05-15T08:15:00Z",
+    "user": {
+      "login": "ruwan-wickramasinghe",
+      "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&q=80",
+      "html_url": "https://github.com/ruwan-wickramasinghe"
+    }
+  }
+]
