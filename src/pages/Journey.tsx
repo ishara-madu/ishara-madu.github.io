@@ -23,9 +23,9 @@ function JourneyItem({ item }: JourneyItemProps) {
         inView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
       }`}
     >
-      {/* Vertical connector line */}
+      {/* Vertical connector line - Optimized: removed animate-pulse to prevent continuous repaint loops */}
       <div 
-        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-zinc-800 group-last:hidden animate-pulse"
+        className="absolute left-[7px] md:left-[11px] top-6 bottom-0 w-[2px] bg-zinc-800 group-last:hidden"
         style={{ transformOrigin: "top" }}
       />
 
@@ -39,8 +39,8 @@ function JourneyItem({ item }: JourneyItemProps) {
         title={item.type}
       />
 
-      {/* Content card */}
-      <div className="flex flex-col bg-zinc-900 bg-opacity-35 hover:bg-opacity-55 backdrop-blur-sm p-5 md:p-6 rounded-2xl border border-zinc-800/80 hover:border-zinc-700 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-x-1">
+      {/* Content card - Optimized: removed backdrop-blur-sm to avoid rendering bottleneck under mask-image, swapped transition-all with targeted CSS transitions */}
+      <div className="flex flex-col bg-zinc-900 bg-opacity-35 hover:bg-opacity-55 p-5 md:p-6 rounded-2xl border border-zinc-800/80 hover:border-zinc-700 shadow-sm hover:shadow-md transition-[border-color,background-color,transform,box-shadow] duration-300 hover:translate-x-1">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
           {/* Year Badge */}
           <span 
@@ -72,7 +72,7 @@ function JourneyItem({ item }: JourneyItemProps) {
             {item.skills.map((skill, index) => (
               <span
                 key={index}
-                className="text-[10px] font-mono font-semibold bg-zinc-900/60 text-zinc-300 px-2.5 py-1 rounded-lg border border-zinc-800/80 hover:bg-zinc-800 hover:border-zinc-700 hover:text-white transition-all duration-150"
+                className="text-[10px] font-mono font-semibold bg-zinc-900/60 text-zinc-300 px-2.5 py-1 rounded-lg border border-zinc-800/80 hover:bg-zinc-800 hover:border-zinc-700 hover:text-white transition-[border-color,background-color,text-color] duration-150"
               >
                 {skill}
               </span>
@@ -89,12 +89,19 @@ export default function Journey() {
   const [hasHover, setHasHover] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
+  const rafId = useRef<number | null>(null);
 
   useEffect(() => {
     // Detect if device supports hover (desktop mouse pointer vs touch screen)
     if (typeof window !== "undefined") {
       setHasHover(window.matchMedia("(hover: hover)").matches);
     }
+    
+    return () => {
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
   }, []);
 
   const handleMouseEnter = () => {
@@ -110,23 +117,35 @@ export default function Journey() {
     const x = e.clientX - rectRef.current.left;
     const y = e.clientY - rectRef.current.top;
     
-    // High performance GPU-accelerated coordinate setting via CSS variables
-    containerRef.current.style.setProperty('--mouse-x', `${x}px`);
-    containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+    // Optimized: RequestAnimationFrame throttling to coordinate writes exactly with monitor refresh rate
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+    }
+
+    rafId.current = requestAnimationFrame(() => {
+      if (containerRef.current) {
+        containerRef.current.style.setProperty('--mouse-x', `${x}px`);
+        containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+      }
+    });
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     rectRef.current = null;
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    }
   };
 
-  // Fades whole container from 100% to 6% smoothly on mouse leave. Keeps mask structure to prevent layout flash.
-  // Spread radius increased to 260px. Mask centers 212px to the top-right of the cursor tip, projecting the wider beam far ahead.
+  // Optimized: will-change added to promote masked content container to GPU compositor layer
   const maskStyle: React.CSSProperties = hasHover ? {
     maskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     WebkitMaskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     opacity: isHovered ? 1 : 0.06,
     transition: "opacity 0.4s ease-out",
+    willChange: "mask-image, opacity, transform",
   } : {
     opacity: 1, // Always 100% visible on mobile/tablets
   };
@@ -142,8 +161,7 @@ export default function Journey() {
         hasHover ? "cursor-none" : ""
       }`}
     >
-      {/* Brighter Spotlight Gradient Background Overlay (Only active when device supports hover) */}
-      {/* Spread diameter increased to 500px. Light center shifted 212px to the top-right of the cursor, projecting a wider beam */}
+      {/* Spotlight Gradient Background Overlay (Only active when device supports hover) */}
       {hasHover && (
         <div 
           className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
