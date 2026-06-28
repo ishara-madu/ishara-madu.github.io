@@ -20,7 +20,7 @@ export default function Contact() {
       <div className="flex h-[420px] md:h-[300px] w-full bg-slate-500 bg-opacity-10 p-6 md:p-10 flex-col justify-between z-10">
         
         {/* macOS Window Title Bar */}
-        <div className="flex items-center justify-between w-full pb-3 border-b border-white/20 select-none">
+        <div className="flex items-center justify-between w-full pb-3 border-b border-slate-900/10 select-none">
           <div className="flex items-center gap-4">
             {/* macOS Control Dots */}
             <div className="flex gap-1.5 flex-shrink-0">
@@ -30,15 +30,15 @@ export default function Contact() {
             </div>
             
             {/* File Path */}
-            <div className="flex items-center gap-1.5 font-mono text-[11px] text-white/70 bg-white/10 px-2.5 py-1 rounded border border-white/10">
-              <LuTerminal className="w-3.5 h-3.5 text-white/80" />
+            <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-600 bg-white/40 px-2.5 py-1 rounded border border-slate-200/40">
+              <LuTerminal className="w-3.5 h-3.5 text-indigo-650" />
               <span>bash</span>
               <span>-</span>
-              <span className="text-white font-semibold">establish_connection.sh</span>
+              <span className="text-slate-800 font-semibold">establish_connection.sh</span>
             </div>
           </div>
 
-          <span className="font-mono text-[10px] text-white/40 hidden sm:inline uppercase tracking-widest">
+          <span className="font-mono text-[10px] text-slate-500 hidden sm:inline uppercase tracking-widest">
             contact_session
           </span>
         </div>
@@ -48,20 +48,20 @@ export default function Contact() {
           
           {/* Left Column: Terminal Config Editor */}
           <div className="flex flex-col max-w-lg select-none w-full lg:w-auto">
-            <span className="font-mono text-xs text-white/90 font-bold mb-1.5 block tracking-wider">
+            <span className="font-mono text-xs text-indigo-700 font-bold mb-1.5 block tracking-wider">
               // contact_profile.yaml
             </span>
-            <div className="bg-zinc-950/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 font-mono text-[11px] sm:text-xs text-white/90 space-y-1.5 shadow-lg">
-              <div><span className="text-white/40">01</span>  <span className="text-sky-300 font-bold">developer:</span> <span className="text-emerald-300">"Ishara Madusanka"</span></div>
-              <div><span className="text-white/40">02</span>  <span className="text-sky-300 font-bold">status:</span> <span className="text-emerald-300">"open_to_collaborations"</span></div>
-              <div><span className="text-white/40">03</span>  <span className="text-sky-300 font-bold">location:</span> <span className="text-emerald-300">"Sri Lanka"</span></div>
-              <div><span className="text-white/40">04</span>  <span className="text-sky-300 font-bold">email:</span> <span className="text-indigo-200 font-semibold underline">"{contactData.email}"</span></div>
+            <div className="bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-4 font-mono text-[11px] sm:text-xs text-slate-800 space-y-1.5 shadow-sm">
+              <div><span className="text-slate-400">01</span>  <span className="text-indigo-700 font-bold">developer:</span> <span className="text-emerald-700">"Ishara Madusanka"</span></div>
+              <div><span className="text-slate-400">02</span>  <span className="text-indigo-700 font-bold">status:</span> <span className="text-emerald-700">"open_to_collaborations"</span></div>
+              <div><span className="text-slate-400">03</span>  <span className="text-indigo-700 font-bold">location:</span> <span className="text-emerald-700">"Sri Lanka"</span></div>
+              <div><span className="text-slate-400">04</span>  <span className="text-indigo-700 font-bold">email:</span> <a href={`mailto:${contactData.email}`} className="text-violet-650 font-semibold underline hover:text-violet-750 transition-colors">"{contactData.email}"</a></div>
             </div>
           </div>
 
           {/* Right Column: Execution prompt and platform buttons */}
           <div className="flex flex-col w-full lg:w-auto items-stretch lg:items-end justify-center">
-            <div className="font-mono text-[11px] text-white/60 mb-2 select-none lg:text-right hidden lg:block">
+            <div className="font-mono text-[11px] text-slate-500 mb-2 select-none lg:text-right hidden lg:block">
               $ sh establish_connection.sh --email
             </div>
             <ContactLinks />
@@ -70,8 +70,8 @@ export default function Contact() {
         </div>
 
         {/* Footer log */}
-        <div className="flex items-center gap-1.5 font-mono text-[10px] text-white/50 select-none">
-          <LuFolderHeart className="w-3.5 h-3.5 text-white/70" />
+        <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500 select-none">
+          <LuFolderHeart className="w-3.5 h-3.5 text-slate-650" />
           <span>Session compiled successfully. Ready for inquiries.</span>
         </div>
 
