@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { LuFolder, LuGitBranch, LuMessageSquare, LuCheckCircle, LuGitPullRequest, LuPlus } from 'react-icons/lu';
+import { LuFolder, LuGitBranch, LuMessageSquare, LuCheck, LuGitPullRequest, LuPlus } from 'react-icons/lu';
 
 interface GitHubIssue {
     id: number;
@@ -183,7 +183,7 @@ export default function Testimonials() {
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-1.5 text-emerald-600 font-bold bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded text-[10px] tracking-wide font-mono">
-                                        <LuCheckCircle className="w-3.5 h-3.5 fill-emerald-50 text-emerald-600" />
+                                        <LuCheck className="w-3.5 h-3.5 text-emerald-600" />
                                         <span>APPROVED</span>
                                     </div>
                                 </div>
