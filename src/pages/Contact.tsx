@@ -77,20 +77,25 @@ export default function Contact() {
         <div className="flex flex-col lg:flex-row justify-between gap-6 w-full items-start">
           
           {/* Left Column: Terminal Config Editor */}
-          <div className="flex flex-col max-w-lg select-none w-full lg:w-auto">
-            <span className="font-mono text-xs text-indigo-700 font-bold mb-1.5 block tracking-wider">
-              // contact_profile.yaml
-            </span>
-            <div className="bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-5 font-mono text-[11px] sm:text-xs text-slate-800 space-y-1.5 shadow-sm">
-              <div><span className="text-slate-400">01</span>  <span className="text-indigo-700 font-bold">developer:</span> <span className="text-emerald-700">"Ishara Madusanka"</span></div>
-              <div><span className="text-slate-400">02</span>  <span className="text-indigo-700 font-bold">status:</span> <span className="text-emerald-700">"open_to_collaborations"</span></div>
-              <div><span className="text-slate-400">03</span>  <span className="text-indigo-700 font-bold">location:</span> <span className="text-emerald-700">"Sri Lanka"</span></div>
-              <div><span className="text-slate-400">04</span>  <span className="text-indigo-700 font-bold">email:</span> <a href={`mailto:${contactData.email}`} className="text-violet-650 font-semibold underline hover:text-violet-750 transition-colors">"{contactData.email}"</a></div>
+          <div className="flex flex-col max-w-lg select-none w-full lg:w-auto gap-4">
+            <div className="flex flex-col">
+              <span className="font-mono text-xs text-indigo-700 font-bold mb-1.5 block tracking-wider">
+                // contact_profile.yaml
+              </span>
+              <div className="bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-5 font-mono text-[11px] sm:text-xs text-slate-800 space-y-1.5 shadow-sm">
+                <div><span className="text-slate-400">01</span>  <span className="text-indigo-700 font-bold">developer:</span> <span className="text-emerald-700">"Ishara Madusanka"</span></div>
+                <div><span className="text-slate-400">02</span>  <span className="text-indigo-700 font-bold">status:</span> <span className="text-emerald-700">"open_to_collaborations"</span></div>
+                <div><span className="text-slate-400">03</span>  <span className="text-indigo-700 font-bold">location:</span> <span className="text-emerald-700">"Sri Lanka"</span></div>
+                <div><span className="text-slate-400">04</span>  <span className="text-indigo-700 font-bold">email:</span> <a href={`mailto:${contactData.email}`} className="text-violet-650 font-semibold underline hover:text-violet-750 transition-colors">"{contactData.email}"</a></div>
+              </div>
             </div>
+            
+            {/* Social connection platform links placed on the left */}
+            <ContactLinks />
           </div>
 
-          {/* Right Column: Dynamic Send Message Form & platform badges */}
-          <div className="flex flex-col gap-4 w-full lg:w-[380px] items-stretch justify-start">
+          {/* Right Column: Dynamic Send Message Form */}
+          <div className="flex flex-col w-full lg:w-[380px] items-stretch justify-start">
             
             {/* Terminal Style Send Message Input Box */}
             <form onSubmit={handleSendMessage} className="flex flex-col bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-5 sm:p-6 font-mono text-[11px] sm:text-xs text-slate-800 space-y-3.5 shadow-sm w-full">
@@ -143,8 +148,6 @@ export default function Contact() {
                 sh send_message.sh
               </button>
             </form>
-
-            <ContactLinks />
           </div>
 
         </div>
