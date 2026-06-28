@@ -72,7 +72,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                             {project.tags.map((tag, index) => (
                                 <span 
                                     key={index} 
-                                    className="text-[9px] sm:text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-white bg-opacity-15 backdrop-blur-md border border-white border-opacity-15 text-white uppercase tracking-wider"
+                                    className="text-[9px] sm:text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-zinc-950 bg-opacity-65 backdrop-blur-md border border-zinc-800 border-opacity-50 text-zinc-200 uppercase tracking-wider shadow-sm"
                                 >
                                     {tag}
                                 </span>
