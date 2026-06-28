@@ -1,245 +1,49 @@
 import skillsData from "../data/skills.json";
 import { LuFileCode, LuFolder, LuGitBranch } from "react-icons/lu";
 
-function TechIcon({ name }: { name: string }) {
+function getSkillIconKey(name: string): string {
     const n = name.toLowerCase().trim();
-    
-    // React / React Native
-    if (n.includes("react")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-sky-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                <path d="M2 12h20" />
-            </svg>
-        );
-    }
-    // Next.js
-    if (n.includes("next")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-zinc-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-            </svg>
-        );
-    }
-    // Redux Toolkit
-    if (n.includes("redux")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-purple-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-        );
-    }
-    // Tailwind CSS
-    if (n.includes("tailwind")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-cyan-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M17 17H7l-5-5 5-5h10l5 5-5 5z" />
-            </svg>
-        );
-    }
-    // HTML5 & CSS3
-    if (n.includes("html") || n.includes("css")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
-            </svg>
-        );
-    }
-    // Expo
-    if (n.includes("expo")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-zinc-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="5 3 19 12 5 21 5 3" />
-            </svg>
-        );
-    }
-    // Kotlin / KMP
-    if (n.includes("kotlin") || n.includes("kmp")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-violet-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-            </svg>
-        );
-    }
-    // Java
-    if (n.includes("java") && !n.includes("javascript")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-amber-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-                <line x1="6" y1="2" x2="6" y2="4" />
-                <line x1="10" y1="2" x2="10" y2="4" />
-                <line x1="14" y1="2" x2="14" y2="4" />
-            </svg>
-        );
-    }
-    // Python
-    if (n.includes("python")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-sky-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                <path d="M12 6v6l4 2" />
-            </svg>
-        );
-    }
-    // Android SDK / Room Database / SQLite
-    if (n.includes("android") || n.includes("room")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-                <line x1="12" y1="18" x2="12.01" y2="18" />
-            </svg>
-        );
-    }
-    // Node.js
-    if (n.includes("node")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M2 17l10 5 10-5" />
-                <path d="M2 12l10 5 10-5" />
-            </svg>
-        );
-    }
-    // Express
-    if (n.includes("express")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
-                <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
-                <line x1="6" y1="6" x2="6.01" y2="6" />
-                <line x1="6" y1="18" x2="6.01" y2="18" />
-            </svg>
-        );
-    }
-    // Supabase
-    if (n.includes("supabase")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-emerald-650" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
-        );
-    }
-    // Firebase
-    if (n.includes("firebase")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
-            </svg>
-        );
-    }
-    // MongoDB
-    if (n.includes("mongo")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2c-3.87 0-7 3.13-7 7 0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
-            </svg>
-        );
-    }
-    // MySQL / PostgreSQL / Databases
-    if (n.includes("mysql") || n.includes("postgres") || n.includes("database")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
-            </svg>
-        );
-    }
-    // Git & GitHub
-    if (n.includes("git")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-orange-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="6" y1="3" x2="6" y2="15" />
-                <circle cx="18" cy="6" r="3" />
-                <circle cx="6" cy="18" r="3" />
-                <path d="M18 9a9 9 0 0 1-9 9" />
-            </svg>
-        );
-    }
-    // n8n / Automation
-    if (n.includes("n8n") || n.includes("automation")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-            </svg>
-        );
-    }
-    // Figma
-    if (n.includes("figma")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-rose-450" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" />
-                <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z" />
-                <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5a3.5 3.5 0 0 1-3.5-3.5z" />
-                <path d="M12 9h3.5a3.5 3.5 0 1 1-3.5 3.5V9z" />
-                <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 0 1-3.5 3.5c-1.93 0-3.5-1.57-3.5-3.5z" />
-            </svg>
-        );
-    }
-    // MS Excel
-    if (n.includes("excel")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-green-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M9 3v18" />
-                <path d="M3 9h18" />
-                <path d="M3 15h18" />
-            </svg>
-        );
-    }
-    // Google Gemini API / AI
-    if (n.includes("gemini") || n.includes("ai")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-            </svg>
-        );
-    }
-    // REST APIs / Integrations / NowPayments / AdMob / RevenueCat
-    if (n.includes("api") || n.includes("rest") || n.includes("payment") || n.includes("admob") || n.includes("revenuecat")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <line x1="12" y1="2" x2="12" y2="22" />
-            </svg>
-        );
-    }
-    // Vite
-    if (n.includes("vite")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                <path d="M12 22V12" />
-            </svg>
-        );
-    }
-    // Package Managers
-    if (n.includes("pnpm") || n.includes("npm") || n.includes("yarn")) {
-        return (
-            <svg className="w-3.5 h-3.5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="3" width="7" height="7" />
-                <rect x="14" y="3" width="7" height="7" />
-                <rect x="14" y="14" width="7" height="7" />
-                <rect x="3" y="14" width="7" height="7" />
-            </svg>
-        );
-    }
+    if (n.includes("next")) return "nextjs";
+    if (n.includes("react native")) return "react";
+    if (n.includes("react")) return "react";
+    if (n.includes("kotlin")) return "kotlin";
+    if (n.includes("kmp")) return "kotlin";
+    if (n.includes("typescript") || n === "ts") return "ts";
+    if (n.includes("javascript") || n === "js") return "js";
+    if (n.includes("tailwind")) return "tailwind";
+    if (n.includes("supabase")) return "supabase";
+    if (n.includes("firebase")) return "firebase";
+    if (n.includes("mongodb") || n.includes("mongo")) return "mongodb";
+    if (n.includes("mysql")) return "mysql";
+    if (n.includes("room")) return "sqlite";
+    if (n.includes("sqlite")) return "sqlite";
+    if (n.includes("github")) return "github";
+    if (n.includes("git")) return "git";
+    if (n.includes("n8n")) return "postman"; // fallback
+    if (n.includes("npm")) return "npm";
+    if (n.includes("pnpm")) return "pnpm";
+    if (n.includes("yarn")) return "yarn";
+    if (n.includes("figma")) return "figma";
+    if (n.includes("excel")) return "sqlite"; // fallback
+    if (n.includes("python")) return "py";
+    if (n.includes("java")) return "java";
+    if (n.includes("gemini") || n.includes("ai")) return "gcp"; // fallback
+    if (n.includes("postman") || n.includes("api") || n.includes("rest")) return "postman";
+    if (n.includes("payments") || n.includes("stripe")) return "stripe";
+    if (n.includes("admob")) return "android"; // fallback
+    if (n.includes("revenuecat")) return "apple"; // fallback
+    return "git";
+}
 
-    // Default fallback icon
+function TechIcon({ name }: { name: string }) {
+    const key = getSkillIconKey(name);
     return (
-        <svg className="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="16 18 22 12 16 6" />
-            <polyline points="8 6 2 12 8 18" />
-        </svg>
+        <img 
+            src={`https://skillicons.dev/icons?i=${key}`} 
+            alt={name} 
+            className="w-4 h-4 rounded object-contain flex-shrink-0 select-none pointer-events-none"
+            loading="lazy"
+        />
     );
 }
 
