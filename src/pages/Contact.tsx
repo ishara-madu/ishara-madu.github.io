@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ContactLinks from "../components/ContactLinks";
 import placeholder from '../assets/images/gradient.png';
 import homeData from '../data/home.json';
@@ -5,6 +6,25 @@ import contactData from '../data/contacts.json';
 import { LuTerminal, LuFolderHeart } from 'react-icons/lu';
 
 export default function Contact() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      alert("Please fill in all fields before executing send_message.sh");
+      return;
+    }
+    
+    // Prefill body contents matching the message.md issue template format
+    const bodyContent = `**From:** ${name} (${email})\n\n**Message:**\n${message}`;
+    const newIssueUrl = `https://github.com/ishara-madu/ishara-madu.github.io/issues/new?template=message.md&title=Message+from+${encodeURIComponent(name)}&body=${encodeURIComponent(bodyContent)}`;
+    
+    // Open in a new tab to create the pre-filled issue
+    window.open(newIssueUrl, '_blank');
+  };
+
   return (
     <div id="contact" className="flex h-auto w-full rounded-3xl animate-slide-up overflow-hidden justify-center items-center relative border border-slate-200 border-opacity-80 shadow-md">
       {/* Background Image (Covering full dynamic height) */}
@@ -69,11 +89,61 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Right Column: Execution prompt and platform buttons */}
-          <div className="flex flex-col w-full lg:w-auto items-stretch lg:items-end justify-center">
-            <div className="font-mono text-[11px] text-slate-500 mb-2 select-none lg:text-right hidden lg:block">
-              $ sh establish_connection.sh --email
-            </div>
+          {/* Right Column: Dynamic Send Message Form & platform badges */}
+          <div className="flex flex-col gap-5 w-full lg:w-auto items-stretch lg:items-end justify-center">
+            
+            {/* Terminal Style Send Message Input Box */}
+            <form onSubmit={handleSendMessage} className="flex flex-col bg-white/55 backdrop-blur-md border border-slate-200/45 rounded-2xl p-4 font-mono text-[11px] sm:text-xs text-slate-800 space-y-2.5 shadow-sm w-full lg:w-[340px]">
+              <div className="text-indigo-750 font-bold select-none">$ ./send_message.sh</div>
+              
+              {/* Name Input */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-indigo-700 font-bold select-none">name:</span>
+                <input 
+                  type="text" 
+                  placeholder="enter your name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 text-slate-850 placeholder-slate-400/75 flex-grow"
+                />
+              </div>
+
+              {/* Email Input */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-indigo-700 font-bold select-none">email:</span>
+                <input 
+                  type="email" 
+                  placeholder="enter your email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 text-slate-850 placeholder-slate-400/75 flex-grow"
+                />
+              </div>
+
+              {/* Message Input */}
+              <div className="flex flex-col gap-1">
+                <span className="text-indigo-700 font-bold select-none">message:</span>
+                <textarea 
+                  placeholder="write your inquiry or message..."
+                  required
+                  rows={2}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="bg-transparent border border-slate-300 focus:border-indigo-500 outline-none p-1.5 rounded-lg text-slate-850 placeholder-slate-400/75 w-full h-14 resize-none leading-normal"
+                />
+              </div>
+
+              {/* Submit Action Button */}
+              <button 
+                type="submit"
+                className="w-full py-1.5 bg-zinc-900 hover:bg-zinc-950 text-white rounded-xl font-bold shadow-sm hover:shadow active:scale-98 transition-all duration-200 text-center"
+              >
+                sh send_message.sh
+              </button>
+            </form>
+
             <ContactLinks />
           </div>
 
