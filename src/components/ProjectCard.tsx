@@ -70,7 +70,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     alt={`${project.title} project`} 
                     title={`${project.title} Project`} 
                     loading='lazy' 
-                    className="w-full h-full object-cover z-0 absolute group-hover:scale-105 duration-700 ease-out transition-transform" 
+                    className="w-full h-full object-cover object-top z-0 absolute group-hover:scale-105 duration-700 ease-out transition-transform" 
                 />
 
                 {/* Darker Gradient Overlay for Text Readability */}
