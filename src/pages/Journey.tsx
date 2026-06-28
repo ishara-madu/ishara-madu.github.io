@@ -156,9 +156,9 @@ export default function Journey() {
 
   // Optimized: will-change added to promote masked content container to GPU compositor layer
   const maskStyle: React.CSSProperties = hasHover ? {
-    maskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
-    WebkitMaskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
-    opacity: isHovered ? 1 : 0.06,
+    maskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.25) 100%)`,
+    WebkitMaskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.25) 100%)`,
+    opacity: isHovered ? 1 : 0.25,
     transition: "opacity 0.4s ease-out",
     willChange: "mask-image, opacity, transform",
   } : {
