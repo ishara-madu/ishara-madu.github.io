@@ -134,7 +134,7 @@ export default function InteractiveTerminal() {
    Kernel: React / Vite / Tailwind
    Shell: ishara-sh (custom)
    DE: Minimal Terminal
-   CPU: Gemini Agent Engine
+   CPU: Advanced Agent Engine
    Memory: 8192 MB (Virtual)
    Status: Looking for opportunities`;
         break;

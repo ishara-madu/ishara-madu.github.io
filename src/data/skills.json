@@ -18,7 +18,7 @@
     },
     {
       "category": "Methodologies & Integrations",
-      "items": ["Agile / Waterfall", "Google Gemini API", "REST APIs", "NowPayments", "Google AdMob", "RevenueCat"]
+      "items": ["Agile / Waterfall", "AI Integration", "REST APIs", "NowPayments", "Google AdMob", "RevenueCat"]
     }
   ],
   "services": [
@@ -37,8 +37,8 @@
     {
       "title": "AI Integration & Automation",
       "icon": "🤖",
-      "description": "Automating complex workflows and pipelines using n8n and integrating advanced AI capabilities like the Google Gemini API.",
-      "tech": ["n8n", "Gemini API", "REST APIs", "Python"]
+      "description": "Automating complex workflows and pipelines using n8n and integrating advanced artificial intelligence (AI) capabilities.",
+      "tech": ["n8n", "AI Integration", "REST APIs", "Python"]
     },
     {
       "title": "Backend & Cloud Architecture",
