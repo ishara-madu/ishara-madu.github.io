@@ -24,9 +24,9 @@ function getSkillIconKey(name: string): string {
     if (n.includes("pnpm")) return "pnpm";
     if (n.includes("yarn")) return "yarn";
     if (n.includes("figma")) return "figma";
-    if (n.includes("excel")) return "microsoftexcel";
+    if (n.includes("excel")) return "libreofficecalc";
     if (n.includes("python")) return "python";
-    if (n.includes("java")) return "java";
+    if (n.includes("java")) return "coffeescript";
     if (n.includes("gemini") || n.includes("ai")) return "googlegemini";
     if (n.includes("postman") || n.includes("api") || n.includes("rest")) return "postman";
     if (n.includes("payments") || n.includes("stripe")) return "stripe";
