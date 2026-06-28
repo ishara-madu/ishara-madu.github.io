@@ -43,14 +43,23 @@ export default function Contact() {
           </span>
         </div>
 
-        {/* Section Header Block (Enables layout consistency with projects/testimonials/skills) */}
-        <div className="flex flex-col">
-          <span className="font-mono text-xs text-slate-500 mb-1.5 block tracking-wider font-semibold">
-            // contact.sh - connection channels & endpoints
-          </span>
-          <h2 className="text-2xl md:text-4xl font-extrabold mb-1 text-slate-900 select-none">
-            &lt;Connect /&gt;
-          </h2>
+        {/* Section Header Block */}
+        <div className="flex flex-row justify-between items-end gap-6 w-full">
+          <div className="flex flex-col">
+            <span className="font-mono text-xs text-slate-500 mb-1.5 block tracking-wider font-semibold">
+              // contact.sh - connection channels & endpoints
+            </span>
+            <h2 className="text-2xl md:text-4xl font-extrabold mb-1 text-slate-900 select-none">
+              &lt;Connect /&gt;
+            </h2>
+          </div>
+
+          <div className="hidden sm:flex flex-col items-end font-mono text-[10px] text-slate-500 select-none mb-1">
+            <span className="flex items-center gap-1.5 text-emerald-700 font-bold bg-emerald-100/40 border border-emerald-200/40 px-2.5 py-1.5 rounded-xl shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+              STATUS: ESTABLISHED
+            </span>
+          </div>
         </div>
 
         {/* Content Columns split */}
