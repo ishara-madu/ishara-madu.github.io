@@ -1,47 +1,38 @@
 [
   {
     "id": 1,
-    "year": "2020 - 2022",
-    "title": "Diploma in Software Engineering",
-    "institution": "National Institute of Business Management (NIBM)",
-    "description": "Completed foundation studies in computer science, database management, and object-oriented programming with Java. Developed core programming skills.",
-    "type": "education",
-    "skills": ["Java", "OOP", "MySQL", "Software Engineering"]
+    "year": "Mar 2022 - Oct 2022",
+    "title": "Computer and Information Systems Manager",
+    "institution": "Opera Expo Collage",
+    "description": "Executed a comprehensive software upgrade across 20+ systems, enhancing performance by 30%. Delivered technical support to 50+ end-users, successfully resolving 95% of technical issues within a single business day. Managed database data entry operations and standardized troubleshooting documentation.",
+    "type": "work",
+    "skills": ["Systems Upgrade", "IT Support", "Database Tools", "Excel", "Documentation"]
   },
   {
     "id": 2,
-    "year": "2022 - 2023",
-    "title": "Independent Android Developer",
-    "institution": "Self-Employed",
-    "description": "Developed and published utility applications on Google Play Store. Designed user interfaces, integrated device APIs, and managed publishing pipelines.",
-    "type": "work",
-    "skills": ["Kotlin", "Android SDK", "Git", "Play Console"]
+    "year": "2023 - 2025",
+    "title": "Diploma in Software Development / IT",
+    "institution": "Vocational Training Authority Of Sri Lanka (VTA)",
+    "description": "Completed a comprehensive diploma program covering programming languages, software engineering fundamentals, database systems, and information technology architectures.",
+    "type": "education",
+    "skills": ["Software Development", "Information Technology", "Java", "Python"]
   },
   {
     "id": 3,
-    "year": "2022 - Present",
-    "title": "BSc (Hons) in Software Engineering",
-    "institution": "University / Institute",
-    "description": "Currently reading for a Bachelor's degree in Software Engineering. Gaining in-depth knowledge of web systems, cloud computing, and advanced algorithms.",
-    "type": "education",
-    "skills": ["Web Development", "Data Structures", "Cloud Computing"]
+    "year": "2023 - Present",
+    "title": "Freelance Web & Mobile App Developer",
+    "institution": "Self-Employed (Freelance)",
+    "description": "Designing and developing native (Kotlin, Jetpack Compose) and cross-platform (React Native) applications. Architecting web platforms using Next.js/React integrated with Supabase and MongoDB. Automating workflows and pipelines using n8n to enhance rapid development cycles.",
+    "type": "work",
+    "skills": ["Kotlin", "React Native", "Next.js", "Supabase", "MongoDB", "n8n"]
   },
   {
     "id": 4,
-    "year": "2023 - 2024",
-    "title": "Freelance Frontend Developer",
-    "institution": "Fiverr / Upwork",
-    "description": "Delivered custom modern web interfaces and cross-platform mobile apps for international clients. Focused on responsive design and user experience.",
-    "type": "work",
-    "skills": ["React.js", "React Native", "Tailwind CSS", "JavaScript"]
-  },
-  {
-    "id": 5,
-    "year": "2024 - Present",
-    "title": "Junior Full-Stack Developer",
-    "institution": "Tech Startup / Company",
-    "description": "Collaborating in a dynamic team to build and maintain full-stack web applications. Writing clean code, designing database schemas, and managing state.",
-    "type": "work",
-    "skills": ["TypeScript", "Next.js", "Redux", "Supabase", "Node.js"]
+    "year": "2026 - 2029 (Expected)",
+    "title": "BTech in Software and Intelligent Systems",
+    "institution": "University of Vocational Technology (UoVT), Sri Lanka",
+    "description": "Currently reading for a Bachelor of Technology in Software and Intelligent Systems, focusing on modern software engineering paradigms, intelligent platforms, and advanced software architectures.",
+    "type": "education",
+    "skills": ["Software Systems", "Intelligent Systems", "Computer Science"]
   }
 ]
