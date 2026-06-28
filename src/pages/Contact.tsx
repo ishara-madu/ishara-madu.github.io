@@ -32,7 +32,7 @@ export default function Contact() {
         <img 
           src={homeData.customGradientImage || placeholder} 
           className="w-full h-full object-cover animate-halfRotate" 
-          style={{ transformOrigin: "center center", scale: "1.5" }} 
+          style={{ transformOrigin: "center center", scale: "2" }} 
         />
       </div>
 
