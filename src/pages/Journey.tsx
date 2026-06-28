@@ -88,6 +88,7 @@ export default function Journey() {
   const [isHovered, setIsHovered] = useState(false);
   const [hasHover, setHasHover] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
   useEffect(() => {
     // Detect if device supports hover (desktop mouse pointer vs touch screen)
@@ -96,22 +97,34 @@ export default function Journey() {
     }
   }, []);
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    // Cache bounding client rect on mouse enter to avoid layout thrashing during mouse move
+    if (containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!hasHover || !containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    if (!hasHover || !containerRef.current || !rectRef.current) return;
+    const x = e.clientX - rectRef.current.left;
+    const y = e.clientY - rectRef.current.top;
     
     // High performance GPU-accelerated coordinate setting via CSS variables
     containerRef.current.style.setProperty('--mouse-x', `${x}px`);
     containerRef.current.style.setProperty('--mouse-y', `${y}px`);
   };
 
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    rectRef.current = null;
+  };
+
   // Fades whole container from 100% to 6% smoothly on mouse leave. Keeps mask structure to prevent layout flash.
-  // Mask centers 150px to the top-right of the cursor tip, projecting the beam far ahead so the torch itself stays outside the lit circle.
+  // Spread radius increased to 260px. Mask centers 212px to the top-right of the cursor tip, projecting the wider beam far ahead.
   const maskStyle: React.CSSProperties = hasHover ? {
-    maskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 150px) calc(var(--mouse-y, -999px) - 150px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
-    WebkitMaskImage: `radial-gradient(180px circle at calc(var(--mouse-x, -999px) + 150px) calc(var(--mouse-y, -999px) - 150px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    maskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
+    WebkitMaskImage: `radial-gradient(260px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), black 30%, rgba(0, 0, 0, 0.06) 100%)`,
     opacity: isHovered ? 1 : 0.06,
     transition: "opacity 0.4s ease-out",
   } : {
@@ -123,21 +136,21 @@ export default function Journey() {
       ref={containerRef}
       id="journey"
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={`group relative flex h-auto w-full rounded-3xl overflow-hidden justify-center items-center mb-5 border border-zinc-800 shadow-xl bg-zinc-950 transition-all duration-355 ${
         hasHover ? "cursor-none" : ""
       }`}
     >
       {/* Brighter Spotlight Gradient Background Overlay (Only active when device supports hover) */}
-      {/* Light center shifted 150px to the top-right of the cursor, projecting the beam far in front of the torch head */}
+      {/* Spread diameter increased to 500px. Light center shifted 212px to the top-right of the cursor, projecting a wider beam */}
       {hasHover && (
         <div 
           className={`pointer-events-none absolute inset-0 z-0 transition-opacity duration-300 ease-out ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
           style={{
-            background: `radial-gradient(350px circle at calc(var(--mouse-x, -999px) + 150px) calc(var(--mouse-y, -999px) - 150px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
+            background: `radial-gradient(500px circle at calc(var(--mouse-x, -999px) + 212px) calc(var(--mouse-y, -999px) - 212px), rgba(99, 102, 241, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 80%)`,
           }}
         />
       )}
