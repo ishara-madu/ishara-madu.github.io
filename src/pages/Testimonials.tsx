@@ -150,11 +150,11 @@ export default function Testimonials() {
                         <div className="text-slate-500 text-sm">Run 'write_testimonial.sh' to submit a client review!</div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                    <div className="flex overflow-x-auto gap-6 pb-4 w-full snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-200/80 hover:[&::-webkit-scrollbar-thumb]:bg-slate-350 [&::-webkit-scrollbar-thumb]:rounded-full">
                         {testimonials.map((item) => (
                             <div
                                 key={item.id}
-                                className="bg-white/80 border border-slate-200/70 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col relative"
+                                className="w-[290px] sm:w-[360px] md:w-[460px] flex-shrink-0 snap-start bg-white/80 border border-slate-200/70 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col relative"
                             >
                                 {/* Git Code Review Header */}
                                 <div className="flex items-center justify-between px-5 py-3 bg-slate-50 border-b border-slate-200/60 select-none">
