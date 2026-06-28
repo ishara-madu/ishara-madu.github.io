@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { LuBriefcase, LuGraduationCap } from "react-icons/lu";
 import journeyData from "../data/journey.json";
 import homeData from "../data/home.json";
 import torchIcon from "../assets/icons/tourch.svg";
@@ -50,9 +51,13 @@ function JourneyItem({ item }: JourneyItemProps) {
         {/* IDE Editor Tab Header Bar */}
         <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-950/60 border-b border-zinc-800/80">
           <div className="flex items-center gap-2">
-            {/* Mini icon indicators */}
-            <span className="text-xs select-none">
-              {item.type === "work" ? "💼" : "🎓"}
+            {/* File Type Icon (Lucide LuBriefcase / LuGraduationCap) */}
+            <span className="text-zinc-400 select-none">
+              {item.type === "work" ? (
+                <LuBriefcase className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <LuGraduationCap className="w-3.5 h-3.5 text-indigo-400" />
+              )}
             </span>
             {/* Tab File Title */}
             <span className="font-mono text-xs font-semibold text-zinc-300 select-none">
