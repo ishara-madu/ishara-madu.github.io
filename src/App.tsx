@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Projects from './pages/Projects'
 import Journey from './pages/Journey'
 import SkillsServices from './pages/SkillsServices'
+import Testimonials from './pages/Testimonials'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Journey />
         <SkillsServices />
         <Projects />
+        <Testimonials />
         <Contact />
       </div>
     </div>
