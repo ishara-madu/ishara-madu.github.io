@@ -82,16 +82,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     {/* Tech Stack Tags */}
                     {project.tags && project.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mb-2.5 transform translate-y-0 md:translate-y-2 md:group-hover:translate-y-0 opacity-100 md:opacity-85 md:group-hover:opacity-100 duration-300 transition-all">
-                            {project.tags.map((tag, index) => (
-                                <span 
-                                    key={index} 
-                                    className={`text-[9px] sm:text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-zinc-950 bg-opacity-65 backdrop-blur-md border border-zinc-800 border-opacity-50 text-zinc-200 uppercase tracking-wider shadow-sm ${
-                                        index >= 3 ? 'hidden md:inline-block' : 'inline-block'
-                                    }`}
-                                >
-                                    {tag}
-                                </span>
-                            ))}
+                            {project.tags.map((tag, index) => {
+                                if (index >= 5) return null;
+                                return (
+                                    <span 
+                                        key={index} 
+                                        className={`text-[9px] sm:text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-zinc-950 bg-opacity-65 backdrop-blur-md border border-zinc-800 border-opacity-50 text-zinc-200 uppercase tracking-wider shadow-sm ${
+                                            index >= 3 ? 'hidden md:inline-block' : 'inline-block'
+                                        }`}
+                                    >
+                                        {tag}
+                                    </span>
+                                );
+                            })}
                         </div>
                     )}
 

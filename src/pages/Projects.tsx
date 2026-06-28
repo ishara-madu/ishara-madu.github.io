@@ -1,11 +1,205 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProjectCard, { ProjectType } from '../components/ProjectCard';
 import projectData from '../data/projects.json';
 import { LuFolder, LuGitBranch, LuBox, LuActivity } from 'react-icons/lu';
 
+const CACHE_KEY = 'portfolio_github_projects';
+const CACHE_TIMESTAMP_KEY = 'portfolio_github_projects_timestamp';
+const CACHE_DURATION = 3600000; // 1 hour in milliseconds
+
 export default function Projects() {
-  const [projects] = useState<ProjectType[]>(projectData);
-  const loading = false;
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Map local JSON data to match ProjectType structure as a reliable fallback
+  const getLocalFallback = (): ProjectType[] => {
+    return (projectData as any[]).map((p, idx) => {
+      let formattedTitle = p.title.replace(/[-_]/g, ' ');
+      formattedTitle = formattedTitle.replace(/([a-z])([A-Z])/g, '$1 $2');
+      formattedTitle = formattedTitle.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+      formattedTitle = formattedTitle.replace(/(\d+G)([A-Z])/g, '$1 $2');
+      const title = formattedTitle.replace(/\b\w/g, (c: string) => c.toUpperCase());
+      
+      return {
+        id: p.id || idx + 1,
+        title,
+        description: p.description,
+        image: p.image,
+        images: p.images || [p.image],
+        homepage: p.homepage,
+        textColor: p.textColor || "#ffffff",
+        tags: p.tags || [],
+        github: p.github,
+        playstore: p.playstore,
+        website: p.website
+      };
+    });
+  };
+
+  useEffect(() => {
+    const fetchGitHubProjects = async () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const forceRefresh = urlParams.get('refresh') === 'true' || urlParams.get('nocache') === 'true';
+
+        if (forceRefresh) {
+          const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+          window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+        }
+
+        // 1. Check local storage cache first to avoid rate-limiting
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        const cachedTimestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+        
+        if (cachedData && cachedTimestamp && !forceRefresh) {
+          const age = Date.now() - parseInt(cachedTimestamp, 10);
+          if (age < CACHE_DURATION) {
+            setProjects(JSON.parse(cachedData));
+            setLoading(false);
+            return;
+          }
+        }
+
+        // 2. Fetch public repositories from GitHub
+        const res = await fetch('https://api.github.com/users/ishara-madu/repos?per_page=100&sort=updated');
+        if (!res.ok) throw new Error("Failed to fetch repositories from GitHub");
+        
+        const repos = await res.json();
+        if (!Array.isArray(repos)) throw new Error("Invalid response format");
+
+        // 3. Filter repos: stargazers_count >= 1 OR contains 'portfolio' topic
+        const filteredRepos = repos.filter((repo: any) => {
+          const hasStars = repo.stargazers_count && repo.stargazers_count >= 1;
+          const hasTopics = repo.topics && (
+            repo.topics.includes('portfolio') || 
+            repo.topics.includes('portfolio-project')
+          );
+          return hasStars || hasTopics;
+        });
+
+        if (filteredRepos.length === 0) {
+          // If no repos match, use local fallback
+          setProjects(getLocalFallback());
+          setLoading(false);
+          return;
+        }
+
+        // 4. Resolve details (images and readmes) concurrently for filtered repos
+        const parsedProjects = await Promise.all(
+          filteredRepos.map(async (repo: any) => {
+            const owner = repo.owner.login;
+            const name = repo.name;
+            
+            // Format title neatly (e.g. 4GLTEOnlyApp -> 4G LTE Only App, hireme-web -> Hireme Web)
+            let formattedTitle = name.replace(/[-_]/g, ' ');
+            formattedTitle = formattedTitle.replace(/([a-z])([A-Z])/g, '$1 $2');
+            formattedTitle = formattedTitle.replace(/([A-Z])([A-Z][a-z])/g, '$1 $2');
+            formattedTitle = formattedTitle.replace(/(\d+G)([A-Z])/g, '$1 $2');
+            const title = formattedTitle.replace(/\b\w/g, (c: string) => c.toUpperCase());
+            const description = repo.description || "A public repository developed by ishara-madu.";
+            const tags = repo.topics && repo.topics.length > 0 
+                ? repo.topics.map((t: string) => t.toUpperCase()) 
+                : ["GITHUB", "REPOSITORY"];
+                
+            let github = repo.html_url;
+            let website = repo.homepage || undefined;
+            let playstore = undefined;
+            
+            // Parse Google Play Store links from repo homepage if any
+            if (website && website.includes("play.google.com")) {
+                playstore = website;
+                website = undefined;
+            }
+            
+            // Query image folder 'portfolio_images' in the root
+            let image = "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=60"; // generic banner
+            let images: string[] = [];
+            try {
+                const contentsUrl = `https://api.github.com/repos/${owner}/${name}/contents/portfolio_images`;
+                const contentsRes = await fetch(contentsUrl);
+                if (contentsRes.ok) {
+                    const files = await contentsRes.json();
+                    if (Array.isArray(files)) {
+                        const imgFiles = files.filter(f => {
+                            const fname = f.name.toLowerCase();
+                            return fname.endsWith(".png") || fname.endsWith(".jpg") || fname.endsWith(".jpeg") || fname.endsWith(".webp") || fname.endsWith(".gif");
+                        });
+                        if (imgFiles.length > 0) {
+                            // Sort alphabetically to maintain order
+                            imgFiles.sort((a, b) => a.name.localeCompare(b.name));
+                            image = imgFiles[0].download_url;
+                            images = imgFiles.map(f => f.download_url);
+                        }
+                    }
+                }
+            } catch (e) {
+                // No folder or error, skip
+            }
+            
+            // Query README.md for extra links
+            try {
+                const readmeUrl = `https://raw.githubusercontent.com/${owner}/${name}/${repo.default_branch || 'main'}/README.md`;
+                const readmeRes = await fetch(readmeUrl);
+                if (readmeRes.ok) {
+                    const text = await readmeRes.text();
+                    
+                    const playStoreRegex = /(https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-zA-Z0-9._]+)/i;
+                    const playMatch = text.match(playStoreRegex);
+                    if (playMatch && !playstore) {
+                        playstore = playMatch[1];
+                    }
+                    
+                    const websiteRegex = /\[(?:Live Demo|Website)\]\((https?:\/\/[^\s)]+)\)/i;
+                    const webMatch = text.match(websiteRegex);
+                    if (webMatch && !website) {
+                        website = webMatch[1];
+                    }
+                }
+            } catch (e) {
+                // Readme parsing failed, skip
+            }
+
+            return {
+                id: repo.id,
+                title,
+                description,
+                image,
+                images: images.length > 0 ? images : [image],
+                homepage: repo.homepage || repo.html_url,
+                textColor: "#ffffff",
+                tags,
+                github,
+                playstore,
+                website
+            };
+          })
+        );
+
+        // 5. Save to state and update cache
+        setProjects(parsedProjects);
+        localStorage.setItem(CACHE_KEY, JSON.stringify(parsedProjects));
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+
+      } catch (err) {
+        console.warn("GitHub fetch failed, attempting cache fallback first.", err);
+        const cachedData = localStorage.getItem(CACHE_KEY);
+        if (cachedData) {
+          try {
+            setProjects(JSON.parse(cachedData));
+            console.log("Successfully loaded expired cached GitHub projects as fallback.");
+            return;
+          } catch (e) {
+            // Cached parse failed, fall through to local fallback
+          }
+        }
+        setProjects(getLocalFallback());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGitHubProjects();
+  }, []);
 
   return (
     <div

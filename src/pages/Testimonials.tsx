@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { LuFolder, LuGitBranch, LuMessageSquare, LuCheck, LuGitPullRequest, LuPlus } from 'react-icons/lu';
-import testimonialsData from '../data/testimonials.json';
 
 interface GitHubIssue {
     id: number;
@@ -17,8 +16,8 @@ interface GitHubIssue {
 }
 
 export default function Testimonials() {
-    const [testimonials] = useState<GitHubIssue[]>(testimonialsData);
-    const loading = false;
+    const [testimonials, setTestimonials] = useState<GitHubIssue[]>([]);
+    const [loading, setLoading] = useState(true);
     const { ref, inView } = useInView({
         threshold: 0.1,
         triggerOnce: true,
@@ -26,7 +25,37 @@ export default function Testimonials() {
 
     const repoOwner = "ishara-madu";
     const repoName = "ishara-madu.github.io";
-    const newIssueUrl = `https://github.com/${repoOwner}/${repoName}/issues/new?template=testimonial.md`;
+    
+    // Fetch all open issues to support title-based filtering fallback
+    const issuesApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/issues?state=open`;
+    const newIssueUrl = `https://github.com/ishara-madu/ishara-madu.github.io/issues/new?template=testimonial.md`;
+
+    useEffect(() => {
+        const fetchTestimonials = async () => {
+            try {
+                const res = await fetch(issuesApiUrl);
+                if (!res.ok) throw new Error("Failed to fetch");
+                const data = await res.json();
+                
+                // Filter issues: must not be a PR, and must have 'testimonial' in title or labels
+                const filteredIssues = data.filter((issue: any) => {
+                    if (issue.pull_request) return false;
+                    const hasLabel = issue.labels && issue.labels.some((l: any) => l.name.toLowerCase() === 'testimonial');
+                    const hasTitle = issue.title && issue.title.toLowerCase().includes('testimonial');
+                    return hasLabel || hasTitle;
+                }) as GitHubIssue[];
+                
+                setTestimonials(filteredIssues);
+            } catch (err) {
+                console.error("Failed to load testimonials from GitHub issues.", err);
+                setTestimonials([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTestimonials();
+    }, [issuesApiUrl]);
 
     // Format date string to display neatly (e.g. June 15, 2026)
     const formatDate = (dateString: string) => {
@@ -73,7 +102,7 @@ export default function Testimonials() {
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-slate-200" />
                     <span className="flex items-center gap-1 text-slate-500 font-semibold">
-                      status: read-only
+                      status: read-write
                     </span>
                   </div>
                 </div>
@@ -88,7 +117,7 @@ export default function Testimonials() {
                             &lt;Testimonials /&gt;
                         </h2>
                         <p className="text-base font-normal text-slate-650 leading-relaxed">
-                            Kind words and technical feedback shared by clients, project managers, and peer developers. Recommendations are loaded statically.
+                            Kind words and technical feedback shared by clients, project managers, and peer developers. GitHub accounts are verified via API queries.
                         </p>
                     </div>
 
@@ -111,7 +140,7 @@ export default function Testimonials() {
                         <div>$ git log --grep="testimonial" --max-count=4</div>
                         <div className="flex items-center gap-2">
                             <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
-                            <span>Fetching verified reviews from GitHub repository...</span>
+                            <span>Fetching verified reviews from GitHub repository api...</span>
                         </div>
                     </div>
                 ) : testimonials.length === 0 ? (
@@ -175,7 +204,7 @@ export default function Testimonials() {
                                     {/* Commit Date log footer */}
                                     <div className="flex items-center justify-between mt-5 pt-3 border-t border-slate-100 font-mono text-[10px] text-slate-400 select-none">
                                         <span className="flex items-center gap-1">
-                                            <LuMessageSquare className="w-3.5 h-3.5 text-slate-355" />
+                                            <LuMessageSquare className="w-3.5 h-3.5 text-slate-350" />
                                             verified_comment
                                         </span>
                                         <span>{formatDate(item.created_at)}</span>
