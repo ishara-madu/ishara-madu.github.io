@@ -227,7 +227,7 @@ export default function InteractiveTerminal() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="opacity-0 absolute inset-0 w-full h-full cursor-text outline-none text-base"
+          className="opacity-0 absolute inset-0 w-full h-full cursor-text outline-none"
           autoFocus
           autoComplete="off"
           spellCheck="false"

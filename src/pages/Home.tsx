@@ -190,9 +190,9 @@ export default function Home() {
                 </div>
                 
                 {/* IDE Code Editor Tab Header Bar */}
-                <div className="flex items-center justify-between border-b border-zinc-200 border-opacity-35 bg-white bg-opacity-35 backdrop-blur-md px-4 py-2 relative z-10 w-full select-none">
+                <div className="flex items-center justify-start sm:justify-between border-b border-zinc-200 border-opacity-35 bg-white bg-opacity-35 backdrop-blur-md px-4 py-2 relative z-10 w-full select-none">
                     {/* macOS close/minimize/zoom control dots */}
-                    <div className="flex gap-1.5 items-center">
+                    <div className="hidden sm:flex gap-1.5 items-center">
                         <span className="w-2.5 h-2.5 rounded-full bg-red-400 opacity-80" />
                         <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 opacity-80" />
                         <span className="w-2.5 h-2.5 rounded-full bg-green-400 opacity-80" />

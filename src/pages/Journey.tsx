@@ -20,7 +20,7 @@ function JourneyItem({ item }: JourneyItemProps) {
   return (
     <div
       ref={ref}
-      className={`relative pl-8 md:pl-16 pb-12 last:pb-2 group transition-all duration-700 ${
+      className={`relative pl-6 md:pl-16 pb-10 last:pb-2 group transition-all duration-700 ${
         inView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
       }`}
     >
@@ -49,7 +49,7 @@ function JourneyItem({ item }: JourneyItemProps) {
       <div className="flex flex-col overflow-hidden bg-zinc-900/40 hover:bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700/80 shadow-md hover:shadow-xl rounded-2xl transition-[border-color,background-color,transform,box-shadow] duration-300 hover:translate-x-1.5">
         
         {/* IDE Editor Tab Header Bar */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-950/60 border-b border-zinc-800/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-2.5 bg-zinc-950/60 border-b border-zinc-800/80 gap-2 sm:gap-0">
           <div className="flex items-center gap-2">
             {/* File Type Icon (Lucide LuBriefcase / LuGraduationCap) */}
             <span className="text-zinc-400 select-none">
@@ -76,7 +76,7 @@ function JourneyItem({ item }: JourneyItemProps) {
             
             {/* Year Badge */}
             <span 
-              className="text-[10px] font-mono font-bold px-2 py-0.5 rounded text-white tracking-wider select-none shadow-sm"
+              className="text-[10px] font-mono font-bold px-2 py-0.5 rounded text-white tracking-wider select-none shadow-sm whitespace-nowrap"
               style={{ backgroundColor: `${accentColor}cc` }}
             >
               {item.year}
@@ -287,7 +287,7 @@ export default function Journey() {
       {/* Content Container (Masked to reveal only under the torch/flashlight spotlight) */}
       <div 
         style={maskStyle}
-        className="flex h-auto w-full p-6 md:p-10 flex-col z-10 relative"
+        className="flex h-auto w-full px-4 py-6 md:p-10 flex-col z-10 relative"
       >
         
         {/* macOS Window Controls */}

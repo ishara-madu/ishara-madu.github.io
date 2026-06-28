@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useInView } from 'react-intersection-observer';
 import { GoArrowUpRight } from 'react-icons/go';
 
@@ -25,6 +26,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isFullscreenImageOpen, setIsFullscreenImageOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const { ref, inView } = useInView({
         threshold: 0.1,
@@ -35,6 +37,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
     const images = project.images && project.images.length > 0 ? project.images : [project.image];
     const showSlider = images.length > 1;
+
+    useEffect(() => {
+        if (isModalOpen || isFullscreenImageOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isModalOpen, isFullscreenImageOpen]);
 
     const handleOpenModal = () => {
         setCurrentImageIndex(0);
@@ -47,7 +60,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <div 
                 ref={ref} 
                 onClick={handleOpenModal}
-                className={`w-full min-h-[260px] sm:min-h-[300px] md:h-[360px] rounded-3xl overflow-hidden relative group shadow-lg hover:shadow-xl cursor-pointer transition-all duration-500 ${
+                className={`w-full min-h-[290px] sm:min-h-[300px] md:h-[360px] rounded-3xl overflow-hidden relative group shadow-lg hover:shadow-xl cursor-pointer transition-all duration-500 ${
                     inView ? 'animate-slide-up-card opacity-100' : 'opacity-0'
                 }`}
             >
@@ -68,11 +81,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     
                     {/* Tech Stack Tags */}
                     {project.tags && project.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mb-2.5 transform translate-y-2 group-hover:translate-y-0 opacity-80 group-hover:opacity-100 duration-300 transition-all">
+                        <div className="flex flex-wrap gap-1.5 mb-2.5 transform translate-y-0 md:translate-y-2 md:group-hover:translate-y-0 opacity-100 md:opacity-85 md:group-hover:opacity-100 duration-300 transition-all">
                             {project.tags.map((tag, index) => (
                                 <span 
                                     key={index} 
-                                    className="text-[9px] sm:text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-zinc-950 bg-opacity-65 backdrop-blur-md border border-zinc-800 border-opacity-50 text-zinc-200 uppercase tracking-wider shadow-sm"
+                                    className={`text-[9px] sm:text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-md bg-zinc-950 bg-opacity-65 backdrop-blur-md border border-zinc-800 border-opacity-50 text-zinc-200 uppercase tracking-wider shadow-sm ${
+                                        index >= 3 ? 'hidden md:inline-block' : 'inline-block'
+                                    }`}
                                 >
                                     {tag}
                                 </span>
@@ -88,7 +103,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                             </h2>
                             
                             {/* Description (visible, line-clamp, smooth text styling) */}
-                            <p className="text-xs sm:text-sm font-normal text-zinc-300 leading-relaxed line-clamp-3 sm:line-clamp-4 group-hover:text-white transition-colors duration-300">
+                            <p className="text-xs sm:text-sm font-normal text-zinc-300 leading-relaxed line-clamp-2 sm:line-clamp-3 md:line-clamp-4 group-hover:text-white transition-colors duration-300">
                                 {project.description}
                             </p>
                         </div>
@@ -165,7 +180,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </div>
 
             {/* Glassmorphic Project Inspector Modal */}
-            {isModalOpen && (
+            {isModalOpen && createPortal(
                 <div 
                     className="fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-[10000] flex justify-center items-center p-4 sm:p-6"
                     onClick={() => setIsModalOpen(false)}
@@ -194,7 +209,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                                 key={currentImageIndex}
                                 src={images[currentImageIndex]} 
                                 alt={`${project.title} screenshot ${currentImageIndex + 1}`} 
-                                className="w-full h-full object-contain animate-in fade-in duration-300" 
+                                className="w-full h-full object-contain animate-in fade-in duration-300 cursor-zoom-in hover:opacity-95 transition-opacity" 
+                                onClick={() => setIsFullscreenImageOpen(true)}
+                                title="Click to view full screen"
                             />
 
                             {/* Left Navigation Arrow */}
@@ -329,7 +346,35 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body
+            )}
+
+            {/* Lightbox / Fullscreen Image Overlay */}
+            {isFullscreenImageOpen && createPortal(
+                <div 
+                    className="fixed inset-0 bg-black/95 z-[20000] flex justify-center items-center p-4 cursor-zoom-out animate-in fade-in duration-200"
+                    onClick={() => setIsFullscreenImageOpen(false)}
+                >
+                    {/* Close Button */}
+                    <button 
+                        className="absolute top-4 right-4 text-white/70 hover:text-white bg-zinc-900/60 p-2 rounded-full border border-zinc-800/80 backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95"
+                        onClick={() => setIsFullscreenImageOpen(false)}
+                        title="Close Fullscreen View"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    {/* Centered Fullscreen Image */}
+                    <img 
+                        src={images[currentImageIndex]} 
+                        alt={`${project.title} screenshot fullscreen`}
+                        className="max-w-full max-h-[92vh] object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200 select-none pointer-events-none"
+                    />
+                </div>,
+                document.body
             )}
         </>
     );

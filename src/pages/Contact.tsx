@@ -116,7 +116,7 @@ export default function Contact() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 py-0.5 text-slate-850 placeholder-slate-400/70 flex-grow text-base md:text-xs"
+                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 py-0.5 text-slate-850 placeholder-slate-400/70 flex-grow"
                 />
               </div>
 
@@ -129,7 +129,7 @@ export default function Contact() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 py-0.5 text-slate-850 placeholder-slate-400/70 flex-grow text-base md:text-xs"
+                  className="bg-transparent border-b border-slate-300 focus:border-indigo-500 outline-none px-1 py-0.5 text-slate-850 placeholder-slate-400/70 flex-grow"
                 />
               </div>
 
@@ -142,7 +142,7 @@ export default function Contact() {
                   rows={3}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="bg-transparent border border-slate-300 focus:border-indigo-500 outline-none p-2.5 rounded-xl text-slate-850 placeholder-slate-400/70 w-full h-24 resize-none leading-relaxed text-base md:text-xs"
+                  className="bg-transparent border border-slate-300 focus:border-indigo-500 outline-none p-2.5 rounded-xl text-slate-850 placeholder-slate-400/70 w-full h-24 resize-none leading-relaxed"
                 />
               </div>
 
