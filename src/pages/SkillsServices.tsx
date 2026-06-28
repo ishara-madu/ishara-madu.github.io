@@ -19,19 +19,19 @@ function getSkillIconKey(name: string): string {
     if (n.includes("sqlite")) return "sqlite";
     if (n.includes("github")) return "github";
     if (n.includes("git")) return "git";
-    if (n.includes("n8n")) return "postman"; // fallback
+    if (n.includes("n8n")) return "n8n";
     if (n.includes("npm")) return "npm";
     if (n.includes("pnpm")) return "pnpm";
     if (n.includes("yarn")) return "yarn";
     if (n.includes("figma")) return "figma";
-    if (n.includes("excel")) return "sqlite"; // fallback
+    if (n.includes("excel")) return "excel";
     if (n.includes("python")) return "py";
     if (n.includes("java")) return "java";
-    if (n.includes("gemini") || n.includes("ai")) return "gcp"; // fallback
+    if (n.includes("gemini") || n.includes("ai")) return "gemini";
     if (n.includes("postman") || n.includes("api") || n.includes("rest")) return "postman";
     if (n.includes("payments") || n.includes("stripe")) return "stripe";
-    if (n.includes("admob")) return "android"; // fallback
-    if (n.includes("revenuecat")) return "apple"; // fallback
+    if (n.includes("admob")) return "admob";
+    if (n.includes("revenuecat")) return "apple"; // fallback to apple
     return "git";
 }
 
@@ -39,7 +39,7 @@ function TechIcon({ name }: { name: string }) {
     const key = getSkillIconKey(name);
     return (
         <img 
-            src={`https://skillicons.dev/icons?i=${key}`} 
+            src={`https://go-skill-icons.vercel.app/api/icons?i=${key}`} 
             alt={name} 
             className="w-4 h-4 rounded object-contain flex-shrink-0 select-none pointer-events-none"
             loading="lazy"
