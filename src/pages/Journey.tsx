@@ -90,6 +90,7 @@ export default function Journey() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
+  const lastMousePos = useRef({ clientX: 0, clientY: 0 });
 
   useEffect(() => {
     // Detect if device supports hover (desktop mouse pointer vs touch screen)
@@ -98,23 +99,49 @@ export default function Journey() {
     }
   }, []);
 
-  const handleMouseEnter = () => {
+  // Listen to scroll events to dynamically update container rect offsets and shift the mask coords accordingly
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!isHovered || !containerRef.current || !rectRef.current) return;
+      
+      // Update cached bounding rect on scroll
+      rectRef.current = containerRef.current.getBoundingClientRect();
+      
+      // Recalculate container coordinates using the new scrolled offset rect
+      const x = lastMousePos.current.clientX - rectRef.current.left;
+      const y = lastMousePos.current.clientY - rectRef.current.top;
+      
+      containerRef.current.style.setProperty('--mouse-x', `${x}px`);
+      containerRef.current.style.setProperty('--mouse-y', `${y}px`);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isHovered]);
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHovered(true);
     // Cache bounding client rect on mouse enter to avoid layout thrashing during mouse move
     if (containerRef.current) {
       rectRef.current = containerRef.current.getBoundingClientRect();
     }
+    lastMousePos.current = { clientX: e.clientX, clientY: e.clientY };
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hasHover || !containerRef.current || !rectRef.current) return;
+    
+    // Store latest client coordinates for scroll listener offset calculations
+    lastMousePos.current = { clientX: e.clientX, clientY: e.clientY };
+    
     const x = e.clientX - rectRef.current.left;
     const y = e.clientY - rectRef.current.top;
     
-    // 1. Direct GPU position update to the custom cursor container (removes 1-frame latency entirely)
-    // Precise offset calculated from tourch.svg viewBox coordinates (tip is at 97.7% X, 33.2% Y)
+    // 1. Direct GPU positioning of the fixed cursor (using client coordinates for zero-latency scroll alignment)
     if (cursorRef.current) {
-      cursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-97.7%, -33.2%)`;
+      cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-97.7%, -33.2%)`;
     }
 
     // 2. Set coordinates directly to CSS variables on container for the mask-image radial gradient
@@ -161,11 +188,11 @@ export default function Journey() {
         />
       )}
 
-      {/* Custom user flashlight icon cursor (tourch.svg) - GPU translate3d positioning for zero-latency mouse sync */}
+      {/* Custom user flashlight icon cursor (tourch.svg) - Fixed viewport-relative positioning for 100% scroll sync */}
       {isHovered && hasHover && (
         <div 
           ref={cursorRef}
-          className="pointer-events-none absolute left-0 top-0 z-30 select-none will-change-transform"
+          className="pointer-events-none fixed left-0 top-0 z-[9999] select-none will-change-transform"
           style={{
             transform: 'translate3d(-999px, -999px, 0) translate(-97.7%, -33.2%)',
           }}
